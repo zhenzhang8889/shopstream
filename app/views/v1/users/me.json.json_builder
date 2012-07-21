@@ -1,0 +1,7 @@
+id @user.id.to_s
+access_token @user.authentication_token
+shop do
+  id @user.shop.id.to_s
+  shopify_id @user.shop.shopify_id
+  attributes @user.shop.shopify_attributes 
+end

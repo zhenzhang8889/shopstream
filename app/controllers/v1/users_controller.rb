@@ -6,6 +6,15 @@ module V1
 
     def me
       @user = current_user
+
+      render action: :show
+    end
+
+    def show
+      @user = User.find params[:id]
+
+      return not_authorized unless @user == current_user
+
       respond_with @user
     end
   end

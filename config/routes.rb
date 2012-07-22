@@ -9,8 +9,11 @@ ShopstreamApi::Application.routes.draw do
   end
 
   namespace :v1 do
-    resources :users, only: [] do
+    resources :users, only: [:show] do
       get :me, on: :collection
+    end
+    resources :shops, only: [:show] do
+      get :my, on: :collection
     end
   end
 

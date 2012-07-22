@@ -1,0 +1,3 @@
+id @user.id.to_s
+access_token @user.authentication_token
+shop_id @user.shop.id.to_s

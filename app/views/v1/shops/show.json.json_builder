@@ -1,0 +1,4 @@
+id @shop.id.to_s
+shopify_id @shop.shopify_id
+domain @shop.shopify_attributes['domain']
+attributes @shop.shopify_attributes

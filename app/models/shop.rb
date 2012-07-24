@@ -3,7 +3,8 @@ class Shop
 
   field :shopify_id, type: Integer
   field :shopify_token, type: String
-  field :shopify_attributes, type: Hash
+  field :domain, type: String
+  field :shopify_attributes, type: Hash, default: {}
   field :token, type: String
 
   belongs_to :user
@@ -29,7 +30,7 @@ class Shop
 
   # Internal: Setup Shopify webhooks.
   def setup_shopify_webhooks
-    ShopifyAPI::Webhook.create topic: 'order/create', address: new_order_webhook_url, format: 'json'
+    ShopifyAPI::Webhook.create topic: 'orders/create', address: new_order_webhook_url, format: 'json'
   end
 
   # Internal: Get URL of tracker script for current shop.
@@ -42,11 +43,6 @@ class Shop
     "http://#{ENV['COLLECTOR_HOST']}/webhooks/shopify/#{token}/new_order"
   end
 
-  # Public: Get Shopify shop domain.
-  def domain
-    shopify_attributes['domain']
-  end
-
   def self.find_or_create_with_omniauth(shop_host, token)
     shopify = shopify_shop(shop_host, token)
 
@@ -55,6 +51,7 @@ class Shop
     shop = Shop.find_or_initialize_by(shopify_id: shopify.id, shopify_token: token)
     new_shop = shop.new_record?
     shop.shopify_attributes = shopify.attributes
+    shop.domain = shop.shopify_attributes.fetch('domain', nil) || shop_host
     shop.save
     shop.setup_shopify_shop if new_shop
     shop

@@ -4,11 +4,15 @@ class Shop
   field :shopify_id, type: Integer
   field :shopify_token, type: String
   field :shopify_attributes, type: Hash
+  field :token, type: String
 
   belongs_to :user
 
   validates :shopify_id, presence: true
   validates :shopify_token, presence: true
+  validates :token, uniqueness: true
+
+  before_create :generate_token
 
   def self.find_or_create_with_omniauth(shop_host, token)
     shopify = shopify_shop(shop_host, token)
@@ -36,5 +40,9 @@ class Shop
     ensure
       ShopifyAPI::Base.clear_session
     end
+  end
+
+  def generate_token
+    self.token = Devise.friendly_token
   end
 end

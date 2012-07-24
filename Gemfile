@@ -1,5 +1,9 @@
 source 'https://rubygems.org'
 
+if respond_to? :ruby
+  ruby '1.9.3'
+end
+
 gem 'rails', '3.2.6'
 
 # Bundle edge Rails instead:

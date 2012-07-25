@@ -116,6 +116,6 @@ class Shop
   end
 
   def reset_redis_keys
-    $redis.set avg_purchase_key, 0 unless avg_purchase
+    $redis.set avg_purchase_key, 0.0 unless avg_purchase
   end
 end

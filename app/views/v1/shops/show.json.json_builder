@@ -1,4 +1,5 @@
 id @shop.id.to_s
 shopify_id @shop.shopify_id
 domain @shop.domain
+avg_purchase @shop.avg_purchase
 attributes @shop.shopify_attributes

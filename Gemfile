@@ -12,6 +12,9 @@ gem 'rails', '3.2.6'
 gem 'mongoid'
 gem 'devise'
 
+gem 'redis', '~> 3.0.0.rc2'
+gem 'hiredis', '~> 0.4.5'
+
 gem 'shopify_app'
 
 gem 'json_builder'

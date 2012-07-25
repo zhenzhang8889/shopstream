@@ -14,6 +14,7 @@ class Shop
   validates :token, uniqueness: true
 
   before_create :generate_token
+  after_create :reset_redis_keys
 
   # Public: Setup Shopify shop - webhooks & script tag.
   def setup_shopify_shop
@@ -36,6 +37,26 @@ class Shop
   # Internal: Get URL of tracker script for current shop.
   def tracker_script_url
     "http://#{ENV['COLLECTOR_HOST']}/track-#{token}.js"
+  end
+
+  # Internal: Redis prefix.
+  def redis_prefix
+    "shop_#{token}"
+  end
+
+  # Internal: Prefix a string with redis prefix for current shop.
+  def redis_prefixed(key)
+    "#{redis_prefix}_#{key}"
+  end
+
+  # Internal: Redis average purchase key.
+  def avg_purchase_key
+    redis_prefixed 'avg_purchase'
+  end
+
+  # Public: Get avg purchase.
+  def avg_purchase
+    $redis.get avg_purchase_key
   end
 
   # Internal: Get URL of new order webhook for current shop.
@@ -92,5 +113,9 @@ class Shop
 
   def generate_token
     self.token = Devise.friendly_token
+  end
+
+  def reset_redis_keys
+    $redis.set avg_purchase_key, 0 unless avg_purchase
   end
 end

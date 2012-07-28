@@ -59,6 +59,11 @@ class Shop
     redis_prefixed 'conversion_rate'
   end
 
+  # Internal: Redis total sales today key.
+  def total_sales_today_key
+    redis_prefixed 'total_sales_today'
+  end
+
   # Public: Get avg purchase.
   def avg_purchase
     $redis.get avg_purchase_key
@@ -67,6 +72,11 @@ class Shop
   # Public: Get conversion rate.
   def conversion_rate
     $redis.get conversion_rate_key
+  end
+
+  # Public: Get total sales today.
+  def total_sales_today
+    $redis.get total_sales_today_key
   end
 
   # Internal: Get URL of new order webhook for current shop.
@@ -128,5 +138,6 @@ class Shop
   def reset_redis_keys
     $redis.set avg_purchase_key, 0.0 unless avg_purchase
     $redis.set conversion_rate_key, 0.0 unless conversion_rate
+    $redis.set total_sales_today_key, 0.0 unless total_sales_today
   end
 end

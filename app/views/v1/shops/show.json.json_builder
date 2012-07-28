@@ -3,4 +3,5 @@ shopify_id @shop.shopify_id
 domain @shop.domain
 token @shop.token
 avg_purchase @shop.avg_purchase
+conversion_rate @shop.conversion_rate
 attributes @shop.shopify_attributes

@@ -64,6 +64,11 @@ class Shop
     redis_prefixed 'total_sales_today'
   end
 
+  # Internal: Redis checkout distribution key.
+  def checkout_distribution_key
+    redis_prefixed 'co_distribution'
+  end
+
   # Public: Get avg purchase.
   def avg_purchase
     $redis.get avg_purchase_key
@@ -77,6 +82,11 @@ class Shop
   # Public: Get total sales today.
   def total_sales_today
     $redis.get total_sales_today_key
+  end
+
+  # Public: Get checkout distribution.
+  def checkout_distribution
+    $redis.get(checkout_distribution_key).try :split, ','
   end
 
   # Internal: Get URL of new order webhook for current shop.
@@ -139,5 +149,6 @@ class Shop
     $redis.set avg_purchase_key, 0.0 unless avg_purchase
     $redis.set conversion_rate_key, 0.0 unless conversion_rate
     $redis.set total_sales_today_key, 0.0 unless total_sales_today
+    $redis.set checkout_distribution_key, '' unless checkout_distribution
   end
 end

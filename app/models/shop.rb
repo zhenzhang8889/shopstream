@@ -86,7 +86,7 @@ class Shop
 
   # Public: Get checkout distribution.
   def checkout_distribution
-    $redis.get(checkout_distribution_key).try :split, ','
+    $redis.get(checkout_distribution_key).try(:split, ',').try(:map, &:to_i)
   end
 
   # Internal: Get URL of new order webhook for current shop.

@@ -14,6 +14,8 @@ ShopstreamApi::Application.routes.draw do
     end
     resources :shops, only: [:show] do
       get :my, on: :collection
+
+      resource :feed, only: [:show]
     end
   end
 

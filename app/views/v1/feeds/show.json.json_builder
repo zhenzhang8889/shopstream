@@ -1,4 +1,5 @@
 feed_items @feed do |item|
   activity_type item.activity_type
   activity_attributes item.activity_attributes
+  created_at item.created_at
 end

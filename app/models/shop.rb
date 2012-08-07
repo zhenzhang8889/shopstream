@@ -35,6 +35,32 @@ class Shop
     ShopifyAPI::Webhook.create topic: 'orders/create', address: new_order_webhook_url, format: 'json'
   end
 
+  # Internal: Setup Shopify billing.
+  def setup_shopify_billing(return_url)
+    with_shopify_session do |session|
+      unless ShopifyAPI::RecurringApplicationCharge.current
+        charge = ShopifyAPI::RecurringApplicationCharge.create name: 'Basic plan',
+          price: 9.99,
+          trial: 30,
+          test: ENV['SHOPIFY_TEST'] == 'YES',
+          return_url: return_url
+
+        charge.confirmation_url
+      end
+    end
+  end
+
+  # Intrnal: Activate recurring charge.
+  def activate_shopify_recurring_charge(charge_id)
+    with_shopify_session do |session|
+      ShopifyAPI::RecurringApplicationCharge.find(charge_id).activate
+    end
+  end
+
+  def self.activate_shopify_recurring_charge(domain, charge_id)
+    where(domain: domain).first.try :activate_shopify_recurring_charge, charge_id
+  end
+
   # Internal: Get URL of tracker script for current shop.
   def tracker_script_url
     "http://#{ENV['COLLECTOR_HOST']}/track-#{token}.js"

@@ -19,7 +19,7 @@ class Shop
 
   # Public: Setup Shopify shop - webhooks & script tag.
   def setup_shopify_shop
-    with_shopify_session do |session|
+    with_shopify_session do
       setup_shopify_script_tag
       setup_shopify_webhooks
     end
@@ -37,7 +37,7 @@ class Shop
 
   # Internal: Setup Shopify billing.
   def setup_shopify_billing(return_url)
-    with_shopify_session do |session|
+    with_shopify_session do
       unless ShopifyAPI::RecurringApplicationCharge.current
         charge = ShopifyAPI::RecurringApplicationCharge.create name: 'Basic plan',
           price: 9.99,
@@ -52,13 +52,15 @@ class Shop
 
   # Intrnal: Activate recurring charge.
   def activate_shopify_recurring_charge(charge_id)
-    with_shopify_session do |session|
+    shopify_shop
+
+    with_shopify_session do
       ShopifyAPI::RecurringApplicationCharge.find(charge_id).activate
     end
   end
 
   def self.activate_shopify_recurring_charge(domain, charge_id)
-    where(domain: domain).first.try :activate_shopify_recurring_charge, charge_id
+    find_by(domain: domain).activate_shopify_recurring_charge charge_id
   end
 
   # Internal: Get URL of tracker script for current shop.
@@ -129,7 +131,7 @@ class Shop
     shop = Shop.find_or_initialize_by(shopify_id: shopify.id, shopify_token: token)
     new_shop = shop.new_record?
     shop.shopify_attributes = shopify.attributes
-    shop.domain = shop.shopify_attributes.fetch('domain', nil) || shop_host
+    shop.domain = shop.shopify_attributes.fetch('domain', shop_host)
     shop.save
     shop.setup_shopify_shop if new_shop
     shop
@@ -140,8 +142,8 @@ class Shop
   # shop  - The String shop domain.
   # token - The String OAuth 2 token.
   def self.shopify_shop(shop, token)
-    with_shopify_session(shop, token) do |session|
-      session.shop
+    with_shopify_session(shop, token) do
+      ShopifyAPI::Shop.current
     end
   end
 
@@ -151,21 +153,15 @@ class Shop
   end
 
   def self.with_shopify_session(shop, token, &block)
-    begin
-      logger.debug "Creating new session #{shop} - #{token}"
-      session = ShopifyAPI::Session.new shop, token
-      ShopifyAPI::Base.activate_session session
+    logger.debug "Creating new session #{shop} - #{token}"
 
-      block.call session if session.valid?
-    ensure
-      ShopifyAPI::Base.clear_session
+    ShopifyAPI::Session.temp shop, token do
+      yield
     end
   end
 
   def with_shopify_session(&block)
-    Shop.with_shopify_session domain, shopify_token do |session|
-      block.call session
-    end
+    Shop.with_shopify_session domain, shopify_token, &block
   end
 
   def generate_token

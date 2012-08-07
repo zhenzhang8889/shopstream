@@ -176,6 +176,6 @@ class Shop
     $redis.set avg_purchase_key, 0.0 unless avg_purchase
     $redis.set conversion_rate_key, 0.0 unless conversion_rate
     $redis.set total_sales_today_key, 0.0 unless total_sales_today
-    $redis.set checkout_distribution_key, '' unless checkout_distribution
+    $redis.set checkout_distribution_key, '[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]' unless checkout_distribution
   end
 end

@@ -33,6 +33,7 @@ class Shop
   # Internal: Setup Shopify webhooks.
   def setup_shopify_webhooks
     ShopifyAPI::Webhook.create topic: 'orders/create', address: new_order_webhook_url, format: 'json'
+    ShopifyAPI::Webhook.create topic: 'app/uninstalled', address: app_uninstalled_webhook_url, format: 'json'
   end
 
   # Internal: Setup Shopify billing.
@@ -120,7 +121,17 @@ class Shop
 
   # Internal: Get URL of new order webhook for current shop.
   def new_order_webhook_url
-    "http://#{ENV['COLLECTOR_HOST']}/webhooks/shopify/#{token}/new_order"
+    webhook_url :new_order
+  end
+
+  # Internal: Get URL for app/uninstalled webhook.
+  def app_uninstalled_webhook_url
+    webhook_url :app_uninstalled
+  end
+
+  # Internal: Generate webhook url for specified action.
+  def webhook_url(action)
+    "http://#{ENV['COLLECTOR_HOST']}/webhooks/shopify/#{token}/#{action}"
   end
 
   def self.find_or_create_with_omniauth(shop_host, token)

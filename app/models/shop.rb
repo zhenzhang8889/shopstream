@@ -99,6 +99,11 @@ class Shop
     redis_prefixed 'co_distribution'
   end
 
+  # Internal: Redis top links key.
+  def top_links_key
+    redis_prefixed 'top_links'
+  end
+
   # Public: Get avg purchase.
   def avg_purchase
     $redis.get avg_purchase_key
@@ -117,6 +122,11 @@ class Shop
   # Public: Get checkout distribution.
   def checkout_distribution
     $redis.get(checkout_distribution_key).try(:split, ',').try(:map, &:to_i)
+  end
+
+  # Public: Get top links.
+  def top_links
+    $redis.zrange top_links_key, 0, 9
   end
 
   # Internal: Get URL of new order webhook for current shop.

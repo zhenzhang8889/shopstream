@@ -104,6 +104,11 @@ class Shop
     redis_prefixed 'top_links'
   end
 
+  # Internal: Redis top searched key.
+  def top_searches_key
+    redis_prefixed 'top_searches'
+  end
+
   # Public: Get avg purchase.
   def avg_purchase
     $redis.get avg_purchase_key
@@ -127,6 +132,11 @@ class Shop
   # Public: Get top links.
   def top_links
     $redis.zrange top_links_key, 0, 9
+  end
+
+  # Public: Get top searches.
+  def top_searches
+    $redis.zrange top_searches_key, 0, 9
   end
 
   # Internal: Get URL of new order webhook for current shop.

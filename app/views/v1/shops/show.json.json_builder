@@ -7,4 +7,5 @@ conversion_rate @shop.conversion_rate
 total_sales_today @shop.total_sales_today
 checkout_distribution @shop.checkout_distribution
 top_links @shop.top_links
+top_searches @shop.top_searches
 attributes @shop.shopify_attributes

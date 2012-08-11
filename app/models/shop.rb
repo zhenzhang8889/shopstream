@@ -33,6 +33,7 @@ class Shop
   # Internal: Setup Shopify webhooks.
   def setup_shopify_webhooks
     ShopifyAPI::Webhook.create topic: 'orders/create', address: new_order_webhook_url, format: 'json'
+    ShopifyAPI::Webhook.create topic: 'carts/create', address: new_cart_webhook_url, format: 'json'
     ShopifyAPI::Webhook.create topic: 'app/uninstalled', address: app_uninstalled_webhook_url, format: 'json'
   end
 
@@ -142,6 +143,11 @@ class Shop
   # Internal: Get URL of new order webhook for current shop.
   def new_order_webhook_url
     webhook_url :new_order
+  end
+
+  # Internal: Get URL of new cart webhook.
+  def new_cart_webhook_url
+    webhook_url :new_cart
   end
 
   # Internal: Get URL for app/uninstalled webhook.

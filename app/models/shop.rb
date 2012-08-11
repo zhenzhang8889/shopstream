@@ -34,6 +34,7 @@ class Shop
   def setup_shopify_webhooks
     setup_shopify_webhook 'orders/create', :new_order
     setup_shopify_webhook 'carts/create', :new_cart
+    setup_shopify_webhook 'carts/update', :updated_cart
     setup_shopify_webhook 'app/uninstalled', :app_uninstalled
   end
 

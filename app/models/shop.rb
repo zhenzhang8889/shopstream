@@ -32,9 +32,20 @@ class Shop
 
   # Internal: Setup Shopify webhooks.
   def setup_shopify_webhooks
-    ShopifyAPI::Webhook.create topic: 'orders/create', address: new_order_webhook_url, format: 'json'
-    ShopifyAPI::Webhook.create topic: 'carts/create', address: new_cart_webhook_url, format: 'json'
-    ShopifyAPI::Webhook.create topic: 'app/uninstalled', address: app_uninstalled_webhook_url, format: 'json'
+    setup_shopify_webhook 'orders/create', :new_order
+    setup_shopify_webhook 'carts/create', :new_cart
+    setup_shopify_webhook 'app/uninstalled', :app_uninstalled
+  end
+
+  # Internal: Setup Shopify webhook.
+  #
+  # topic - The String webhook topic.
+  # url   - The Symbol webhook url.
+  def setup_shopify_webhook(topic, meth)
+    unless ShopifyAPI::Webhook.count(topic: topic) > 0
+      address = send :webhook_url, meth
+      ShopifyAPI::Webhook.create topic: topic, address: address, format: 'json'
+    end
   end
 
   # Internal: Setup Shopify billing.
@@ -138,21 +149,6 @@ class Shop
   # Public: Get top searches.
   def top_searches
     $redis.zrange top_searches_key, 0, 9
-  end
-
-  # Internal: Get URL of new order webhook for current shop.
-  def new_order_webhook_url
-    webhook_url :new_order
-  end
-
-  # Internal: Get URL of new cart webhook.
-  def new_cart_webhook_url
-    webhook_url :new_cart
-  end
-
-  # Internal: Get URL for app/uninstalled webhook.
-  def app_uninstalled_webhook_url
-    webhook_url :app_uninstalled
   end
 
   # Internal: Generate webhook url for specified action.

@@ -102,6 +102,11 @@ class Shop
     redis_prefixed 'conversion_rate'
   end
 
+  # Internal: Redis max conversion rate key.
+  def max_conversion_rate_key
+    redis_prefixed 'max_conversion_rate'
+  end
+
   # Internal: Redis total sales today key.
   def total_sales_today_key
     redis_prefixed 'total_sales_today'
@@ -130,6 +135,11 @@ class Shop
   # Public: Get conversion rate.
   def conversion_rate
     $redis.get conversion_rate_key
+  end
+
+  # Public: Get max conversion rate.
+  def max_conversion_rate
+    $redis.get max_conversion_rate_key
   end
 
   # Public: Get total sales today.
@@ -205,6 +215,7 @@ class Shop
   def reset_redis_keys
     $redis.set avg_purchase_key, 0.0 unless avg_purchase
     $redis.set conversion_rate_key, 0.0 unless conversion_rate
+    $redis.set max_conversion_rate_key, 0.0 unless max_conversion_rate
     $redis.set total_sales_today_key, 0.0 unless total_sales_today
     $redis.set checkout_distribution_key, '[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]' unless checkout_distribution
   end

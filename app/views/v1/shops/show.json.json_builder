@@ -4,6 +4,7 @@ domain @shop.domain
 token @shop.token
 avg_purchase @shop.avg_purchase
 conversion_rate @shop.conversion_rate
+max_conversion_rate @shop.max_conversion_rate
 total_sales_today @shop.total_sales_today
 checkout_distribution @shop.checkout_distribution
 top_links @shop.top_links

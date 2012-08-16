@@ -139,27 +139,27 @@ class Shop
 
   # Public: Get avg purchase.
   def avg_purchase
-    $redis.get avg_purchase_key
+    $redis.get(avg_purchase_key).to_f
   end
 
   # Public: Get max average purchase.
   def max_avg_purchase
-    $redis.get max_avg_purchase_key
+    $redis.get(max_avg_purchase_key).to_f
   end
 
   # Public: Get conversion rate.
   def conversion_rate
-    $redis.get conversion_rate_key
+    $redis.get(conversion_rate_key).to_f
   end
 
   # Public: Get max conversion rate.
   def max_conversion_rate
-    $redis.get max_conversion_rate_key
+    $redis.get(max_conversion_rate_key).to_f
   end
 
   # Public: Get total sales today.
   def total_sales_today
-    $redis.get total_sales_today_key
+    $redis.get(total_sales_today_key).to_f
   end
 
   # Public: Get checkout distribution.

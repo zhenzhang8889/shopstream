@@ -9,7 +9,7 @@ require "sprockets/railtie"
 # require "rails/test_unit/railtie"
 
 if defined?(Bundler)
-  Bundler.require(*Rails.groups)
+  Bundler.require(*Rails.groups(assets: %w(development test)))
 end
 
 module ShopstreamApi
@@ -61,6 +61,16 @@ module ShopstreamApi
     # config.active_record.whitelist_attributes = true
 
     # Enable the asset pipeline
-    config.assets.enabled = false
+    config.assets.enabled = true
+
+    config.assets.version = '1.0'
+
+    config.to_prepare do
+      Devise::SessionsController.layout 'devise'
+      Devise::RegistrationsController.layout 'devise'
+      Devise::ConfirmationsController.layout 'devise'
+      Devise::UnlocksController.layout 'devise'
+      Devise::PasswordsController.layout 'devise'
+    end
   end
 end

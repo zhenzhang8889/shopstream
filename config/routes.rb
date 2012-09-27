@@ -1,5 +1,5 @@
 ShopstreamApi::Application.routes.draw do
-  devise_for :users, only: [], controllers: {
+  devise_for :users, controllers: {
     omniauth_callbacks: 'omniauth_callbacks'
   }
 
@@ -19,7 +19,7 @@ ShopstreamApi::Application.routes.draw do
     end
   end
 
-  root to: redirect("http://#{ENV['FRONTEND_HOST']}")
+  root to: 'home#app'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

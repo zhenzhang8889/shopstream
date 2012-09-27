@@ -1,0 +1,24 @@
+#header {
+  ul {
+    #logo {
+      width: 25%;
+      margin-top: -40px;
+      margin-left: -30px;
+    }
+
+    li {
+      a.active {
+        color: #000;
+      }
+    }
+
+    li.logout {
+      float: right;
+      font-weight: normal;
+    }
+  }
+}
+
+#footer {
+  display: none;
+}

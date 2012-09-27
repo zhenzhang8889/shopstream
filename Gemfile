@@ -4,7 +4,7 @@ if respond_to? :ruby
   ruby '1.9.3'
 end
 
-gem 'rails', '3.2.6'
+gem 'rails', '3.2.8'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -23,6 +23,15 @@ gem 'puma'
 gem 'rack-cors', require: 'rack/cors'
 
 gem 'pry-rails', group: :development
+
+group :assets do
+  gem 'sass-rails', '~> 3.2.3'
+  gem 'coffee-rails', '~> 3.2.1'
+
+  gem 'uglifier', '>= 1.0.3'
+end
+
+gem 'jquery-rails'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

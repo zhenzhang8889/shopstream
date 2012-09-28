@@ -2,12 +2,10 @@ module V1
   class ShopsController < ApplicationController
     before_filter :check_sign_in
 
-    respond_to :json
-
     def my
       @shop = current_user.shop
 
-      render action: :show
+      render json: @shop
     end
 
     def show
@@ -15,7 +13,7 @@ module V1
 
       return not_authorized unless @shop == current_user.shop
 
-      respond_with @shop
+      render json: @shop
     end
   end
 end

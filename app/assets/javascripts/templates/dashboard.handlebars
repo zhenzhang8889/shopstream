@@ -1,0 +1,37 @@
+<section id="stream">
+  <div class="con">
+    <section class="tile">
+      <h2>{{percentage conversionRate}}</h2>
+      {{view SS.GaugeView numberBinding="conversionRate" maxNumberBinding="maxConversionRate"}}
+      <span class="title"><strong>Conversion</strong> rate</span>
+      <span class="desc">30 day max <strong>{{percentage maxConversionRate}}</strong></span>
+    </section>
+    <section class="tile">
+      <h2>{{money avgPurchase}}</h2>
+      {{view SS.GaugeView numberBinding="avgPurchase" maxNumberBinding="maxAvgPurchase"}}
+      <span class="title"><strong>Avg</strong> purchase</span>
+      <span class="desc">30 day max <strong>{{money maxAvgPurchase}}</strong></span>
+    </section>
+    <section class="tile">
+      <h2>{{money totalSalesToday}}</h2>
+      <canvas></canvas>
+      <span class="title"><strong>Total</strong> sales</span>
+      <span class="desc"><strong>Today</strong></span>
+    </section>
+    <section class="tile chart-tile">
+      {{view SS.FlotChartView seriesBinding="checkoutDistributionSeries" optionsBinding="checkoutDistributionChartOptions" class="co-distribution-chart"}}
+    </section>
+  </div>
+</section>
+
+<section class="dashboard">
+  <div class="scroll con">
+    <section class="section current">
+      <div class="row widgets">
+        {{view SS.DashboardTopColumnView title="Products" subtitle="past 2 days" topItemsBinding="topProducts" classNames="fourty"}}
+        {{view SS.DashboardTopColumnView title="Links" subtitle="overall" topItemsBinding="topLinks" classNames="thirty"}}
+        {{view SS.DashboardTopColumnView title="Searches" subtitle="overall" topItemsBinding="topSearches" classNames="thirty"}}
+      </div>
+    </section>
+  </div>
+</section>

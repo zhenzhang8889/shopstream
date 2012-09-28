@@ -1,1 +1,3 @@
-SS.ApplicationController = Ember.Controller.extend()
+SS.ApplicationController = Ember.Controller.extend
+  userBinding: 'SS.user'
+  shopBinding: 'SS.shop'

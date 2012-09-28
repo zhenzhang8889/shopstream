@@ -17,6 +17,10 @@ class Shop
   before_create :generate_token
   after_create :reset_redis_keys
 
+  def feed
+    feed_items.desc(:created_at).limit(10).to_a
+  end
+  
   # Public: Setup Shopify shop - webhooks & script tag.
   def setup_shopify_shop
     with_shopify_session do

@@ -1,0 +1,17 @@
+<div id="header">
+  <ul class="con">
+    <div class="tile" id="logo">
+      <h2>
+        <span>Shop</span>Stream
+      </h2>
+    </div>
+
+    <li><a {{action goToDashboard href=true}}>Dashboard</a></li>
+    <li><a {{action goToFeed href=true}}>Feed</a></li>
+
+    <li class="logout">
+      {{SS.shop.domain}}
+      <a href="/users/sign_out" data-method="delete"><img src="/assets/logout.png"></a>
+    </li>
+  </ul>
+</div>

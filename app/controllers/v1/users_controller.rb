@@ -2,12 +2,10 @@ module V1
   class UsersController < ApplicationController
     before_filter :check_sign_in
 
-    respond_to :json
-
     def me
       @user = current_user
 
-      render action: :show
+      render json: @user
     end
 
     def show
@@ -15,7 +13,7 @@ module V1
 
       return not_authorized unless @user == current_user
 
-      respond_with @user
+      render json: @user
     end
   end
 end

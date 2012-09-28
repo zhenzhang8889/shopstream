@@ -17,7 +17,7 @@ gem 'hiredis', '~> 0.4.5'
 
 gem 'shopify_app'
 
-gem 'json_builder'
+gem 'active_model_serializers', git: 'git://github.com/josevalim/active_model_serializers.git'
 
 gem 'puma'
 gem 'rack-cors', require: 'rack/cors'
@@ -32,7 +32,7 @@ group :assets do
 end
 
 gem 'jquery-rails', '2.0.3'
-gem 'ember-rails'
+gem 'ember-rails', git: 'git://github.com/emberjs/ember-rails.git'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

@@ -1,7 +1,0 @@
-id @user.id.to_s
-access_token @user.authentication_token
-shop_id @user.shop.id.to_s
-shop do
-  id @user.shop.id.to_s
-  domain @user.shop.domain
-end

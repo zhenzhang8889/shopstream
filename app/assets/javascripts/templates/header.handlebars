@@ -6,11 +6,13 @@
       </h2>
     </div>
 
-    <li><a {{action goToDashboard href=true}}>Dashboard</a></li>
-    <li><a {{action goToFeed href=true}}>Feed</a></li>
+    {{#if SS.hasShop}}
+      <li><a {{action goToDashboard href=true}}>Dashboard</a></li>
+      <li><a {{action goToFeed href=true}}>Feed</a></li>
+    {{/if}}
 
     <li class="logout">
-      {{SS.shop.domain}}
+      {{#if SS.hasShop}}{{SS.shop.domain}}{{/if}}
       <a href="/users/sign_out" data-method="delete"><img src="/assets/logout.png"></a>
     </li>
   </ul>

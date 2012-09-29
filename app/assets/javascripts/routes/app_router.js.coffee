@@ -5,6 +5,7 @@ SS.Router = Ember.Router.extend
     goToIndex: Ember.Route.transitionTo('index')
     goToDashboard: Ember.Route.transitionTo('dashboard')
     goToFeed: Ember.Route.transitionTo('feed')
+    goToConnectShop: Ember.Route.transitionTo('connectShop')
 
     index: Ember.Route.extend
       route: '/'
@@ -14,13 +15,22 @@ SS.Router = Ember.Router.extend
       route: '/dashboard'
 
       connectOutlets: (router) ->
-        router.get('applicationController').connectOutlet 'dashboard'
+        if SS.hasShop
+          router.get('applicationController').connectOutlet 'dashboard'
+        else
+          router.send 'goToConnectShop'
 
     feed: Ember.Route.extend
       route: '/feed'
 
       connectOutlets: (router) ->
         router.get('applicationController').connectOutlet 'feed'
+
+    connectShop: Ember.Route.extend
+      route: '/connect_shop'
+
+      connectOutlets: (router) ->
+        router.get('applicationController').connectOutlet 'connectShop'
 
     connectOutlets: (router) ->
       SS.set 'user', SS.User.find(SS.userId)

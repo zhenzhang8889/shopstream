@@ -8,7 +8,7 @@ ShopstreamApi::Application.routes.draw do
   end
 
   resources :shops, only: [] do
-    get :connect, on: collection
+    get :connect, on: :collection
   end
 
   namespace :v1 do

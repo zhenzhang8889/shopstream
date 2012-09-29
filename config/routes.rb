@@ -1,4 +1,20 @@
+require 'subdomain_constraint'
+
 ShopstreamApi::Application.routes.draw do
+  scope constraints: SubdomainConstraint.new('manage') do
+    devise_for :superusers
+
+    scope module: 'superuser' do
+      resource :dashboard, controller: 'dashboard', only: [:show]
+
+      resources :users, only: [:index] do
+        resources :masquerades, only: [:new]
+      end
+
+      root to: 'users#index'
+    end
+  end
+
   devise_for :users, controllers: {
     omniauth_callbacks: 'omniauth_callbacks'
   }

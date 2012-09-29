@@ -1,0 +1,23 @@
+<div class="scroll con">
+  <section class="section current">
+    <div class="container top-spacing">
+      <h2>Users</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Email</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @users.each do |user| %>
+            <tr>
+              <td><%= user.email %></td>
+              <td><%= button_to 'Act as', new_user_masquerade_path(user), method: :get %></td>
+            </tr>
+          <% end %>
+      </table>
+    </div>
+  </section>
+</div>

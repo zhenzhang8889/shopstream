@@ -5,7 +5,10 @@ ShopstreamApi::Application.routes.draw do
 
   devise_scope :user do
     match '/auth/shopify/callback' => 'omniauth_callbacks#shopify'
-    match '/login' => 'login#authenticate'
+  end
+
+  resources :shops, only: [] do
+    get :connect, on: collection
   end
 
   namespace :v1 do

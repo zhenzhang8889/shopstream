@@ -1,5 +1,5 @@
-class LoginController < ApplicationController
-  def authenticate
+class ShopsController < ApplicationController
+  def connect
     if params[:shop].present?
       shop_url = params[:shop]
       url = URI.parse(shop_url)

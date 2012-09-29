@@ -191,17 +191,15 @@ class Shop
     "http://#{ENV['COLLECTOR_HOST']}/webhooks/shopify/#{token}/#{action}"
   end
 
-  def self.find_or_create_with_omniauth(shop_host, token)
+  def self.create_with_omniauth_and_user(shop_host, token, user)
     shopify = shopify_shop(shop_host, token)
 
     return nil unless shopify
 
-    shop = Shop.find_or_initialize_by(shopify_id: shopify.id, shopify_token: token)
-    new_shop = shop.new_record?
-    shop.shopify_attributes = shopify.attributes
-    shop.domain = shop.shopify_attributes.fetch('domain', shop_host)
-    shop.save
-    shop.setup_shopify_shop if new_shop
+    shop = Shop.create shopify_id: shopify.id, shopify_token: token,
+      shopify_attributes: shopify.attributes,
+      domain: shopify.attributes.fetch('domain', shop_host), user: user
+    shop.setup_shopify_shop
     shop
   end
 

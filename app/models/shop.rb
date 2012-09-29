@@ -3,9 +3,12 @@ class Shop
 
   field :shopify_id, type: Integer
   field :shopify_token, type: String
+  field :name, type: String
   field :domain, type: String
+  field :timezone, type: String
   field :shopify_attributes, type: Hash, default: {}
   field :token, type: String
+  field :send_daily_notifications, type: Boolean, default: true
 
   belongs_to :user
   has_many :feed_items
@@ -13,8 +16,12 @@ class Shop
   validates :shopify_id, presence: true
   validates :shopify_token, presence: true
   validates :token, uniqueness: true
+  validates :name, presence: true
+  validates :doman, presence: true
+  validates :timezone, presence: true
 
   before_create :generate_token
+  before_create :extract_shopify_attributes
   after_create :reset_redis_keys
 
   def feed
@@ -197,8 +204,7 @@ class Shop
     return nil unless shopify
 
     shop = Shop.create shopify_id: shopify.id, shopify_token: token,
-      shopify_attributes: shopify.attributes,
-      domain: shopify.attributes.fetch('domain', shop_host), user: user
+      shopify_attributes: shopify.attributes, user: user
     shop.setup_shopify_shop
     shop
   end
@@ -232,6 +238,12 @@ class Shop
 
   def generate_token
     self.token = Devise.friendly_token
+  end
+
+  def extract_shopify_attributes
+    self.domain = shopify_attributes['domain']
+    self.name = shopify_attributes['name']
+    self.timezone = shopify_attributes['timezone'].sub /\([^)]*\) /, ''
   end
 
   def reset_redis_keys

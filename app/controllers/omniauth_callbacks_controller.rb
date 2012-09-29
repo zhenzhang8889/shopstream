@@ -17,17 +17,11 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       user.save
     end
 
-    billing_confirmation_url = shop.setup_shopify_billing(login_url(shop: shop.domain))
-
-    if billing_confirmation_url
-      redirect_to billing_confirmation_url
-    else
-      redirect_to after_shopify_auth_uri(user)
-    end
+    redirect_to after_shopify_auth_uri(user)
   end
 
   def after_shopify_auth_uri(user)
-    "http://#{ENV['FRONTEND_HOST']}/auth-callback/?accessToken=#{user.authentication_token}"
+    root_url
   end
 
   def auth_error

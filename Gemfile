@@ -22,7 +22,10 @@ gem 'active_model_serializers', git: 'git://github.com/josevalim/active_model_se
 gem 'puma'
 gem 'rack-cors', require: 'rack/cors'
 
-gem 'pry-rails', group: :development
+group :development do
+  gem 'pry-rails'
+  gem 'letter_opener'
+end
 
 group :assets do
   gem 'sass-rails', '~> 3.2.3'

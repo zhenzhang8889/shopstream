@@ -5,6 +5,7 @@ SS.Router = Ember.Router.extend
     goToIndex: Ember.Route.transitionTo('index')
     goToDashboard: Ember.Route.transitionTo('dashboard')
     goToFeed: Ember.Route.transitionTo('feed')
+    goToSettings: Ember.Route.transitionTo('settings')
     goToConnectShop: Ember.Route.transitionTo('connectShop')
 
     index: Ember.Route.extend
@@ -25,6 +26,12 @@ SS.Router = Ember.Router.extend
 
       connectOutlets: (router) ->
         router.get('applicationController').connectOutlet 'feed'
+
+    settings: Ember.Route.extend
+      route: '/settings'
+
+      connectOutlets: (router) ->
+        router.get('applicationController').connectOutlet 'settings'
 
     connectShop: Ember.Route.extend
       route: '/connect_shop'

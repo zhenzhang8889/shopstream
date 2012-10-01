@@ -2,6 +2,7 @@ SS.Shop = DS.Model.extend
   domain: DS.attr 'string'
   token: DS.attr 'string'
   shopifyAttributes: DS.attr 'object'
+  sendDailyNotifications: DS.attr 'boolean'
 
   user: DS.belongsTo 'SS.User'
   feedItems: DS.hasMany('SS.FeedItem', embedded: true)

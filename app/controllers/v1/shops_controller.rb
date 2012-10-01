@@ -15,5 +15,15 @@ module V1
 
       render json: @shop
     end
+
+    def update
+      @shop = Shop.find params[:id]
+
+      return not_authorized unless @shop == current_user.shop
+
+      @shop.update_attributes params[:shop]
+
+      render json: @shop
+    end
   end
 end

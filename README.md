@@ -3,6 +3,7 @@
 ### Requirements
 
 * MongoDB
+* Redis
 * Ruby 1.9
 * Bundler
 
@@ -14,3 +15,16 @@
 * `PUSHER_KEY`.
 * `MONGOLAB_URI` on Heroku.
 * `REDISTOGO_URL` on Heroku.
+
+### Production deployment
+
+Required heroku addons:
+
+* Mongolab
+* RedisToGo
+* Sendgrid
+* Scheduler
+
+Schduled tasks:
+
+Task: `rake send_daily_notifications`, frequency: hourly, run on xx:50.

@@ -1,0 +1,20 @@
+<div class="scroll con">
+  <section class="section current">
+    <div class="container top-spacing">
+      <h2>Settings</h2>
+
+      <div class="col_3 alpha">
+        <div class="input">
+          <label>
+            {{view Ember.Checkbox checkedBinding="sendDailyNotifications"}}
+            Send daily reports
+          </label>
+        </div>
+
+        <div>
+          <button {{action save target="controller"}}>Save</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

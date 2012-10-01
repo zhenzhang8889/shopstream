@@ -17,8 +17,12 @@ class Shop
   validates :shopify_token, presence: true
   validates :token, uniqueness: true
   validates :name, presence: true
-  validates :doman, presence: true
+  validates :domain, presence: true
   validates :timezone, presence: true
+
+  attr_accessible :name, :send_daily_notifications
+  attr_accessible :shopify_id, :shopify_token, :name, :domain, :timezone,
+    :token, :shopify_attributes, :send_daily_notifications, as: :admin
 
   before_create :generate_token
   before_create :extract_shopify_attributes
@@ -26,6 +30,10 @@ class Shop
 
   def feed
     feed_items.desc(:created_at).limit(10).to_a
+  end
+
+  def tz
+    ActiveSupport::TimeZone.new timezone
   end
   
   # Public: Setup Shopify shop - webhooks & script tag.
@@ -203,8 +211,8 @@ class Shop
 
     return nil unless shopify
 
-    shop = Shop.create shopify_id: shopify.id, shopify_token: token,
-      shopify_attributes: shopify.attributes, user: user
+    shop = Shop.create({shopify_id: shopify.id, shopify_token: token,
+      shopify_attributes: shopify.attributes, user: user}, as: :admin)
     shop.setup_shopify_shop
     shop
   end
@@ -253,5 +261,18 @@ class Shop
     $redis.set max_conversion_rate_key, 0.0 unless max_conversion_rate
     $redis.set total_sales_today_key, 0.0 unless total_sales_today
     $redis.set checkout_distribution_key, '[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]' unless checkout_distribution
+  end
+
+  def self.interested_in_reports(time, offset = -1)
+    # Only those in which time zone it's midnight now
+    hour_offset = time.utc.hour - offset
+
+    shops = where(send_daily_notifications: true).to_a
+
+    shops.select! do |shop|
+      shop.tz.utc_offset / 3600 == -hour_offset
+    end
+
+    shops
   end
 end

@@ -211,9 +211,12 @@ class Shop
 
     return nil unless shopify
 
-    shop = Shop.create({shopify_id: shopify.id, shopify_token: token,
-      shopify_attributes: shopify.attributes, user: user}, as: :admin)
+    shop = Shop.new({shopify_id: shopify.id, shopify_token: token,
+      shopify_attributes: shopify.attributes}, as: :admin)
+    shop.user = user
+    shop.extract_shopify_attributes
     shop.setup_shopify_shop
+    shop.save
     shop
   end
 

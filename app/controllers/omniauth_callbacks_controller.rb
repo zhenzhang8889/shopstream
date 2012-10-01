@@ -9,7 +9,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     return auth_error unless shop
 
-    redirect_to after_shopify_auth_uri(user)
+    redirect_to after_shopify_auth_uri(current_user)
   end
 
   def after_shopify_auth_uri(user)

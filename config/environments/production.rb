@@ -12,9 +12,7 @@ ShopstreamApi::Application.configure do
   config.serve_static_assets = false
 
   config.assets.compress = true
-
-  config.assets.compile = false
-
+  config.assets.compile = true
   config.assets.digest = true
 
   # Specifies the header that your server uses for sending files

@@ -51,8 +51,6 @@ SS.Shop = DS.Model.extend
         for k, v of data
           mappedData[k.camelize()] = v
 
-        console.log mappedData
-
         @setProperties mappedData
 
       channel.bind 'feed-item-created', (item) =>
@@ -61,8 +59,8 @@ SS.Shop = DS.Model.extend
         for k, v of item
           mappedItem[k.camelize()] = v
 
-        console.log mappedItem
-
+        $('.beep-sound')[0].play() if mappedItem.activityType == 'new_order'
+        
         @get('feedItems').unshiftObject SS.FeedItem.createRecord(mappedItem)
 
       @set 'pusherSetup', true

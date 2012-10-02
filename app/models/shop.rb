@@ -215,8 +215,8 @@ class Shop
       shopify_attributes: shopify.attributes}, as: :admin)
     shop.user = user
     shop.extract_shopify_attributes
-    shop.setup_shopify_shop
     shop.save
+    shop.setup_shopify_shop
     shop
   end
 

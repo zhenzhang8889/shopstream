@@ -13,7 +13,7 @@ class User
 
   field :authentication_token, type: String
 
-  has_one :shop
+  has_many :shops
 
   before_save :ensure_authentication_token
 end

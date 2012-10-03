@@ -1,3 +1,3 @@
 SS.FeedController = Ember.Controller.extend
-  contentBinding: 'SS.shop.feedItems'
+  contentBinding: 'SS.router.shopController.content.feedItems'
   sortProperties: ['createdAt']

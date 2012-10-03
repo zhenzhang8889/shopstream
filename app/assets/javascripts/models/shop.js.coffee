@@ -1,6 +1,7 @@
 SS.Shop = DS.Model.extend
   domain: DS.attr 'string'
   token: DS.attr 'string'
+  name: DS.attr 'string'
   shopifyAttributes: DS.attr 'object'
   sendDailyNotifications: DS.attr 'boolean'
 

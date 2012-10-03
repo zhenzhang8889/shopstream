@@ -1,5 +1,5 @@
 SS.SettingsController = Ember.ObjectController.extend
-  contentBinding: 'SS.shop'
-
+  contentBinding: 'SS.router.shopController.content'
+  
   save: ->
     SS.store.commit()

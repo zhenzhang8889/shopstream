@@ -15,8 +15,7 @@
 
 SS = Ember.Application.create({
   user: null,
-  hasShop: null,
-  shopBinding: 'user.shop',
+  shop: null,
   pusherKey: null,
   pusher: null,
 
@@ -26,7 +25,6 @@ SS = Ember.Application.create({
     this.userId = window.userId;
     this.authToken = window.authToken;
     this.pusherKey = window.pusherKey;
-    this.hasShop = window.hasShop;
 
     this.initPusher();
   },

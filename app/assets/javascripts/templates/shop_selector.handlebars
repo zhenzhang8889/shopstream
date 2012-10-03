@@ -1,0 +1,12 @@
+<div class="scroll con">
+  <section class="section current">
+    <div class="container top-spacing">
+      <h2>Select shop</h2>
+
+      {{#collection SS.ShopSelectorCollectionView contentBinding="content"}}
+        <a {{action goToDashboard view.content href=true}}>{{view.content.name}}</a>
+      {{/collection}}
+    </div>
+    {{view SS.ConnectShopView}}
+  </section>
+</div>

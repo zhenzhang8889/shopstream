@@ -3,5 +3,4 @@
   window.authToken = "<%= current_user.authentication_token %>";
   window.userId = "<%= current_user.id %>";
   window.pusherKey = "<%= ENV['PUSHER_KEY'] %>";
-  window.hasShop = <%= current_user.shop? %>;
 </script>

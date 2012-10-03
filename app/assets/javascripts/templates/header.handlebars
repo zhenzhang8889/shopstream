@@ -2,18 +2,20 @@
   <ul class="con">
     <div class="tile" id="logo">
       <h2>
-        <span>Shop</span>Stream
+        <a {{action goToIndex href=true}}>
+          <span>Shop</span>Stream
+        </a>
       </h2>
     </div>
 
-    {{#if SS.hasShop}}
+    {{#if SS.router.shopController.content}}
       <li><a {{action goToDashboard href=true}}>Dashboard</a></li>
       <li><a {{action goToFeed href=true}}>Feed</a></li>
       <li><a {{action goToSettings href=true}}>Settings</a></li>
     {{/if}}
 
     <li class="logout">
-      {{#if SS.hasShop}}{{SS.shop.domain}}{{/if}}
+      {{#if SS.router.shopController.content}}{{SS.router.shopController.content.domain}}{{/if}}
       <a href="/users/sign_out" data-method="delete"><img src="/assets/logout.png"></a>
     </li>
   </ul>

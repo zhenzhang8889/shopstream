@@ -1,10 +1,6 @@
-<div class="scroll con">
-  <section class="section current">
-    <div class="container connect-shop top-spacing">
-      <h2>Connect shop</h2>
+<div class="container connect-shop top-spacing">
+  <h2>Connect shop</h2>
 
-      <p>{{view Ember.TextField valueBinding="shopUrl" placeholder="Shopify shop URL..."}}
-      <p><button class="sunlit" {{action redirectConnectShop target="controller"}}>Connect</button></p>
-    </div>
-  </section>
+  <p>{{view Ember.TextField valueBinding="shopUrl" placeholder="Shopify shop URL..."}}
+  <p><button class="sunlit" {{action redirectConnectShop target="controller"}}>Connect</button></p>
 </div>

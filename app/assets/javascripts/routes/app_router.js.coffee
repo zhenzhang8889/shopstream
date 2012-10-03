@@ -3,35 +3,42 @@ SS.Router = Ember.Router.extend
 
   root: Ember.Route.extend
     goToIndex: Ember.Route.transitionTo('index')
-    goToDashboard: Ember.Route.transitionTo('dashboard')
-    goToFeed: Ember.Route.transitionTo('feed')
-    goToSettings: Ember.Route.transitionTo('settings')
+    goToDashboard: Ember.Route.transitionTo('shop.dashboard')
+    goToFeed: Ember.Route.transitionTo('shop.feed')
+    goToSettings: Ember.Route.transitionTo('shop.settings')
     goToConnectShop: Ember.Route.transitionTo('connectShop')
 
     index: Ember.Route.extend
       route: '/'
-      redirectsTo: 'dashboard'
 
-    dashboard: Ember.Route.extend
-      route: '/dashboard'
+      connectOutlets: (router, context) ->
+        router.get('applicationController').connectOutlet 'shopSelector'
 
-      connectOutlets: (router) ->
-        if SS.hasShop
-          router.get('applicationController').connectOutlet 'dashboard'
-        else
-          router.send 'goToConnectShop'
+    shop: Ember.Route.extend
+      route: '/shops/:shop_id'
 
-    feed: Ember.Route.extend
-      route: '/feed'
+      dashboard: Ember.Route.extend
+        route: '/dashboard'
 
-      connectOutlets: (router) ->
-        router.get('applicationController').connectOutlet 'feed'
+        connectOutlets: (router, context) ->
+          console.log context
+          
+          router.get('shopController').connectOutlet 'dashboard'
 
-    settings: Ember.Route.extend
-      route: '/settings'
+      feed: Ember.Route.extend
+        route: '/feed'
 
-      connectOutlets: (router) ->
-        router.get('applicationController').connectOutlet 'settings'
+        connectOutlets: (router) ->
+          router.get('shopController').connectOutlet 'feed'
+
+      settings: Ember.Route.extend
+        route: '/settings'
+
+        connectOutlets: (router) ->
+          router.get('shopController').connectOutlet 'settings'
+
+      connectOutlets: (router, context) ->
+        router.get('applicationController').connectOutlet 'shop', context
 
     connectShop: Ember.Route.extend
       route: '/connect_shop'

@@ -8,14 +8,14 @@
       </h2>
     </div>
 
-    {{#if SS.router.shopController.content}}
+    {{#if isShop}}
       <li><a {{action goToDashboard href=true}}>Dashboard</a></li>
       <li><a {{action goToFeed href=true}}>Feed</a></li>
       <li><a {{action goToSettings href=true}}>Settings</a></li>
     {{/if}}
 
     <li class="logout">
-      {{#if SS.router.shopController.content}}{{SS.router.shopController.content.domain}}{{/if}}
+      {{#if isShop}}{{SS.router.shopController.content.domain}}{{/if}}
       <a href="/users/sign_out" data-method="delete"><img src="/assets/logout.png"></a>
     </li>
   </ul>

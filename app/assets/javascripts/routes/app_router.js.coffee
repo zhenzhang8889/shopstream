@@ -12,6 +12,7 @@ SS.Router = Ember.Router.extend
 
       connectOutlets: (router, context) ->
         router.get('applicationController').connectOutlet 'shopSelector'
+        router.get('applicationController').connectOutlet 'header', 'header', {}
         router.get('shopSelectorController').connectOutlet 'add', 'addShop'
 
     shop: Ember.Route.extend
@@ -37,6 +38,7 @@ SS.Router = Ember.Router.extend
 
       connectOutlets: (router, context) ->
         router.get('applicationController').connectOutlet 'shop', context
+        router.get('applicationController').connectOutlet 'header', 'header', context
 
     connectOutlets: (router) ->
       SS.set 'user', SS.User.find(SS.userId)

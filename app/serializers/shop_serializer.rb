@@ -15,7 +15,7 @@ class ShopSerializer < ActiveModel::Serializer
     case shop._type
     when "ShopifyShop"
       "shopify"
-    when "CutomShop"
+    when "CustomShop"
       "custom"
     end
   end

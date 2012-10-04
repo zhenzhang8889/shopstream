@@ -4,6 +4,7 @@ SS.Shop = DS.Model.extend
   domain: DS.attr 'string'
   name: DS.attr 'string'
   timezone: DS.attr 'string'
+  trackerScriptUrl: DS.attr 'string'
   sendDailyNotifications: DS.attr 'boolean'
 
   user: DS.belongsTo('SS.User', key: 'user_id')

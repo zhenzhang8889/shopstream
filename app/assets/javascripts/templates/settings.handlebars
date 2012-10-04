@@ -37,6 +37,25 @@
           <button {{action deleteShop target="controller"}} class="red">Delete shop</button>
         </div>
       </div>
+
+      {{#if isCustomShop}}
+        <div class="carton col_9">
+          <h2>Setup for custom shop</h2>
+          <div class="content">
+            <p>As you are using ShopStream with your custom, non-Shopify shop, we were not able to set it up for you. Just add the following tag to your template:</p>
+
+            <pre>&lt;script type=&quot;text/javascript&quot; src=&quot;{{trackerScriptUrl}}&quot;&gt;&lt;/script&gt;</pre>
+
+            <p>Then, track orders via JS like this:</p>
+
+            <pre>
+_shopstream.addOrder("Order name", $20.02, "email@customer.com", "first", "last");
+_shopstream.addItem("Title", $10.01, 2);
+_shopstream.trackOrder();
+            </pre>
+          </div>
+        </div>
+      {{/if}}
     </div>
   </section>
 </div>

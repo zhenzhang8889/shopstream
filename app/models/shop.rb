@@ -16,7 +16,7 @@ class Shop
   validates :domain, presence: true
   validates :timezone, presence: true
 
-  attr_accessible :name, :send_daily_notifications
+  attr_accessible :name, :domain, :timezone, :send_daily_notifications
   attr_accessible :name, :domain, :timezone, :token, :send_daily_notifications,
     as: :admin
 

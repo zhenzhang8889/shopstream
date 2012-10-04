@@ -10,6 +10,7 @@ class ShopifyShop < Shop
 
   before_create :extract_shopify_attributes
 
+  # Internal: Extract required shop attributes from shopify payload.
   def extract_shopify_attributes
     self.domain = shopify_attributes['domain']
     self.name = shopify_attributes['name']
@@ -82,6 +83,11 @@ class ShopifyShop < Shop
     end
   end
 
+  # Public: Create shopify session and execute some code within it.
+  #
+  # shop  - The String shop domain name.
+  # token - The String shopify shop token.
+  # block - A block of code to be executed within the session.
   def self.with_shopify_session(shop, token, &block)
     logger.debug "Creating new session #{shop} - #{token}"
 
@@ -112,7 +118,7 @@ class ShopifyShop < Shop
       shopify_attributes: shopify.attributes}, as: :admin)
     shop.user = user
     shop.extract_shopify_attributes
-    
+
     if shop.save
       shop.setup_shopify_shop
 

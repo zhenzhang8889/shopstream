@@ -23,10 +23,12 @@ class Shop
   before_create :generate_token
   after_create :reset_redis_keys
 
+  # Public: Get 10 most recent feed items.
   def feed
     feed_items.desc(:created_at).limit(10).to_a
   end
 
+  # Public: Get TimeZone object for shop's time zone.
   def tz
     ActiveSupport::TimeZone.new timezone
   end
@@ -141,10 +143,13 @@ class Shop
     "http://#{ENV['COLLECTOR_HOST']}/webhooks/shopify/#{token}/#{action}"
   end
 
+  # Internal: Generate shop token.
   def generate_token
     self.token = Devise.friendly_token
   end
 
+  # Internal: Reset all redis keys to default values in case those values are
+  # blank currently.
   def reset_redis_keys
     $redis.set avg_purchase_key, 0.0 unless avg_purchase
     $redis.set max_avg_purchase_key, 0.0 unless max_avg_purchase
@@ -154,6 +159,10 @@ class Shop
     $redis.set checkout_distribution_key, '[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]' unless checkout_distribution
   end
 
+  # Internal: Find shops interested in daily reports, for specified `time`.
+  #
+  # time   - The Time object.
+  # offset - The Integer offset.
   def self.interested_in_reports(time, offset = -1)
     # Only those in which time zone it's midnight now
     hour_offset = time.utc.hour - offset

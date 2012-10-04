@@ -5,7 +5,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     return auth_error unless auth_data && shop_host
 
-    shop = Shop.create_with_omniauth_and_user shop_host, auth_data.credentials.token, current_user
+    shop = ShopifyShop.create_with_omniauth_and_user shop_host, auth_data.credentials.token, current_user
 
     return auth_error unless shop
 

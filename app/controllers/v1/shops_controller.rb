@@ -19,5 +19,16 @@ module V1
 
       render json: @shop
     end
+
+    def create
+      @shop = CustomShop.new params[:shop]
+      @shop.user = current_user
+
+      if @shop.save
+        render json: @shop
+      else
+        render json: { errors: @shop.errors.full_messages }
+      end
+    end
   end
 end

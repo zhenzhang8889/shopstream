@@ -12,6 +12,8 @@ gem 'rails', '3.2.8'
 gem 'mongoid'
 gem 'devise'
 
+gem 'cancan'
+
 gem 'redis', '~> 3.0.0.rc2'
 gem 'hiredis', '~> 0.4.5'
 

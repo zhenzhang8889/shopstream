@@ -5,7 +5,7 @@ module V1
     def show
       @shop = Shop.find params[:id]
 
-      return not_authorized unless current_user.shops.include?(@shop)
+      authorize! :read, @shop
 
       render json: @shop
     end
@@ -13,7 +13,7 @@ module V1
     def update
       @shop = Shop.find params[:id]
 
-      return not_authorized unless current_user.shops.include?(@shop)
+      authorize! :update, @shop
 
       @shop.update_attributes params[:shop]
 
@@ -23,6 +23,8 @@ module V1
     def create
       @shop = CustomShop.new params[:shop]
       @shop.user = current_user
+
+      authorize! :create, @shop
 
       if @shop.save
         render json: @shop

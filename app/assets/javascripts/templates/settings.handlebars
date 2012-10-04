@@ -6,6 +6,24 @@
       <div class="col_3 alpha">
         <div class="input">
           <label>
+            Name
+            {{view Ember.TextField valueBinding="name"}}
+          </label>
+        </div>
+        <div class="input">
+          <label>
+            Domain
+            {{view Ember.TextField valueBinding="domain"}}
+          </label>
+        </div>
+        <div class="input">
+          <label>
+            Timezone
+            {{view Ember.Select contentBinding="SS.timezones" optionValuePath="content.value" optionLabelPath="content.name" valueBinding="timezone"}}
+          </label>
+        </div>
+        <div class="input">
+          <label>
             {{view Ember.Checkbox checkedBinding="sendDailyNotifications"}}
             Send daily reports
           </label>

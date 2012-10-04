@@ -14,7 +14,7 @@ class Shop
   validates :token, uniqueness: true
   validates :name, presence: true
   validates :domain, presence: true
-  validates :timezone, presence: true
+  validates :timezone, presence: true, inclusion: { in: ActiveSupport::TimeZone.zones_map.keys }
 
   attr_accessible :name, :domain, :timezone, :send_daily_notifications
   attr_accessible :name, :domain, :timezone, :token, :send_daily_notifications,

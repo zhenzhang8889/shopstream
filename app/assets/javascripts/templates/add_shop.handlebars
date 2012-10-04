@@ -5,14 +5,14 @@
   <p>{{view Ember.Select contentBinding="shopTypes" optionValuePath="content.type" optionLabelPath="content.name" valueBinding="shop.type"}}
 
   {{#if isShopifyShop}}
-    <p>{{view Ember.TextField valueBinding="shop.domain" placeholder="Shopify shop URL, e.g. somestore.myshopify.com"}}
+    <p>{{view Ember.TextField valueBinding="shop.domain" placeholder="Shopify shop URL, e.g. somestore.myshopify.com"}}</p>
     {{#if isValid}}<p><button class="sunlit" {{action redirectConnectShop target="controller"}}>Connect</button></p>{{/if}}
   {{/if}}
 
   {{#if isCustomShop}}
-    <p>{{view Ember.TextField valueBinding="shop.name" placeholder="Your shop name, e.g. My Store"}}
-    <p>{{view Ember.TextField valueBinding="shop.domain" placeholder="Your shop domain, e.g. mystore.com"}}
-    <p>{{view Ember.Select contentBinding="SS.timezones" optionValuePath="content.value" optionLabelPath="content.name" valueBinding="shop.timezone"}}
+    <p>{{view Ember.TextField valueBinding="shop.name" placeholder="Your shop name, e.g. My Store"}}</p>
+    <p>{{view Ember.TextField valueBinding="shop.domain" placeholder="Your shop domain, e.g. mystore.com"}}</p>
+    <p>{{view Ember.Select contentBinding="SS.timezones" optionValuePath="content.value" optionLabelPath="content.name" valueBinding="shop.timezone"}}</p>
     {{#if isValid}}<p><button class="sunlit" {{action createShop target="controller"}}>Add</button></p>{{/if}}
   {{/if}}
 </div>

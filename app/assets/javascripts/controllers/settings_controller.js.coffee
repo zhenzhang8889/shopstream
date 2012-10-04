@@ -2,4 +2,4 @@ SS.SettingsController = Ember.ObjectController.extend
   contentBinding: 'SS.router.shopController.content'
   
   save: ->
-    SS.store.commit()
+    @get('content.transaction').commit()

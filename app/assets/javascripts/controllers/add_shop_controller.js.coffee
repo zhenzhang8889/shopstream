@@ -6,6 +6,7 @@ SS.AddShopController = Ember.Controller.extend
     ]
 
   shop: null
+  transaction: null
 
   isShopifyShopBinding: 'shop.isShopifyShop'
   isCustomShopBinding: 'shop.isCustomShop'
@@ -22,13 +23,13 @@ SS.AddShopController = Ember.Controller.extend
   init: ->
     @_super()
 
+    @set 'transaction', SS.store.transaction()
     @makeShop()
 
   makeShop: ->
     @clearTransaction()
 
-    @set 'shop', SS.Shop.createRecord(type: 'shopify')
+    @set 'shop', @get('transaction').createRecord(SS.Shop, type: 'shopify')
 
   clearTransaction: ->
-    if @get 'shop'
-      shop.transaction.rollback()
+    @get('transaction').rollback()

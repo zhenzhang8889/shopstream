@@ -18,10 +18,15 @@ SS.Shop = DS.Model.extend
   topSearches: DS.attr 'array'
   topProducts: DS.attr 'array'
 
-  pusherChannelName: (->
-    "dashboard-#{@get('token')}"
-  ).property 'token'
+  # Public: Check if shop is a shopify shop.
+  isShopifyShop: (-> @get('type') == 'shopify').property 'type'
+  # Public: Check if shop is a custom shop.
+  isCustomShop: (-> @get('type') == 'custom').property 'type'
 
+  # Public: Generate Pusher channel name.
+  pusherChannelName: (-> "dashboard-#{@get('token')}").property 'token'
+
+  # Public: Generate checkout distribution series for flot.
   checkoutDistributionSeries: (->
     coDistr = @get 'checkoutDistribution'
     yesterdayData = _.zip [0..23], coDistr[0..23]
@@ -33,6 +38,7 @@ SS.Shop = DS.Model.extend
     [yesterdaySeries, todaySeries]
   ).property 'checkoutDistribution'
 
+  # Public: Checkout distribution chart options for flot.
   checkoutDistributionChartOptions:
     yaxis:
       min: 0
@@ -43,6 +49,7 @@ SS.Shop = DS.Model.extend
       lines:
         lineWidth: 2
 
+  # Internal: Listen to needed messages on shop's pusher channel.
   setupPusher: (->
     if @get('isLoaded') && !@get('pusherSetup')
       channel = SS.pusher.subscribe @get('pusherChannelName')

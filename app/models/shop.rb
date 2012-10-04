@@ -2,10 +2,10 @@ class Shop
   include Mongoid::Document
   include Mongoid::Timestamps
 
+  field :token, type: String
   field :name, type: String
   field :domain, type: String
   field :timezone, type: String
-  field :token, type: String
   field :send_daily_notifications, type: Boolean, default: true
 
   belongs_to :user

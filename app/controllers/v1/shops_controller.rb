@@ -2,6 +2,12 @@ module V1
   class ShopsController < ApplicationController
     before_filter :check_sign_in
 
+    def index
+      @shops = current_user.shops
+
+      render json: @shops
+    end
+
     def show
       @shop = Shop.find params[:id]
 
@@ -29,7 +35,8 @@ module V1
       if @shop.save
         render json: @shop
       else
-        render json: { errors: @shop.errors.full_messages }
+        render json: { errors: @shop.errors.full_messages },
+          status: :unprocessable_entity
       end
     end
   end

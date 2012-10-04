@@ -18,6 +18,7 @@ SS = Ember.Application.create({
   shop: null,
   pusherKey: null,
   pusher: null,
+  timezones: null,
 
   init: function() {
     this._super();
@@ -25,6 +26,7 @@ SS = Ember.Application.create({
     this.userId = window.userId;
     this.authToken = window.authToken;
     this.pusherKey = window.pusherKey;
+    this.timezones = window.timezones;
 
     this.initPusher();
   },

@@ -4,7 +4,7 @@ class ShopSerializer < ActiveModel::Serializer
     :total_sales_today, :checkout_distribution, :top_links, :top_searches,
     :top_products, :tracker_script_url, :send_daily_notifications
 
-  has_one :user, embed: :ids
+  has_one :user, embed: :ids, key: :user_id
   has_many :feed_items
 
   def feed_items

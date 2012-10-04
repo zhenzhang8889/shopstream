@@ -6,13 +6,13 @@ SS.Router = Ember.Router.extend
     goToDashboard: Ember.Route.transitionTo('shop.dashboard')
     goToFeed: Ember.Route.transitionTo('shop.feed')
     goToSettings: Ember.Route.transitionTo('shop.settings')
-    goToConnectShop: Ember.Route.transitionTo('connectShop')
 
     index: Ember.Route.extend
       route: '/'
 
       connectOutlets: (router, context) ->
         router.get('applicationController').connectOutlet 'shopSelector'
+        router.get('shopSelectorController').connectOutlet 'add', 'addShop'
 
     shop: Ember.Route.extend
       route: '/shops/:shop_id'
@@ -39,12 +39,6 @@ SS.Router = Ember.Router.extend
 
       connectOutlets: (router, context) ->
         router.get('applicationController').connectOutlet 'shop', context
-
-    connectShop: Ember.Route.extend
-      route: '/connect_shop'
-
-      connectOutlets: (router) ->
-        router.get('applicationController').connectOutlet 'connectShop'
 
     connectOutlets: (router) ->
       SS.set 'user', SS.User.find(SS.userId)

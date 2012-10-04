@@ -6,7 +6,7 @@ SS.Shop = DS.Model.extend
   timezone: DS.attr 'string'
   sendDailyNotifications: DS.attr 'boolean'
 
-  user: DS.belongsTo 'SS.User'
+  user: DS.belongsTo('SS.User', key: 'user_id')
   feedItems: DS.hasMany('SS.FeedItem', embedded: true)
 
   avgPurchase: DS.attr 'number'
@@ -23,6 +23,15 @@ SS.Shop = DS.Model.extend
   isShopifyShop: (-> @get('type') == 'shopify').property 'type'
   # Public: Check if shop is a custom shop.
   isCustomShop: (-> @get('type') == 'custom').property 'type'
+
+  isValid: (->
+    switch @get('type')
+      when 'shopify'
+        @get('domain') != '' && @get('domain')?
+      when 'custom'
+        @get('name') != '' && @get('domain') != '' && @get('timezone') != '' &&
+          @get('name')? && @get('domain')? && @get('timezone')?
+  ).property 'type', 'name', 'domain', 'timezone'
 
   # Public: Generate Pusher channel name.
   pusherChannelName: (-> "dashboard-#{@get('token')}").property 'token'

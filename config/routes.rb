@@ -31,7 +31,7 @@ ShopstreamApi::Application.routes.draw do
     resources :users, only: [:show] do
       get :me, on: :collection
     end
-    resources :shops, only: [:show, :update, :create] do
+    resources :shops, only: [:index, :show, :update, :create] do
       get :my, on: :collection
     end
   end

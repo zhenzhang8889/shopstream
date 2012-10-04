@@ -3,4 +3,5 @@
   window.authToken = "<%= current_user.authentication_token %>";
   window.userId = "<%= current_user.id %>";
   window.pusherKey = "<%= ENV['PUSHER_KEY'] %>";
+  window.timezones = <%= ActiveSupport::TimeZone.zones_map.map{|k,v| {name: v.to_s, value: k}}.to_json.html_safe %>;
 </script>

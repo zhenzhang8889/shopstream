@@ -1,0 +1,2 @@
+class CustomShop < Shop
+end

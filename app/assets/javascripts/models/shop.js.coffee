@@ -1,8 +1,9 @@
 SS.Shop = DS.Model.extend
   type: DS.attr 'string'
-  domain: DS.attr 'string'
   token: DS.attr 'string'
+  domain: DS.attr 'string'
   name: DS.attr 'string'
+  timezone: DS.attr 'string'
   sendDailyNotifications: DS.attr 'boolean'
 
   user: DS.belongsTo 'SS.User'

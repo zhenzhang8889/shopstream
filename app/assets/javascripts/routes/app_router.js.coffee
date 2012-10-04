@@ -21,8 +21,6 @@ SS.Router = Ember.Router.extend
         route: '/dashboard'
 
         connectOutlets: (router, context) ->
-          console.log context
-          
           router.get('shopController').connectOutlet 'dashboard'
 
       feed: Ember.Route.extend

@@ -39,5 +39,15 @@ module V1
           status: :unprocessable_entity
       end
     end
+
+    def destroy
+      @shop = Shop.find params[:id]
+
+      authorize! :destroy, @shop
+
+      @shop.destroy
+
+      head :ok
+    end
   end
 end

@@ -166,4 +166,8 @@ class Shop
 
     shops
   end
+
+  def active_model_serializer
+    ShopSerializer
+  end
 end

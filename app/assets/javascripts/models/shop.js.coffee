@@ -1,4 +1,5 @@
 SS.Shop = DS.Model.extend
+  type: DS.attr 'string'
   domain: DS.attr 'string'
   token: DS.attr 'string'
   name: DS.attr 'string'

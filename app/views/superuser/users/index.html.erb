@@ -1,23 +1,21 @@
-<div class="scroll con">
-  <section class="section current">
-    <div class="container top-spacing">
-      <h2>Users</h2>
+<div class="twelve columns">
+  <div class="row">
+    <h3>Users</h3>
 
-      <table>
-        <thead>
+    <table>
+      <thead>
+        <tr>
+          <th class="ten">Email</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @users.each do |user| %>
           <tr>
-            <th>Email</th>
-            <th>Actions</th>
+            <td><%= user.email %></td>
+            <td><%= link_to 'Act as', new_user_masquerade_path(user), class: 'button' %></td>
           </tr>
-        </thead>
-        <tbody>
-          <% @users.each do |user| %>
-            <tr>
-              <td><%= user.email %></td>
-              <td><%= button_to 'Act as', new_user_masquerade_path(user), method: :get %></td>
-            </tr>
-          <% end %>
+        <% end %>
       </table>
     </div>
-  </section>
-</div>
+  </div>

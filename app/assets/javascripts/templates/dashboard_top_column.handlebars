@@ -1,9 +1,9 @@
 {{#with view}}
-  <header class="heading">
-    <h4><span>Top</span> {{title}}</h4>
-    <span>{{subtitle}}</span>
+  <header class="text-center">
+    <h4>Top {{title}}</h4>
+    <h4 class="subheader short">{{subtitle}}</h4>
   </header>
-  <article class="wrapper">
+  <article>
     {{collection SS.DashboardTopCollectionView contentBinding="topItems"}}
   </article>
 {{/with}}

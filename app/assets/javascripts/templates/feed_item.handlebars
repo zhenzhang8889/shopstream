@@ -1,22 +1,22 @@
 {{#with view.content}}
-  <div class="comment col_10">
-    <p>
-      <strong>{{actorName}}</strong>
-      {{madeActionText}}:
-    </p>
-
-    {{#collection tagName="ul" contentBinding="activityAttributes.line_items"}}
-      {{view.content.title}} <i>(Qty: {{view.content.quantity}})</i>
-    {{/collection}}
-
-    {{#if isNewOrder}}
-      <p>Total: <strong>{{money activityAttributes.total_price_usd}}</strong></p>
-    {{/if}}
-
-    <div class="byline"><strong>{{timeago createdAt}}</strong></div>
-
-    <div class="avatar">
+  <div class="row">
+    <div class="two column avatar">
       <img class="avatar" {{bindAttr src="avatarUrl"}}>
+    </div>
+    <div class="ten column">
+      <h5>
+        {{actorName}} {{madeActionText}}:
+      </h5>
+
+      {{#collection tagName="ul" contentBinding="activityAttributes.line_items"}}
+        {{view.content.title}} <i>(Qty: {{view.content.quantity}})</i>
+      {{/collection}}
+
+      {{#if isNewOrder}}
+        <p>Total: <strong>{{money activityAttributes.total_price_usd}}</strong></p>
+      {{/if}}
+
+      <div class="right"><strong>{{timeago createdAt}}</strong></div>
     </div>
   </div>
 {{/with}}

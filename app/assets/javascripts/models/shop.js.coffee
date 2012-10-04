@@ -34,6 +34,8 @@ SS.Shop = DS.Model.extend
           @get('name')? && @get('domain')? && @get('timezone')?
   ).property 'type', 'name', 'domain', 'timezone'
 
+  isInvalid: (-> !@get('isValid')).property 'isValid'
+
   # Public: Generate Pusher channel name.
   pusherChannelName: (-> "dashboard-#{@get('token')}").property 'token'
 

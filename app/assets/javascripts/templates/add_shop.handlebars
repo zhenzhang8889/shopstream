@@ -1,18 +1,55 @@
-<div class="container connect-shop top-spacing">
-  {{#if isShopifyShop}}<h2>Connect your Shopify store</h2>{{/if}}
-  {{#if isCustomShop}}<h2>Add your store<h2>{{/if}}
+<h3>
+  {{#if isShopifyShop}}Connect your{{/if}}
+  {{#if isCustomShop}}Add your{{/if}}
 
-  <p>{{view Ember.Select contentBinding="shopTypes" optionValuePath="content.type" optionLabelPath="content.name" valueBinding="shop.type"}}
+  {{view Ember.Select contentBinding="shopTypes" optionValuePath="content.type" optionLabelPath="content.name" valueBinding="shop.type" class="two"}}
+</h3>
 
-  {{#if isShopifyShop}}
-    <p>{{view Ember.TextField valueBinding="shop.domain" placeholder="Shopify shop URL, e.g. somestore.myshopify.com"}}</p>
-    {{#if isValid}}<p><button class="sunlit" {{action redirectConnectShop target="controller"}}>Connect</button></p>{{/if}}
-  {{/if}}
 
-  {{#if isCustomShop}}
-    <p>{{view Ember.TextField valueBinding="shop.name" placeholder="Your shop name, e.g. My Store"}}</p>
-    <p>{{view Ember.TextField valueBinding="shop.domain" placeholder="Your shop domain, e.g. mystore.com"}}</p>
-    <p>{{view Ember.Select contentBinding="SS.timezones" optionValuePath="content.value" optionLabelPath="content.name" valueBinding="shop.timezone"}}</p>
-    {{#if isValid}}<p><button class="sunlit" {{action createShop target="controller"}}>Add</button></p>{{/if}}
-  {{/if}}
-</div>
+{{#if isShopifyShop}}
+  <div class="row">
+    <div class="two columns">
+      <label class="right inline">Shop domain</label>
+    </div>
+    <div class="ten columns">
+      {{view Ember.TextField valueBinding="shop.domain" placeholder="e.g. somestore.myshopify.com" class="five"}}
+    </div>
+  </div>
+  <div class="row">
+    <div class="ten columns offset-by-two">
+      <button class="button" {{action redirectConnectShop target="controller"}} {{bindAttr disabled="shop.isInvalid"}}>Connect</button>
+    </div>
+  </div>
+{{/if}}
+
+{{#if isCustomShop}}
+  <div class="row">
+    <div class="two columns">
+      <label class="right inline">Shop name</label>
+    </div>
+    <div class="ten columns">
+      {{view Ember.TextField valueBinding="shop.name" placeholder="e.g. My Store" class="five"}}
+    </div>
+  </div>
+  <div class="row">
+    <div class="two columns">
+      <label class="right inline">Shop domain</label>
+    </div>
+    <div class="ten columns">
+      {{view Ember.TextField valueBinding="shop.domain" placeholder="e.g. somestore.myshopify.com" class="five"}}
+    </div>
+  </div>
+  <div class="row">
+    <div class="two columns">
+      <label class="right inline">Timezone</label>
+    </div>
+    <div class="ten columns">
+      {{view Ember.Select contentBinding="SS.timezones" optionValuePath="content.value" optionLabelPath="content.name" valueBinding="shop.timezone" class="five"}}
+    </div>
+  </div>
+  <div class="row">
+    <div class="ten columns offset-by-two">
+      <button class="button" {{action createShop target="controller"}} {{bindAttr disabled="shop.isInvalid"}}>Add</button>
+    </div>
+  </div>
+{{/if}}

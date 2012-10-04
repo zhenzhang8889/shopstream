@@ -1,4 +1,4 @@
 SS.HeaderView = Ember.View.extend
   templateName: 'header'
-  classNames: ['header']
+  classNames: ['contain-to-grid']
   tagName: 'header'

@@ -1,9 +1,9 @@
 /*
  *= require_self
+ *= require foundation_and_overrides
  *= require header
+ *= require footer
+ *= require home
  *= require dashboard
  *= require feed
- *= require login
- *= require pastel
- *= require home
  */

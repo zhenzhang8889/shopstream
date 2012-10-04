@@ -1,17 +1,11 @@
-.comment {
-  margin-bottom: 20px;
-}
+.feed-item {
+  h5 {
+    margin-top: 0;
+  }
 
-.comment ul li {
-  color: #000;
-  text-shadow: none;
-}
-
-.byline { 
-  padding: 10px;
-  float:right;
-}
-
-.peach {
-  background-color: #F5EBD5;
+  .avatar {
+    img {
+      width: 100%;
+    }
+  }
 }

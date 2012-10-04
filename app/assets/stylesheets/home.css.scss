@@ -1,44 +1,7 @@
-body {
-  -webkit-font-smoothing: antialiased;
+.content {
+  padding-top: 1em;
 }
 
-#stream {
-  height: 280px;
-
-  .tile {
-    h2 {
-      margin-left: 0;
-    }
-
-    canvas {
-      max-width: 100%;
-    }
-  }
-}
-
-.dashboard {
-  margin-top: 345px;
-}
-
-.chart-tile {
-  width: 55%;
-}
-
-.logout {
-  img {
-    margin-bottom: -4px;
-    margin-left: 5px;
-  }
-}
-
-.border-bottom {
-  border-bottom: 1px solid #e5e5e5;
-}
-
-.top-spacing {
-  margin-top: 60px;
-}
-
-.connect-shop {
-  text-align: center;
+.subheader.short {
+  margin-top: -10px;
 }

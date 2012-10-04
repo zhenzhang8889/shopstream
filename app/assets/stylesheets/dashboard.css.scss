@@ -1,3 +1,15 @@
-.co-distribution-chart {
-  height: 100%;
+.metric {
+  text-align: center;
+
+  canvas {
+    width: 100%;
+  }
+}
+
+.chart {
+  height: 250px;
+
+  .co-distr-chart {
+    height: 100%;
+  }
 }

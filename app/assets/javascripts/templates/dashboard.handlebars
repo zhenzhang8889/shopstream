@@ -1,36 +1,39 @@
-<section id="stream">
-  <div class="con">
-    <section class="tile">
+<div class="twelve columns">
+  <div class="row">
+    <div class="two columns metric">
       <h2>{{percentage conversionRate}}</h2>
       {{view SS.GaugeView numberBinding="conversionRate" maxNumberBinding="maxConversionRate"}}
-      <span class="title"><strong>Conversion</strong> rate</span>
-      <span class="desc">30 day max <strong>{{percentage maxConversionRate}}</strong></span>
-    </section>
-    <section class="tile">
+      <h5 class="subheader"><strong>Conversion</strong> rate</h5>
+      <h5 class="subheader short">30 day max <strong>{{percentage maxConversionRate}}</strong></h5>
+    </div>
+    <div class="two columns metric">
       <h2>{{money avgPurchase}}</h2>
       {{view SS.GaugeView numberBinding="avgPurchase" maxNumberBinding="maxAvgPurchase"}}
-      <span class="title"><strong>Avg</strong> purchase</span>
-      <span class="desc">30 day max <strong>{{money maxAvgPurchase}}</strong></span>
-    </section>
-    <section class="tile">
+      <h5 class="subheader"><strong>Avg</strong> purchase</h5>
+      <h5 class="subheader short">30 day max <strong>{{money maxAvgPurchase}}</strong></h5>
+    </div>
+    <div class="two columns metric">
       <h2>{{money totalSalesToday}}</h2>
-      <canvas></canvas>
-      <span class="title"><strong>Total</strong> sales</span>
-      <span class="desc"><strong>Today</strong></span>
-    </section>
-    <section class="tile chart-tile">
-      {{view SS.FlotChartView seriesBinding="checkoutDistributionSeries" optionsBinding="checkoutDistributionChartOptions" class="co-distribution-chart"}}
-    </section>
+      <h5 class="subheader"><strong>Total</strong> sales</h5>
+      <h5 class="subheader short">Today</h5>
+    </div>
+    <div class="six columns chart">
+      {{view SS.FlotChartView seriesBinding="checkoutDistributionSeries" optionsBinding="checkoutDistributionChartOptions" class="co-distr-chart"}}
+    </div>
   </div>
-</section>
+
+  <div class="row content">
+    {{view SS.DashboardTopColumnView title="Products" subtitle="past 2 days" topItemsBinding="topProducts" classNames="four"}}
+    {{view SS.DashboardTopColumnView title="Links" subtitle="overall" topItemsBinding="topLinks" classNames="four"}}
+    {{view SS.DashboardTopColumnView title="Searches" subtitle="overall" topItemsBinding="topSearches" classNames="four"}}
+  </div>
+</div>
 
 <section class="dashboard">
   <div class="scroll con">
     <section class="section current">
       <div class="row widgets">
-        {{view SS.DashboardTopColumnView title="Products" subtitle="past 2 days" topItemsBinding="topProducts" classNames="fourty"}}
-        {{view SS.DashboardTopColumnView title="Links" subtitle="overall" topItemsBinding="topLinks" classNames="thirty"}}
-        {{view SS.DashboardTopColumnView title="Searches" subtitle="overall" topItemsBinding="topSearches" classNames="thirty"}}
+
       </div>
     </section>
   </div>

@@ -1,12 +1,18 @@
-<div class="scroll con">
-  <section class="section current">
-    <div class="container top-spacing">
-      <h2>Select shop</h2>
-
-      {{#collection SS.ShopSelectorCollectionView contentBinding="content"}}
+<div class="twelve columns">
+  {{#collection SS.ShopSelectorCollectionView contentBinding="content"}}
+    <div class="panel">
+      <h5>
         <a {{action goToDashboard view.content href=true}}>{{view.content.name}}</a>
-      {{/collection}}
+        <small>
+          {{#if view.content.isShopifyShop}}
+            Shopify shop
+          {{else}}
+            Non-Shopify shop
+          {{/if}}
+        </small>
+      </h5>
     </div>
-    {{outlet add}}
-  </section>
+  {{/collection}}
+
+  {{outlet add}}
 </div>

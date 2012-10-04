@@ -1,16 +1,14 @@
-<div id="password" style="display: block">
+<div class="six columns offset-by-three">
   <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
     <h3>Sign in</h3>
 
-    <div class="input username"><%= f.email_field :email, placeholder: 'Email' %></div>
+    <%= devise_error_messages! %>
 
-    <div class="input password"><%= f.password_field :password, placeholder: 'Password' %></div>
+    <%= f.email_field :email, placeholder: 'Email', class: 'twelve' %>
 
-    <% if devise_mapping.rememberable? -%>
-      <div><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>
-    <% end -%>
+    <%= f.password_field :password, placeholder: 'Password', class: 'twelve' %>
 
-    <div><%= f.submit "Sign in" %></div>
+    <%= f.submit "Sign in", class: 'button' %>
   <% end %>
 
   <%= render "users/shared/links" %>

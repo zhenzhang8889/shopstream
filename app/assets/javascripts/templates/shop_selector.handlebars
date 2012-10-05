@@ -1,17 +1,26 @@
 <div class="twelve columns">
   {{#collection SS.ShopSelectorCollectionView contentBinding="content"}}
-    <div class="panel">
-      <h5>
-        <a {{action goToDashboard view.content href=true}}>{{view.content.name}}</a>
-        <small>
-          {{#if view.content.isShopifyShop}}
-            Shopify shop
-          {{else}}
-            Non-Shopify shop
-          {{/if}}
-        </small>
-      </h5>
-    </div>
+    {{#with view.content}}
+      <div class="panel">
+        <h5>
+          <a {{action goToDashboard this href=true}}>{{name}}</a>
+          <small>
+            {{#if view.content.isShopifyShop}}
+              Shopify shop
+            {{else}}
+              Non-Shopify shop
+            {{/if}}
+          </small>
+        </h5>
+        <h6 class="subheader super-short">
+          <strong>{{money totalSalesToday}}</strong> today
+          /
+          <strong>{{money avgPurchase}}</strong> avg
+          /
+          <strong>{{percentage conversionRate}}</strong> converted
+        </h6>
+      </div>
+    {{/with}}
   {{/collection}}
 
   {{outlet add}}

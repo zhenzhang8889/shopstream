@@ -6,6 +6,7 @@ class Shop
   field :name, type: String
   field :domain, type: String
   field :timezone, type: String
+  field :timezone_name, type: String
   field :send_daily_notifications, type: Boolean, default: true
 
   belongs_to :user
@@ -21,6 +22,7 @@ class Shop
     as: :admin
 
   before_create :generate_token
+  after_create :set_timezone_name
   after_create :reset_redis_keys
 
   # Public: Get 10 most recent feed items.
@@ -174,6 +176,10 @@ class Shop
     end
 
     shops
+  end
+
+  def set_timezone_name
+    self.update_attribute :timezone_name, tz.to_s
   end
 
   def active_model_serializer

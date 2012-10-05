@@ -26,12 +26,13 @@ SS.Shop = DS.Model.extend
   isCustomShop: (-> @get('type') == 'custom').property 'type'
 
   isValid: (->
-    switch @get('type')
-      when 'shopify'
-        @get('domain') != '' && @get('domain')?
-      when 'custom'
-        @get('name') != '' && @get('domain') != '' && @get('timezone') != '' &&
-          @get('name')? && @get('domain')? && @get('timezone')?
+    if @get('isShopifyShop')
+      console.log 'SHOPIFY'
+      @get('domain') != '' && @get('domain')?
+    else
+      console.log 'CUSTOM'
+      @get('name') != '' && @get('domain') != '' && @get('timezone') != '' &&
+        @get('name')? && @get('domain')? && @get('timezone')?
   ).property 'type', 'name', 'domain', 'timezone'
 
   isInvalid: (-> !@get('isValid')).property 'isValid'
@@ -64,7 +65,7 @@ SS.Shop = DS.Model.extend
 
   # Internal: Listen to needed messages on shop's pusher channel.
   setupPusher: (->
-    if @get('isLoaded') && !@get('pusherSetup')
+    if @get('isLoaded') && !@get('pusherSetup') && !!@get('id')
       channel = SS.pusher.subscribe @get('pusherChannelName')
       channel.bind 'metrics-updated', (data) =>
         mappedData = {}

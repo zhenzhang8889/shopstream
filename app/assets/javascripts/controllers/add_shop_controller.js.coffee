@@ -21,10 +21,10 @@ SS.AddShopController = Ember.Controller.extend
       location.reload()
 
   init: ->
-    @_super()
-
     @set 'transaction', SS.store.transaction()
     @makeShop()
+
+    @_super()
 
   makeShop: ->
     @clearTransaction()

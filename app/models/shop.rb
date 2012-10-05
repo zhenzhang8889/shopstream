@@ -8,6 +8,7 @@ class Shop
   field :timezone, type: String
   field :timezone_name, type: String
   field :send_daily_notifications, type: Boolean, default: true
+  field :sound_on_sales, type: Boolean, default: true
 
   belongs_to :user
   has_many :feed_items
@@ -17,9 +18,10 @@ class Shop
   validates :domain, presence: true
   validates :timezone, presence: true, inclusion: { in: ActiveSupport::TimeZone.zones_map.keys }
 
-  attr_accessible :name, :domain, :timezone, :send_daily_notifications
+  attr_accessible :name, :domain, :timezone, :send_daily_notifications,
+    :sound_on_sales
   attr_accessible :name, :domain, :timezone, :token, :send_daily_notifications,
-    as: :admin
+    :sound_on_sales, as: :admin
 
   before_create :generate_token
   after_create :set_timezone_name

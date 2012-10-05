@@ -6,6 +6,7 @@ SS.Shop = DS.Model.extend
   timezone: DS.attr 'string'
   trackerScriptUrl: DS.attr 'string'
   sendDailyNotifications: DS.attr 'boolean'
+  soundOnSales: DS.attr 'boolean'
 
   user: DS.belongsTo('SS.User', key: 'user_id')
   feedItems: DS.hasMany('SS.FeedItem', embedded: true)
@@ -79,7 +80,10 @@ SS.Shop = DS.Model.extend
         for k, v of item
           mappedItem[k.camelize()] = v
 
-        $('.beep-sound')[0].play() if mappedItem.activityType == 'new_order'
+        feedItem = SS.FeedItem.createRecord(mappedItem)
+
+        if feedItem.get('isNewOrder') and @get('soundOnSales')
+          $('.beep-sound')[0].play()
         
         @get('feedItems').unshiftObject SS.FeedItem.createRecord(mappedItem)
 

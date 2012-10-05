@@ -27,10 +27,8 @@ SS.Shop = DS.Model.extend
 
   isValid: (->
     if @get('isShopifyShop')
-      console.log 'SHOPIFY'
       @get('domain') != '' && @get('domain')?
     else
-      console.log 'CUSTOM'
       @get('name') != '' && @get('domain') != '' && @get('timezone') != '' &&
         @get('name')? && @get('domain')? && @get('timezone')?
   ).property 'type', 'name', 'domain', 'timezone'

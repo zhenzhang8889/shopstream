@@ -16,9 +16,14 @@ SS.AddShopController = Ember.Controller.extend
     window.location = "/shops/connect?shop=#{@get('shop.domain')}"
 
   createShop: ->
-    @get('shop').transaction.commit()
-    @get('shop').addObserver 'id', =>
-      location.reload()
+    shop = @get('shop')
+    shop.transaction.commit()
+    shop.addObserver 'id', =>
+      Ember.run.next ->
+        SS.user.get('shops').pushObject shop
+        SS.router.send 'goToSettings', shop
+        
+      @makeShop()
 
   init: ->
     @set 'transaction', SS.store.transaction()
@@ -32,4 +37,5 @@ SS.AddShopController = Ember.Controller.extend
     @set 'shop', @get('transaction').createRecord(SS.Shop, type: 'shopify')
 
   clearTransaction: ->
-    @get('transaction').rollback()
+    @get('transaction').destroy()
+    @set 'transaction', SS.store.transaction()

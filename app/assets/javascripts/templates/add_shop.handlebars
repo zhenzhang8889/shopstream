@@ -1,55 +1,57 @@
-<h3>
-  {{#if isShopifyShop}}Connect your{{/if}}
-  {{#if isCustomShop}}Add your{{/if}}
+<div class="twelve columns">
+  <h3>
+    {{#if isShopifyShop}}Connect your{{/if}}
+    {{#if isCustomShop}}Add your{{/if}}
 
-  {{view Ember.Select contentBinding="shopTypes" optionValuePath="content.type" optionLabelPath="content.name" valueBinding="shop.type" class="two"}}
-</h3>
+    {{view Ember.Select contentBinding="shopTypes" optionValuePath="content.type" optionLabelPath="content.name" valueBinding="shop.type" class="two"}}
+  </h3>
 
 
-{{#if isShopifyShop}}
-  <div class="row">
-    <div class="two columns">
-      <label class="right inline">Shop domain</label>
+  {{#if isShopifyShop}}
+    <div class="row">
+      <div class="two columns">
+        <label class="right inline">Shop domain</label>
+      </div>
+      <div class="ten columns">
+        {{view Ember.TextField valueBinding="shop.domain" placeholder="e.g. somestore.myshopify.com" class="five"}}
+      </div>
     </div>
-    <div class="ten columns">
-      {{view Ember.TextField valueBinding="shop.domain" placeholder="e.g. somestore.myshopify.com" class="five"}}
+    <div class="row">
+      <div class="ten columns offset-by-two">
+        <button class="button" {{action redirectConnectShop target="controller"}} {{bindAttr disabled="shop.isInvalid"}}>Connect</button>
+      </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="ten columns offset-by-two">
-      <button class="button" {{action redirectConnectShop target="controller"}} {{bindAttr disabled="shop.isInvalid"}}>Connect</button>
-    </div>
-  </div>
-{{/if}}
+  {{/if}}
 
-{{#if isCustomShop}}
-  <div class="row">
-    <div class="two columns">
-      <label class="right inline">Shop name</label>
+  {{#if isCustomShop}}
+    <div class="row">
+      <div class="two columns">
+        <label class="right inline">Shop name</label>
+      </div>
+      <div class="ten columns">
+        {{view Ember.TextField valueBinding="shop.name" placeholder="e.g. My Store" class="five"}}
+      </div>
     </div>
-    <div class="ten columns">
-      {{view Ember.TextField valueBinding="shop.name" placeholder="e.g. My Store" class="five"}}
+    <div class="row">
+      <div class="two columns">
+        <label class="right inline">Shop domain</label>
+      </div>
+      <div class="ten columns">
+        {{view Ember.TextField valueBinding="shop.domain" placeholder="e.g. somestore.myshopify.com" class="five"}}
+      </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="two columns">
-      <label class="right inline">Shop domain</label>
+    <div class="row">
+      <div class="two columns">
+        <label class="right inline">Timezone</label>
+      </div>
+      <div class="ten columns">
+        {{view Ember.Select contentBinding="SS.timezones" optionValuePath="content.value" optionLabelPath="content.name" valueBinding="shop.timezone" class="five"}}
+      </div>
     </div>
-    <div class="ten columns">
-      {{view Ember.TextField valueBinding="shop.domain" placeholder="e.g. somestore.myshopify.com" class="five"}}
+    <div class="row">
+      <div class="ten columns offset-by-two">
+        <button class="button" {{action createShop target="controller"}} {{bindAttr disabled="shop.isInvalid"}}>Add</button>
+      </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="two columns">
-      <label class="right inline">Timezone</label>
-    </div>
-    <div class="ten columns">
-      {{view Ember.Select contentBinding="SS.timezones" optionValuePath="content.value" optionLabelPath="content.name" valueBinding="shop.timezone" class="five"}}
-    </div>
-  </div>
-  <div class="row">
-    <div class="ten columns offset-by-two">
-      <button class="button" {{action createShop target="controller"}} {{bindAttr disabled="shop.isInvalid"}}>Add</button>
-    </div>
-  </div>
-{{/if}}
+  {{/if}}
+</div>

@@ -6,9 +6,8 @@ SS.SettingsController = Ember.ObjectController.extend
 
   deleteShop: ->
     transaction = @get('content.transaction')
-    @get('content').deleteRecord()
+    shop = @get('content')
+    SS.user.get('shops').removeObject shop
+    shop.deleteRecord()
     transaction.commit()
-    setTimeout ->
-      SS.router.send 'goToIndex'
-      location.reload()
-    , 1000
+    SS.router.send 'goToIndex'

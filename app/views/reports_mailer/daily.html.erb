@@ -11,8 +11,7 @@
 <p>Your Tops:</p>
 
 <p>
-  <% if @shop.top_links.blank? %>
-  <% else %>
+  <% unless @shop.top_links.blank? %>
 		Top links:
     <ul>
       <% @shop.top_links.each do |link| %>
@@ -23,8 +22,7 @@
 </p>
 
 <p>
-  <% if @shop.top_searches.blank? %>
-  <% else %>
+  <% unless @shop.top_searches.blank? %>
 		Top searches:
     <ul>
       <% @shop.top_searches.each do |search| %>
@@ -35,8 +33,7 @@
 </p>
 
 <p>
-  <% if @shop.top_products.blank? %>
-  <% else %>
+  <% unless @shop.top_products.blank? %>
 		Top products:
     <ul>
       <% @shop.top_products.each do |product| %>

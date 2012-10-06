@@ -4,6 +4,6 @@ class ReportsMailer < ActionMailer::Base
   def daily(shop)
     @shop = shop
 
-    mail to: shop.user.email
+    mail to: shop.user.email, subject: 'Your Today Sales Report is Here! - [ShopStream]'
   end
 end

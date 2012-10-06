@@ -1,5 +1,8 @@
 <h3>Settings</h3>
-
+<dl class="tabs">
+  <dd class="active"><a href="#">Store Details</a></dd>
+  <dd><a href="#">Tracking code</a></dd>
+</dl>
 <div class="row">
   <div class="two columns">
     <label class="right inline">Shop name</label>
@@ -50,9 +53,9 @@
 {{#if isCustomShop}}
   <div class="row content">
     <div class="twelve column">
-      <div class="panel">
+      <div class="">
         <h4>Tracking Code</h4>
-
+				<div class="panel">
         <p>To start using ShopStream, you need to install our javascript tracker in your store. It is really simple, just add the following code to all pages in your website:</p>
 				<code>
         <p><pre>&lt;script type=&quot;text/javascript&quot; src=&quot;{{trackerScriptUrl}}&quot;&gt;&lt;/script&gt;</pre></p>
@@ -77,6 +80,7 @@ _shopstream.trackOrder();
         </pre></p>
 			</code>
 			<a href="#" class="tiny button success">Copy code to clipboard</a>
+			</div>
 			<h5>Not a developer? </h5>
 				<label>Email the setup instructions to your developers:</label>
 				<div class="row">

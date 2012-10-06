@@ -1,20 +1,19 @@
 <p>Hello,</p>
 
-<p>We've been tracking your store and have some stats to share with you:</p>
+<p>We've been tracking your store <%= @shop.name %> and here's your daily report:</p>
 
 <p>
-  Average purchase: <%= @shop.avg_purchase %><br>
-  Conversion rate: <%= @shop.conversion_rate %><br>
-  Total sales today: <%= number_to_currency @shop.total_sales_today %><br>
+  Average Order size: <%= @shop.avg_purchase %><br>
+  Conversion Rate: <%= @shop.conversion_rate %><br>
+  Total Sales Today: <%= number_to_currency @shop.total_sales_today %><br>
 </p>
 
-<p>Your tops:</p>
+<p>Your Tops:</p>
 
 <p>
-  Top links:
   <% if @shop.top_links.blank? %>
-    none
   <% else %>
+		Top links:
     <ul>
       <% @shop.top_links.each do |link| %>
         <li><%= link %></li>
@@ -24,10 +23,9 @@
 </p>
 
 <p>
-  Top searches:
   <% if @shop.top_searches.blank? %>
-    none
   <% else %>
+		Top searches:
     <ul>
       <% @shop.top_searches.each do |search| %>
         <li><%= search %></li>
@@ -37,10 +35,9 @@
 </p>
 
 <p>
-  Top products:
   <% if @shop.top_products.blank? %>
-    none
   <% else %>
+		Top products:
     <ul>
       <% @shop.top_products.each do |product| %>
         <li><%= product %></li>

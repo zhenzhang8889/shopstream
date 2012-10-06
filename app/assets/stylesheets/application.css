@@ -6,4 +6,5 @@
  *= require home
  *= require dashboard
  *= require feed
+ *= require devise
  */

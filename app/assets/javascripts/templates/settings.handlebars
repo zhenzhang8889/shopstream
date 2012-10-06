@@ -50,15 +50,16 @@
 {{#if isCustomShop}}
   <div class="row content">
     <div class="twelve column">
-      <div class="panel callout">
-        <h4>Setup for custom shop</h4>
+      <div class="panel">
+        <h4>Tracking Code</h4>
 
-        <p>As you are using ShopStream with your custom, non-Shopify shop, we were not able to set it up for you. Just add the following tag to your template:</p>
-
+        <p>To start using ShopStream, you need to install our javascript tracker in your store. It is really simple, just add the following code to all pages in your website:</p>
+				<code>
         <p><pre>&lt;script type=&quot;text/javascript&quot; src=&quot;{{trackerScriptUrl}}&quot;&gt;&lt;/script&gt;</pre></p>
-
-        <p>Then, track orders via JS like this:</p>
-
+				</code>
+				
+        <p>Then, add the tracker to your website checkout:</p>
+				<code>
         <p><pre>
 _shopstream.addOrder(
   "Order name", // order name, required
@@ -74,6 +75,26 @@ _shopstream.addItem(
 );
 _shopstream.trackOrder();
         </pre></p>
+			</code>
+			<a href="#" class="tiny button success">Copy code to clipboard</a>
+			<h5>Not a developer? </h5>
+				<label>Email the setup instructions to your developers:</label>
+				<div class="row">
+				  <div class="five columns">
+				    <div class="row collapse">
+				      <div class="eight mobile-three columns">
+				        <input type="text" value="your developer's email"/>
+				      </div>
+				      <div class="four mobile-one columns">
+				        <a href="mailto:contact@shopstream.co" class="postfix button expand">Send Instructions</a>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+			
+			<h5>Need help? </h5>
+			<p><a href="#"> Contact Us!</a> We are happy to help!</p>
+			
       </div>
     </div>
   </div>

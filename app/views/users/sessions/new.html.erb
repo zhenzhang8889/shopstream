@@ -1,12 +1,12 @@
-<div class="six columns offset-by-three">
+<div class="five columns centered panel">
   <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
     <h3>Sign in</h3>
 
     <%= devise_error_messages! %>
 
-    <%= f.email_field :email, placeholder: 'Email', class: 'twelve' %>
+    <%= f.email_field :email, placeholder: 'Email', class: 'ten' %>
 
-    <%= f.password_field :password, placeholder: 'Password', class: 'twelve' %>
+    <%= f.password_field :password, placeholder: 'Password', class: 'ten' %>
 
     <%= f.submit "Sign in", class: 'button' %>
   <% end %>

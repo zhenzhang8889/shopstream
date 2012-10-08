@@ -7,9 +7,9 @@
   Conversion Rate: <%= @shop.conversion_rate %><br>
   Total Sales Today: <%= number_to_currency @shop.total_sales_today %><br>
 </p>
-
+<% unless @shop.top_links.blank? && @shop.top_searches.blank? && @shop.top_products.blank? %>
 <p>Your Tops:</p>
-
+<% end %>
 <p>
   <% unless @shop.top_links.blank? %>
 		Top links:

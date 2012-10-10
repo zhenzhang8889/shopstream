@@ -1,28 +1,46 @@
-.login-window {
+/* Global devise styles */
+
+.devise-window {
   background: #fff;
-  padding: 30px 30px 60px 30px;
+  padding: 30px 30px 40px 30px;
   border-radius: 3px;
   border: solid 1px #ddd;
   box-shadow: 0px 2px 5px rgba(0,0,0,0.25);
   position: relative;
-	min-height:330px;
 	margin-top: 50px;
 }
+
+.m-right {
+	margin-right: 10px;
+}
+
+/*login*/
+
+.login {
+	padding-top:50px;
+}
+
+.login-box { 
+	padding: 20px 40px 70px 40px;
+}
+
 /*Sign up page */
+
 .grey-bg { 
 	background: url("absurdidad.png");
 	border-left: 2px dashed #d8d8d8; 
 	border-radius: 0px 8px 8px 0px ;
 	padding-top:10px;
 }
+
 .center { 
 	text-align: center;
 }
+
 .terms-notice {
 	font-size: 0.8em;
 	margin-top: 9px;
 }
-
 
 .benefit-header {
 	color: #2BA6CB;
@@ -35,12 +53,21 @@
 	color: #2BA6CB;
 }
 
+.second {
+	margin-top:5px;
+}
 
 .benefit-p {
 	line-height: 1.4em;
 }
 
+.clear { 
+	clear:both;
+}
+
+
 /* forgot password */
+
 .back {
 	color: #2BA6CB;
 }

@@ -1,4 +1,20 @@
-<div class="five columns centered panel login-window">
+<nav class="top-bar">
+  <ul>
+    <li class="name">
+      <h1>
+        <a>ShopStream</a>
+      </h1>
+    </li>
+  </ul>
+  <ul class="right">
+	    <li><a class="small button m-right" href="sign_up">Sign Up</a></li>
+	</ul>
+</nav>
+<div class="eight columns centered">
+	<h2 class="center">Welcome back!</h2>
+</div>
+<div class="row login">
+<div class="five columns centered panel devise-window login-box">
   <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
     <h3>Sign in</h3>
 		<hr/>
@@ -12,5 +28,5 @@
     <%= f.submit "Sign in", class: 'button right' %>
 		<%= link_to "Forgot your password?", new_password_path(resource_name), class: 'small forgot' %>
   <% end %>
-	
+</div>
 </div>

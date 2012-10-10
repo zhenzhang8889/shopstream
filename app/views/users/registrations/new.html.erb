@@ -1,3 +1,16 @@
+<nav class="top-bar">
+  <ul>
+    <li class="name">
+      <h1>
+        <a>ShopStream</a>
+      </h1>
+    </li>
+  </ul>
+  <ul class="right">
+	    <li><a class="small button m-right" href="sign_in">Sign In</a></li>
+	</ul>
+</nav>
+
 <div class="row">
 	<div class="eight columns centered">
 		<h2 class="center">Start your free 14-day trial today.</h2>
@@ -5,16 +18,15 @@
 	</div>
 </div>
 <div class="row">
-	<div class="panel login-window ten columns centered">
+	<div class="panel devise-window ten columns centered">
 		<div class="six columns">
-			
 	  	<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
 	    	<%= devise_error_messages! %>
-	    	<label>Email Address:</label> <%= f.email_field :email, placeholder: 'myname@mycompany.com', class: 'twelve' %>
+	    	<label>Email Address:</label> <%= f.email_field :email, placeholder: 'myname@mycompany.com', class: 'twelve' %><br/>
 	    	<label>Password:</label><%= f.password_field :password, placeholder: 'desired password', class: 'twelve' %>
 	    	<label>Password Confirmation:</label><%= f.password_field :password_confirmation, placeholder: 'repeat your password', class: 'twelve' %>
 		<hr/>
-	    	<%= f.submit "Start Your Free Trial Now!", class: 'button' %>
+	    	<%= f.submit "Start Your Free Trial Now!", class: 'button success' %>
 				<p class="terms-notice">by clicking this button, you accept our <a href="http://shopstream.co/terms">terms</a>.</p>
 	  		<% end %>
 
@@ -23,11 +35,12 @@
 			
   		<i class="signup-icon foundicon-graph"></i> 
 			<h5 class="benefit-header">Feel Your Store Beat in Real Time</h5>
-			<p class="benefit-p"> We track your store's most useful real time metrics, so you can focus in the only thing that matters. Sales!  </p>	
-			<i class="signup-icon foundicon-idea"></i> 
+			<p class="benefit-p"> We track your store's most useful real time metrics, so you can focus in the only thing that matters. Sales!  </p>
+			<i class="signup-icon second foundicon-idea"></i> 
 			<h5 class="benefit-header">Awesome Insights to Help You Understand Your Customers</h5>
-			<p class="benefit-p"> ShopStream's real time metrics allow you to track how real time actions, such as tweeting and sending email marketing campaigns impact your conversions.  </p>
+			<p class="benefit-p"> ShopStream's real time metrics allow you to track how real time actions, such as tweeting and sending email marketing campaigns impact your conversions.  <br/><br/><br/><br/></p>
 		</div>
-		<br/>
+		<div class="clear">
+		</div>
 	</div>
 </div>

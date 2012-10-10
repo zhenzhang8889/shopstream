@@ -14,7 +14,6 @@
       {{#if isShop}}
         <li><a {{action goToDashboard href=true}}>Dashboard</a></li>
         <li><a {{action goToFeed href=true}}>Feed</a></li>
-        <li><a {{action goToSettings href=true}}>Settings</a></li>
       {{/if}}
     </ul>
 
@@ -34,10 +33,13 @@
           <li><a {{action goToAddShop href=true}}>Add shop...</a></li>
         </ul>
       </li>
+			<li class="divider show-for-medium-and-up"></li>
+			<li>{{#if isShop}}<a {{action goToSettings href=true}}><i class="foundicon-tools"></i> </a>{{/if}}</li>
       <li class="divider show-for-medium-and-up"></li>
       <li class="has-dropdown">
         <a href="#">{{SS.user.email}}</a>
         <ul class="dropdown">
+					<li><a href="#"> Account settings</a></li>
           <li><a href="/users/sign_out" data-method="delete">Log out</a></li>
         </ul>
       </li>

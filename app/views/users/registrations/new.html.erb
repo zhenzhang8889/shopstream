@@ -1,17 +1,32 @@
-<div class="five columns centered panel login-window">
-  <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-    <h3>Sign up</h3>
+<div class="row">
+	<div class="eight columns centered">
+		<h2>Start your free 14-day trial today.</h2>
+	</div>
+</div>
+<div class="row">
+	<div class="panel login-window ten columns centered">
+		<div class="six columns">
+			
+	  	<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+	    	<%= devise_error_messages! %>
+	    	<label>Email Address:</label> <%= f.email_field :email, placeholder: 'myname@mycompany.com', class: 'twelve' %>
+	    	<label>Password:</label><%= f.password_field :password, placeholder: 'desired password', class: 'twelve' %>
+	    	<label>Password Confirmation:</label><%= f.password_field :password_confirmation, placeholder: 'repeat your password', class: 'twelve' %>
+		<hr/>
+	    	<%= f.submit "Start Your Free Trial Now!", class: 'button' %>
+				<p class="terms-notice">by clicking this button, you accept our <a href="http://shopstream.co/terms">terms</a>.</p>
+	  		<% end %>
 
-    <%= devise_error_messages! %>
-
-    <%= f.email_field :email, placeholder: 'Email', class: 'twelve' %>
-
-    <%= f.password_field :password, placeholder: 'Password', class: 'twelve' %>
-
-    <%= f.password_field :password_confirmation, placeholder: 'Confirm', class: 'twelve' %>
-
-    <%= f.submit "Sign up", class: 'button' %>
-  <% end %>
-
-  <%= render "users/shared/links" %>
+		</div>
+		<div class="six columns grey-bg">
+			
+  		<i class="signup-icon foundicon-graph"></i> 
+			<h5 class="benefit-header">Feel Your Store Beat in Real Time</h5>
+			<p class="benefit-p"> We track your store's most useful real time metrics, so you can focus in the only thing that matters. Sales!  </p>	
+			<i class="signup-icon foundicon-idea"></i> 
+			<h5 class="benefit-header">Awesome Insights to Help You Understand Your Customers</h5>
+			<p class="benefit-p"> ShopStream's real time metrics allow you to track how real time actions, such as tweeting and sending email marketing campaigns impact your conversions.  </p>
+		</div>
+		<br/>
+	</div>
 </div>

@@ -8,6 +8,7 @@
 	min-height:330px;
 	margin-top: 50px;
 }
+/*Sign up page */
 .grey-bg { 
 	background: url("absurdidad.png");
 	border-left: 2px dashed #d8d8d8; 
@@ -35,4 +36,13 @@
 
 .benefit-p {
 	line-height: 1.4em;
+}
+
+/* forgot password */
+.back {
+	color: #2BA6CB;
+}
+.forgot {
+	text-decoration: underline;
+	font-size: 0.9em;
 }

@@ -45,8 +45,8 @@ SS.Shop = DS.Model.extend
     yesterdayData = _.zip [0..23], coDistr[0..23]
     todayData = _.zip [0..23], coDistr[24..47]
 
-    yesterdaySeries = { label: 'yesterday', data: yesterdayData }
-    todaySeries = { label: 'today', data: todayData }
+    yesterdaySeries = { color: '#6f6f6f', label: 'yesterday', data: yesterdayData }
+    todaySeries = { color: '#2ba6cb', label: 'today', data: todayData }
 
     [yesterdaySeries, todaySeries]
   ).property 'checkoutDistribution'

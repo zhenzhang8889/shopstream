@@ -5,9 +5,10 @@ SS.SettingsController = Ember.ObjectController.extend
     @get('content.transaction').commit()
 
   deleteShop: ->
-    transaction = @get('content.transaction')
-    shop = @get('content')
-    SS.user.get('shops').removeObject shop
-    shop.deleteRecord()
-    transaction.commit()
-    SS.router.send 'goToIndex'
+    if confirm 'Are you sure you want to proceed? This action cannot be undone.'
+      transaction = @get('content.transaction')
+      shop = @get('content')
+      SS.user.get('shops').removeObject shop
+      shop.deleteRecord()
+      transaction.commit()
+      SS.router.send 'goToIndex'

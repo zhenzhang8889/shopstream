@@ -30,7 +30,7 @@
         <ul class="right">
           <li class="divider"></li>
           <li class="has-dropdown">
-            <%= link_to current_user.email, '#' %>
+            <%= link_to current_superuser.email, '#' %>
 
             <ul class="dropdown">
               <li><%= link_to 'Log out', destroy_superuser_session_path, method: :delete %></li>

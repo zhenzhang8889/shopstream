@@ -1,33 +1,20 @@
-<nav class="top-bar">
-  <ul>
-    <li class="name">
-      <h1>
-        <a>ShopStream</a>
-      </h1>
-    </li>
-  </ul>
-  <ul class="right">
-	    <li><a class="small button m-right" href="../sign_in">Sign In</a></li>
-	</ul>
-</nav>
 <div class="row">
-<div class="five columns centered panel devise-window">
-<h2>Change Password</h2>
-<p>Enter your new password bellow, please.</p>
-<hr/>
+  <div class="five columns centered panel devise-window">
+    <h2>Change Password</h2>
+    <p>Enter your new password bellow, please.</p>
+    <hr/>
 
-<%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put }) do |f| %>
-  <%= devise_error_messages! %>
-  <%= f.hidden_field :reset_password_token %>
+    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
+      <%= devise_error_messages! %>
+      <%= f.hidden_field :reset_password_token %>
 
-  <div><%= f.label :password, "New password" %><br />
-  <%= f.password_field :password %></div>
+      <div><%= f.label :password, "New password" %><br />
+        <%= f.password_field :password %></div>
 
-  <div><%= f.label :password_confirmation, "Confirm new password" %><br />
-  <%= f.password_field :password_confirmation %></div>
+      <div><%= f.label :password_confirmation, "Confirm new password" %><br />
+        <%= f.password_field :password_confirmation %></div>
 
-  <div><%= f.submit "Change my password", class: 'button' %></div>
-<% end %>
-
-</div>
+      <div><%= f.submit "Change my password", class: 'button' %></div>
+    <% end %>
+  </div>
 </div>

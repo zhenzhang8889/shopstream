@@ -1,8 +1,5 @@
 <h3>Settings</h3>
-<dl class="tabs">
-  <dd class="active"><a href="#">Store Details</a></dd>
-  <dd><a href="#">Tracking code</a></dd>
-</dl>
+
 <div class="row">
   <div class="two columns">
     <label class="right inline">Shop name</label>
@@ -44,12 +41,13 @@
   <div class="ten columns offset-by-two">
     <button class="button success" {{action save target="controller"}}>Save Changes</button>
   </div>
-	<div class="ten columns offset-by-two">
-	<hr/>
-	<h6>Need to delete this store?</h6>
-	<p> Once your store is deleted, all the information captured will be immediately and permanently deleted. If you have a paying account you won't be charged again but you are responsible for any charges already incurred.</p>
 
-	<p> <b>I understand this is irreversible:</b>  <a class="button tiny alert" {{action deleteShop target="controller"}} data-confirm="Are you sure? This action cannot be undone.">Delete Shop</a></p>
+	<div class="ten columns offset-by-two">
+  	<hr/>
+  	<h6>Need to delete this store?</h6>
+  	<p> Once your store is deleted, all the information captured will be immediately and permanently deleted. If you have a paying account you won't be charged again but you are responsible for any charges already incurred.</p>
+
+  	<p><b>I understand this is irreversible:</b> <a class="button tiny alert" {{action deleteShop target="controller"}}>Delete Shop</a></p>
 	</div>
 </div>
 
@@ -82,9 +80,9 @@ _shopstream.addItem(
 _shopstream.trackOrder();
         </pre></p>
 			</code>
-			<a href="#" class="tiny button success">Copy code to clipboard</a>
 			</div>
-			<h5>Not a developer? </h5>
+
+			<!-- <h5>Not a developer? </h5>
 				<label>Email the setup instructions to your developers:</label>
 				<div class="row">
 				  <div class="five columns">
@@ -97,11 +95,7 @@ _shopstream.trackOrder();
 				      </div>
 				    </div>
 				  </div>
-				</div>
-			
-			<h5>Need help? </h5>
-			<p><a href="#"> Contact Us!</a> We are happy to help!</p>
-			
+				</div> -->
       </div>
     </div>
   </div>

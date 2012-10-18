@@ -14,27 +14,19 @@
 	margin-right: 10px;
 }
 
-/*login*/
-
 .login {
-	padding-top:50px;
+	padding-top: 50px;
 }
 
 .login-box { 
 	padding: 20px 40px 70px 40px;
 }
 
-/*Sign up page */
-
 .grey-bg { 
-	background: url("absurdidad.png");
+	background: image-url("absurdidad.png");
 	border-left: 2px dashed #d8d8d8; 
 	border-radius: 0px 8px 8px 0px ;
 	padding-top:10px;
-}
-
-.center { 
-	text-align: center;
 }
 
 .terms-notice {
@@ -45,38 +37,24 @@
 .benefit-header {
 	color: #2BA6CB;
 }
-.signup-icon { 
-	font-size: 2.2em;
-	float:left;
-	margin-right:10px;
-	margin-top:8px;
-	color: #2BA6CB;
-}
-
-.second {
-	margin-top:5px;
-}
 
 .benefit-p {
 	line-height: 1.4em;
 }
 
 .clear { 
-	clear:both;
+	clear: both;
 }
-
-
-/* forgot password */
 
 .back {
 	color: #2BA6CB;
 }
+
 .forgot {
 	text-decoration: underline;
 	font-size: 0.9em;
 }
 
-/*edit profile*/
 #edit_profile{
 	font-size: 0.38em;
 	margin-top: -14px;

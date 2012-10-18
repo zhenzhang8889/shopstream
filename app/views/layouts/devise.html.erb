@@ -11,6 +11,18 @@
   <%= stylesheet_link_tag 'application', media: 'all' %>
 </head>
 <body>
+  <nav class="top-bar">
+    <ul>
+      <li class="name">
+        <h1><a>ShopStream</a></h1>
+      </li>
+    </ul>
+    <ul class="right">
+      <li><%= link_to 'Sign In', new_user_session_path, class: 'small button m-right' %></li>
+      <li><%= link_to 'Sign Up', new_user_registration_path, class: 'small button m-right' %></li>
+    </ul>
+  </nav>
+
   <%= yield %>
 </body>
 </html>

@@ -8,6 +8,7 @@
 	<div class="panel devise-window ten columns centered">
 		<div class="six columns">
 	  	<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+	  	  <%= render partial: 'layouts/flashes' %>
 	    	<%= devise_error_messages! %>
 	    	<label>Email Address:</label> <%= f.email_field :email, placeholder: 'myname@mycompany.com', class: 'twelve' %><br/>
 	    	<label>Password:</label><%= f.password_field :password, placeholder: 'desired password', class: 'twelve' %>

@@ -2,6 +2,8 @@
   <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
     <h3>Sign in</h3>
 
+    <%= render partial: 'layouts/flashes' %>
+    
     <%= f.email_field :email, placeholder: 'Email', class: 'twelve' %>
 
     <%= f.password_field :password, placeholder: 'Password', class: 'twelve' %>

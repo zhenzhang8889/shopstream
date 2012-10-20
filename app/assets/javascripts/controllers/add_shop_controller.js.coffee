@@ -21,7 +21,7 @@ SS.AddShopController = Ember.Controller.extend
     shop.addObserver 'id', =>
       Ember.run.next ->
         SS.user.get('shops').pushObject shop
-        SS.router.send 'goToSettings', shop
+        SS.router.send 'goToWelcomeScreen', shop
 
       @makeShop()
 

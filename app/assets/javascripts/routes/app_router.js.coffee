@@ -7,6 +7,7 @@ SS.Router = Ember.Router.extend
     goToDashboard: Ember.Route.transitionTo('shop.dashboard')
     goToFeed: Ember.Route.transitionTo('shop.feed')
     goToSettings: Ember.Route.transitionTo('shop.settings')
+    goToWelcomeScreen: Ember.Route.transitionTo('shop.welcome')
 
     index: Ember.Route.extend
       route: '/'

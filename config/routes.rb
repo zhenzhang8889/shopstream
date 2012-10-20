@@ -16,6 +16,7 @@ ShopstreamApi::Application.routes.draw do
   end
 
   devise_for :users, controllers: {
+    registrations: 'users/registrations',
     omniauth_callbacks: 'omniauth_callbacks'
   }
 

@@ -1,39 +1,39 @@
 <div class="row">
-	<div class="eight columns centered text-center">
-		<h2>Start your free 14-day trial today.</h2>
-		<h4 class="subheader">No credit card required. World-class support and a great service are just a few clicks away. Let's sell more!</h4>
-	</div>
+  <div class="eight columns centered text-center">
+    <h2>Start your free 14-day trial today.</h2>
+    <h4 class="subheader">No credit card required. World-class support and a great service are just a few clicks away. Let's sell more!</h4>
+  </div>
 </div>
 <div class="row">
-	<div class="panel devise-window ten columns centered">
-		<div class="six columns">
-	  	<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-	  	  <%= render partial: 'layouts/flashes' %>
-	    	<%= devise_error_messages! %>
-	    	<label>Email Address:</label> <%= f.email_field :email, placeholder: 'myname@mycompany.com', class: 'twelve' %><br/>
-	    	<label>Password:</label><%= f.password_field :password, placeholder: 'desired password', class: 'twelve' %>
-	    	<label>Password Confirmation:</label><%= f.password_field :password_confirmation, placeholder: 'repeat your password', class: 'twelve' %>
+  <div class="panel devise-window ten columns centered">
+    <div class="six columns">
+      <%= simple_form_for resource, as: resource_name, url: registration_path(resource_name) do |f| %>
+        <%= render partial: 'layouts/flashes' %>
+        <%= f.error_notification %>
 
-	    	<%= f.submit "Start Your Free Trial Now!", class: 'button success' %>
-				<p class="terms-notice">by clicking this button, you accept our <a href="http://shopstream.co/terms">terms</a>.</p>
-	  		<% end %>
-		</div>
+        <%= f.input :email, label: 'Email address', placeholder: 'myname@mycompany.com' %>
+        <%= f.input :password, placeholder: 'Desired password' %>
+        <%= f.input :password_confirmation, placeholder: 'Confirm' %>
 
-		<div class="six columns grey-bg">
-			<h5 class="benefit-header">
-	  		<i class="foundicon-graph"></i> 
-				Feel Your Store Beat in Real Time
-			</h5>
-			<p class="benefit-p"> We track your store's most useful real time metrics, so you can focus in the only thing that matters. Sales!</p>
- 
-			<h5 class="benefit-header">
-				<i class="second foundicon-idea"></i>
-				Awesome Insights to Help You Understand Your Customers
-			</h5>
-			<p class="benefit-p"> ShopStream's real time metrics allow you to track how real time actions, such as tweeting and sending email marketing campaigns impact your conversions.
-		</div>
-		
-		<div class="clear">
-		</div>
-	</div>
+        <%= f.button :submit, 'Start your free trial now!', class: 'success' %>
+        <p class="terms-notice">by clicking this button, you accept our <a href="http://shopstream.co/terms">terms</a>.</p>
+      <% end %>
+    </div>
+
+    <div class="six columns grey-bg">
+      <h5 class="benefit-header">
+        <i class="foundicon-graph"></i>
+        Feel Your Store Beat in Real Time
+      </h5>
+      <p class="benefit-p"> We track your store's most useful real time metrics, so you can focus in the only thing that matters. Sales!</p>
+      <h5 class="benefit-header">
+        <i class="second foundicon-idea"></i>
+        Awesome Insights to Help You Understand Your Customers
+      </h5>
+      <p class="benefit-p"> ShopStream's real time metrics allow you to track how real time actions, such as tweeting and sending email marketing campaigns impact your conversions.
+    </div>
+
+    <div class="clear">
+    </div>
+  </div>
 </div>

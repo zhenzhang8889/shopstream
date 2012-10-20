@@ -1,23 +1,21 @@
 <div class="eight columns centered">
-	<h2 class="center">Welcome back!</h2>
+  <h2 class="subheader text-center">Welcome back!</h2>
 </div>
-<div class="row login">
+
+<div class="row">
   <div class="five columns centered panel devise-window login-box">
-    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-        <h3>Sign in</h3>
-        <hr/>
+    <%= simple_form_for resource, as: resource_name, url: session_path(resource_name) do |f| %>
+      <h3>Sign in</h3>
 
-        <%= render partial: 'layouts/flashes' %>
-        
-        <%= f.email_field :email, placeholder: 'Email', class: 'twelve' %>
+      <%= render partial: 'layouts/flashes' %>
 
-        <%= f.password_field :password, placeholder: 'Password', class: 'twelve' %>
+      <%= f.input :email, label: false, placeholder: 'Email' %>
+      <%= f.input :password, label: false, placeholder: 'Password' %>
 
-        <label><%= f.check_box :remember_me %>
-        Remember me for 2 weeks<br/><br/><label>
-        
-        <%= f.submit "Sign in", class: 'button right' %>
-        <%= link_to "Forgot your password?", new_password_path(resource_name), class: 'small forgot' %>
+      <%= f.input :remember_me, as: :boolean, label: 'Remember me for 2 weeks' %>
+
+      <%= f.button :submit, 'Sign in', class: 'right' %>
+      <%= link_to 'Forgot your password?', new_password_path(resource_name), class: 'small forgot' %>
     <% end %>
   </div>
 </div>

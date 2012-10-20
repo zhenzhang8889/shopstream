@@ -185,6 +185,9 @@ GEM
       omniauth-shopify-oauth2 (= 1.0.0)
       rails (~> 3.1)
       shopify_api (~> 3.0.0)
+    simple_form (2.0.4)
+      actionpack (~> 3.0)
+      activemodel (~> 3.0)
     slop (3.3.3)
     sprockets (2.1.3)
       hike (~> 1.2)
@@ -223,5 +226,6 @@ DEPENDENCIES
   redis (~> 3.0.0.rc2)
   sass-rails (~> 3.2.3)
   shopify_app
+  simple_form
   uglifier (>= 1.0.3)
   zurb-foundation!

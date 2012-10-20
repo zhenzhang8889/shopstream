@@ -1,17 +1,18 @@
-<div class="six columns offset-by-three">
-  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-    <h3>Sign in</h3>
+<div class="row login">
+  <div class="five columns centered panel devise-window login-box">
+    <%= simple_form_for resource, as: resource_name, url: session_path(resource_name) do |f| %>
+      <h3>Sign in</h3>
 
-    <%= render partial: 'layouts/flashes' %>
-    
-    <%= f.email_field :email, placeholder: 'Email', class: 'twelve' %>
+      <hr>
 
-    <%= f.password_field :password, placeholder: 'Password', class: 'twelve' %>
+      <%= render partial: 'layouts/flashes' %>
 
-    <% if devise_mapping.rememberable? -%>
-      <label><%= f.check_box :remember_me %> Remember me</label>
-    <% end -%>
+      <%= f.input :email, label: false, placeholder: 'Email' %>
+      <%= f.input :password, label: false, placeholder: 'Password' %>
 
-    <%= f.submit "Sign in", class: 'button' %>
-  <% end %>
+      <%= f.input :remember_me, as: :boolean, label: 'Remember me for 2 weeks' %>
+
+      <%= f.button :submit, 'Sign in', class: 'right' %>
+    <% end %>
+  </div>
 </div>

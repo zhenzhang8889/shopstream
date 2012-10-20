@@ -8,7 +8,7 @@ class Superuser
 
   validates_presence_of :email
   validates_presence_of :encrypted_password
-  
+
   ## Rememberable
   field :remember_created_at, type: Time
 end

@@ -64,7 +64,7 @@ SS.Shop = DS.Model.extend
 
   # Internal: Listen to needed messages on shop's pusher channel.
   setupPusher: (->
-    if @get('isLoaded') && !@get('pusherSetup') && !!@get('id')
+    if !@get('pusherSetup') && !!@get('token')
       channel = SS.pusher.subscribe @get('pusherChannelName')
       channel.bind 'metrics-updated', (data) =>
         mappedData = {}
@@ -88,4 +88,4 @@ SS.Shop = DS.Model.extend
         @get('feedItems').unshiftObject SS.FeedItem.createRecord(mappedItem)
 
       @set 'pusherSetup', true
-  ).observes 'isLoaded'
+    ).observes 'token'

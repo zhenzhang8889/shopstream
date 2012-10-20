@@ -84,8 +84,11 @@ SS.Shop = DS.Model.extend
 
         if feedItem.get('isNewOrder') and @get('soundOnSales')
           $('.beep-sound')[0].play()
-        
+
         @get('feedItems').unshiftObject SS.FeedItem.createRecord(mappedItem)
 
       @set 'pusherSetup', true
-    ).observes 'token'
+  ).observes 'token'
+
+  sendInstructions: (email) ->
+    @get('store.adapter').customMethodOnRecord SS.Shop, @, 'POST', 'send_instructions', { email: email }

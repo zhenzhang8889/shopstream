@@ -1,0 +1,64 @@
+<header class="text-center">
+  <h3>Welcome</h3>
+
+  {{#if isCustomShop}}
+    <h4 class="subheader">You are almost done...</h4>
+  {{else}}
+    <h4 class="subheader">You're done. There are no additional installation steps, we have done everything for you!</h4>
+  {{/if}}
+</header>
+
+{{#if isCustomShop}}
+  <article>
+    <h4 class="subheader">There is one more thing to do</h4>
+
+    <p>To start tracking, simply add this line to every page of your shop.</p>
+
+    <code>
+    <p><pre>&lt;script type=&quot;text/javascript&quot; src=&quot;{{trackerScriptUrl}}&quot;&gt;&lt;/script&gt;</pre></p>
+    </code>
+
+    <p>And this JS code to every purchase-successful page.</p>
+
+    <code>
+      <p><pre>
+_shopstream.addOrder(
+  "Order name", // order name, required
+  20.02, // order total, required
+  "email@customer.com", // customer email, required
+  "first", // customer first name, required
+  "last" // customer last name, required
+);
+_shopstream.addItem(
+  "Title", // item name, required
+  10.01, // item price, required
+  2 // item quantity, required
+);
+_shopstream.trackOrder();
+      </pre></p>
+    </code>
+
+    <h4 class="subheader">Not a developer?</h4>
+
+    <div class="row">
+      <div class="six columns">
+        <div class="row collapse">
+          <div class="eight columns">
+            {{view Ember.TextField valueBinding="controller.developerEmail" placeholder="your developer's email"}}
+          </div>
+          <div class="four columns">
+            <button {{action sendInstructions target="controller"}} {{bindAttr disabled="controller.isInvalidOrSentInstructions"}} class="postfix button expand">
+              {{#if sentInstructions}}Instructions sent{{else}}Send instructions{{/if}}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+{{/if}}
+
+<section class="text-center">
+  <a {{action goToDashboard}} class="large success button">
+    Take me to the dashboard!
+  </a>
+</section>

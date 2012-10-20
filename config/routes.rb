@@ -33,7 +33,7 @@ ShopstreamApi::Application.routes.draw do
       get :me, on: :collection
     end
     resources :shops, only: [:index, :show, :update, :create, :destroy] do
-      get :my, on: :collection
+      post :send_instructions, on: :member
     end
   end
 

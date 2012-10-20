@@ -1,0 +1,33 @@
+<p>Hello,</p>
+
+<p>
+  We are contacting you because the owner of <%= @shop.name %> needs your help with setting up ShopStream tracking for their shop.
+</p>
+
+<p>To start tracking, simply add this line to every page of your shop.</p>
+
+<code>
+  <p><pre>&lt;script type=&quot;text/javascript&quot; src=&quot;<%= @shop.tracker_script_url %>&quot;&gt;&lt;/script&gt;</pre></p>
+</code>
+
+<p>And this JS code to every purchase-successful page.</p>
+
+<code>
+  <p><pre>
+_shopstream.addOrder(
+"Order name", // order name, required
+20.02, // order total, required
+"email@customer.com", // customer email, required
+"first", // customer first name, required
+"last" // customer last name, required
+);
+_shopstream.addItem(
+"Title", // item name, required
+10.01, // item price, required
+2 // item quantity, required
+);
+_shopstream.trackOrder();
+  </pre></p>
+</code>
+
+<p>Have a good day!</p>

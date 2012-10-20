@@ -26,6 +26,16 @@ module V1
       render json: @shop
     end
 
+    def send_instructions
+      @shop = Shop.find params[:id]
+
+      authorize! :send_instructions, @shop
+
+      InstructionsMailer.instructions(@shop, params[:email]).deliver
+
+      head :ok
+    end
+
     def create
       @shop = CustomShop.new params[:shop]
       @shop.user = current_user

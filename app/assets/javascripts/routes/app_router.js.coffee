@@ -43,6 +43,12 @@ SS.Router = Ember.Router.extend
         connectOutlets: (router) ->
           router.get('shopController').connectOutlet 'settings'
 
+      welcome: Ember.Route.extend
+        route: '/welcome'
+
+        connectOutlets: (router) ->
+          router.get('shopController').connectOutlet 'welcome'
+
       connectOutlets: (router, context) ->
         router.get('applicationController').connectOutlet 'shop', context
         router.get('applicationController').connectOutlet 'header', 'header', context

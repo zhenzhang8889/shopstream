@@ -1,5 +1,5 @@
 <header class="text-center">
-  <h3>Welcome</h3>
+  <h3>Welcome aboard!</h3>
 
   {{#if isCustomShop}}
     <h4 class="subheader">You are almost done...</h4>
@@ -9,16 +9,16 @@
 </header>
 
 {{#if isCustomShop}}
-  <article>
+  <article class="panel">
     <h4 class="subheader">There is one more thing to do</h4>
 
-    <p>To start tracking, simply add this line to every page of your shop.</p>
+    <p>To start tracking your metrics, we need you to install our javascript tracker code to every page of your shop.</p>
 
     <code>
     <p><pre>&lt;script type=&quot;text/javascript&quot; src=&quot;{{trackerScriptUrl}}&quot;&gt;&lt;/script&gt;</pre></p>
     </code>
 
-    <p>And this JS code to every purchase-successful page.</p>
+    <p>The following script tracks all your successful orders. You should add it to every order complete page, passing the parameters bellow:</p>
 
     <code>
       <p><pre>
@@ -39,14 +39,14 @@ _shopstream.trackOrder();
     </code>
 
     <h4 class="subheader">Not a developer?</h4>
-
+		<p> Send these instructions to your developer's email address! </p>
     <div class="row">
       <div class="six columns">
         <div class="row collapse">
-          <div class="eight columns">
+          <div class="seven columns">
             {{view Ember.TextField valueBinding="controller.developerEmail" placeholder="your developer's email"}}
           </div>
-          <div class="four columns">
+          <div class="five columns">
             <button {{action sendInstructions target="controller"}} {{bindAttr disabled="controller.isInvalidOrSentInstructions"}} class="postfix button expand">
               {{#if sentInstructions}}Instructions sent{{else}}Send instructions{{/if}}
             </a>
@@ -59,6 +59,6 @@ _shopstream.trackOrder();
 
 <section class="text-center">
   <a {{action goToDashboard}} class="large success button">
-    Take me to the dashboard!
+    Take me to my dashboard!
   </a>
 </section>

@@ -4,6 +4,7 @@ class User
     :token_authenticatable, :validatable
 
   field :email, type: String, default: ''
+  field :name, type: String, default: ''
   field :encrypted_password, type: String, default: ''
 
   field :reset_password_token, type: String
@@ -12,6 +13,8 @@ class User
   field :remember_created_at, type: Time
 
   field :authentication_token, type: String
+
+  validates :name, presence: true
 
   has_many :shops
 

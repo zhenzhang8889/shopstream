@@ -15,6 +15,7 @@
 * `PUSHER_KEY`.
 * `MONGOLAB_URI` on Heroku.
 * `REDISTOGO_URL` on Heroku.
+* `GA_ACCOUNT`, the ID of Google Analytics account (optional).
 
 ### Production deployment
 

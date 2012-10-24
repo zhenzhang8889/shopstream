@@ -37,6 +37,9 @@
       {{#if isShop}}
         <li class="divider show-for-medium-and-up"></li>
         <li><a {{action goToSettings href=true}}><i class="foundicon-tools"></i></a></li>
+
+        <li class="divider show-for-medium-and-up"></li>
+        <li><a {{action toggleSoundOnSales target="controller"}}><i {{bindAttr class=":foundicon-accessibility-speaker soundOnSales::no-sound"}}></i></a></li>
       {{/if}}
 
       <li class="divider show-for-medium-and-up"></li>

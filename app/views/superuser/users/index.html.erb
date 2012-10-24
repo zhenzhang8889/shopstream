@@ -5,13 +5,15 @@
     <table>
       <thead>
         <tr>
-          <th class="ten">Email</th>
+          <th class="five">Name</th>
+          <th class="five">Email</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
         <% @users.each do |user| %>
           <tr>
+            <td><%= user.name %></td>
             <td><%= user.email %></td>
             <td><%= link_to 'Act as', new_user_masquerade_path(user), class: 'button' %></td>
           </tr>

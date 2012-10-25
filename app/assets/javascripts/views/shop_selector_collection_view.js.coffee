@@ -4,4 +4,6 @@ SS.ShopSelectorCollectionView = Ember.CollectionView.extend
   itemViewClass: Ember.View.extend
     classNames: ['text-center']
   emptyView: Ember.View.extend
-    template: Ember.Handlebars.compile '<h4 class="subheader">No shops.</h4>'
+    tagName: 'section'
+    classNames: ['text-center']
+    templateName: 'no_stores'

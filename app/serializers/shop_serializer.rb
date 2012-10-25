@@ -3,7 +3,7 @@ class ShopSerializer < ActiveModel::Serializer
     :max_avg_purchase, :conversion_rate, :max_conversion_rate,
     :total_sales_today, :checkout_distribution, :top_links, :top_searches,
     :top_products, :tracker_script_url, :send_daily_notifications,
-    :sound_on_sales
+    :sound_on_sales, :ever_tracked?, :tracked_recently?
 
   has_one :user, embed: :ids, key: :user_id
   has_many :feed_items

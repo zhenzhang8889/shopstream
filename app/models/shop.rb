@@ -97,6 +97,11 @@ class Shop
     redis_prefixed 'top_products'
   end
 
+  # Internal: Redis last tracked at key.
+  def last_tracked_at_key
+    redis_prefixed 'last_tracked_at'
+  end
+
   # Public: Get avg purchase.
   def avg_purchase
     $redis.get(avg_purchase_key).to_f
@@ -140,6 +145,25 @@ class Shop
   # Public: Get top products.
   def top_products
     $redis.zrange top_products_key, 0, 9
+  end
+
+  # Public: Query when the store has tracked anything.
+  def last_tracked_at
+    $redis.get(last_tracked_at_key).try :to_time
+  end
+
+  # Public: Check if store was ever tracked.
+  def ever_tracked?
+    !!last_tracked_at
+  end
+
+  # Public: Check if store was tracked in past 24 hours.
+  def tracked_recently?
+    if ever_tracked?
+      last_tracked_at < 24.hours.ago
+    else
+      false
+    end
   end
 
   # Internal: Generate webhook url for specified action.

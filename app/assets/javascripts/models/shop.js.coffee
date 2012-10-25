@@ -7,6 +7,8 @@ SS.Shop = DS.Model.extend
   trackerScriptUrl: DS.attr 'string'
   sendDailyNotifications: DS.attr 'boolean'
   soundOnSales: DS.attr 'boolean'
+  everTracked: DS.attr 'boolean'
+  trackedRecently: DS.attr 'boolean'
 
   user: DS.belongsTo('SS.User', key: 'user_id')
   feedItems: DS.hasMany('SS.FeedItem', embedded: true)
@@ -67,6 +69,9 @@ SS.Shop = DS.Model.extend
     if !@get('pusherSetup') && !!@get('token')
       channel = SS.pusher.subscribe @get('pusherChannelName')
       channel.bind 'metrics-updated', (data) =>
+        @set 'everTracked', true
+        @set 'trackedRecently', true
+
         mappedData = {}
 
         for k, v of data

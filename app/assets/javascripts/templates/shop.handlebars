@@ -1,1 +1,17 @@
+{{#if isCustomShop}}
+  {{#if everTracked}}
+    {{#unless trackedRecently}}
+      <div class="alert-box alert">
+        We have not tracked anything in your shop for last 24 hours.
+        It is possible that tracking script is not longer installed.
+        Can you please check?
+      </div>
+    {{/unless}}
+  {{else}}
+      <div class="alert-box alert">
+        Please, install the tracking script.
+      </div>
+  {{/if}}
+{{/if}}
+
 {{outlet}}

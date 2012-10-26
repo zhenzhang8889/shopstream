@@ -7,9 +7,15 @@
 }
 
 .chart {
-  height: 250px;
+  height: 270px;
 
   .co-distr-chart {
-    height: 200px;
+    height: 220px;
+
+    .legend {
+      table {
+        border: none;
+      }
+    }
   }
 }

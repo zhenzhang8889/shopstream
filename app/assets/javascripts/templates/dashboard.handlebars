@@ -26,6 +26,9 @@
     </div>
     <div class="six columns chart">
       {{view SS.FlotChartView seriesBinding="checkoutDistributionSeries" optionsBinding="checkoutDistributionChartOptions" class="co-distr-chart"}}
+      {{#view SS.AnimatedNumbersView valueBinding="totalOrdersToday"}}
+        <h5 class="subheader text-center">{{view.animatedValue}} orders today</h5>
+      {{/view}}
     </div>
   </div>
 

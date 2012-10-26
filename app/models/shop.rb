@@ -185,6 +185,7 @@ class Shop
     $redis.set max_conversion_rate_key, 0.0 unless max_conversion_rate
     $redis.set total_sales_today_key, 0.0 unless total_sales_today
     $redis.set checkout_distribution_key, '[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]' unless checkout_distribution
+    $redis.set last_tracked_at_key, '' unless last_tracked_at
   end
 
   # Internal: Find shops interested in daily reports, for specified `time`.

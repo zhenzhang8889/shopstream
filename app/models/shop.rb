@@ -77,6 +77,11 @@ class Shop
     redis_prefixed 'total_sales_today'
   end
 
+  # Internal: Redis max total sales key.
+  def max_total_sales_today_key
+    redis_prefixed 'max_total_sales_today'
+  end
+
   # Internal: Redis checkout distribution key.
   def checkout_distribution_key
     redis_prefixed 'co_distribution'
@@ -125,6 +130,11 @@ class Shop
   # Public: Get total sales today.
   def total_sales_today
     $redis.get(total_sales_today_key).to_f
+  end
+
+  # Public: Get max total sales.
+  def max_total_sales_today
+    $redis.get(max_total_sales_today_key).to_f
   end
 
   # Public: Get checkout distribution.
@@ -184,6 +194,7 @@ class Shop
     $redis.set conversion_rate_key, 0.0 unless conversion_rate
     $redis.set max_conversion_rate_key, 0.0 unless max_conversion_rate
     $redis.set total_sales_today_key, 0.0 unless total_sales_today
+    $redis.set max_total_sales_today_key, 0.0 unless max_total_sales_today
     $redis.set checkout_distribution_key, '[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]' unless checkout_distribution
     $redis.set last_tracked_at_key, '' unless last_tracked_at
   end

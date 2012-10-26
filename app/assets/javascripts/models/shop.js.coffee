@@ -18,6 +18,7 @@ SS.Shop = DS.Model.extend
   conversionRate: DS.attr 'number'
   maxConversionRate: DS.attr 'number'
   totalSalesToday: DS.attr 'number'
+  maxTotalSalesToday: DS.attr 'number'
   checkoutDistribution: DS.attr 'array'
   topLinks: DS.attr 'array'
   topSearches: DS.attr 'array'

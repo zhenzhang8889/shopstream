@@ -20,6 +20,9 @@
       {{#view SS.AnimatedNumbersView valueBinding="totalSalesToday"}}<h2>{{money view.animatedValue}}</h2>{{/view}}
       <h5 class="subheader"><strong>Total</strong> sales</h5>
       <h5 class="subheader short">Today</h5>
+      {{#view SS.AnimatedNumbersView valueBinding="maxTotalSalesToday"}}
+        <h5 class="subheader short">30 day max <strong>{{money view.animatedValue}}</strong></h5>
+      {{/view}}
     </div>
     <div class="six columns chart">
       {{view SS.FlotChartView seriesBinding="checkoutDistributionSeries" optionsBinding="checkoutDistributionChartOptions" class="co-distr-chart"}}

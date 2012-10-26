@@ -1,18 +1,22 @@
-{{#if isCustomShop}}
-  {{#if everTracked}}
-    {{#unless trackedRecently}}
-      <div class="alert-box alert">
-        We have not tracked anything in your shop for last 24 hours.
-        It is possible that tracking script is not longer installed.
-        Can you please check?
-      </div>
-    {{/unless}}
-  {{else}}
-      <div class="alert-box alert">
-        Please, <a {{action goToSettings href=true}}>install the tracking
-          script.</a>
-      </div>
+{{#if isLoaded}}
+  {{#if isCustomShop}}
+    {{#if everTracked}}
+      {{#unless trackedRecently}}
+        <div class="alert-box alert">
+          We have not tracked anything in your shop for last 24 hours.
+          It is possible that tracking script is not longer installed.
+          Can you please check?
+        </div>
+      {{/unless}}
+    {{else}}
+        <div class="alert-box alert">
+          Please, <a {{action goToSettings href=true}}>install the tracking
+            script.</a>
+        </div>
+    {{/if}}
   {{/if}}
-{{/if}}
 
-{{outlet}}
+  {{outlet}}
+{{else}}
+  <h3 class="subheader text-center">Loading...</h3>
+{{/if}}

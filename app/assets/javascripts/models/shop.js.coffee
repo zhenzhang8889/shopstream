@@ -61,8 +61,9 @@ SS.Shop = DS.Model.extend
     yaxis:
       min: 0
       minTickSize: 1
+      tickDecimals: 0
     xaxis:
-      tickSize: 4
+      ticks: [[0, "0:00"], [6, "6:00"], [12, "12:00"], [18, "18:00"]]
     series:
       lines:
         lineWidth: 2

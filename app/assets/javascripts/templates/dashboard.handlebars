@@ -33,8 +33,14 @@
   </div>
 
   <div class="row content">
+    <div class="two columns metric">
+      {{#view SS.AnimatedNumbersView valueBinding="revenuePerVisit"}}<h2>{{money view.animatedValue}}</h2>{{/view}}
+      <h5 class="subheader"><strong>Revenue</strong> per visit</h5>
+    </div>
+
+
     {{view SS.DashboardTopColumnView title="Products" subtitle="past 24 hours" topItemsBinding="topProducts" classNames="four"}}
-    {{view SS.DashboardTopColumnView title="Links" subtitle="past 24 hours" topItemsBinding="topLinks" classNames="four"}}
-    {{view SS.DashboardTopColumnView title="Searches" subtitle="past 24 hours" topItemsBinding="topSearches" classNames="four"}}
+    {{view SS.DashboardTopColumnView title="Links" subtitle="past 24 hours" topItemsBinding="topLinks" classNames="three"}}
+    {{view SS.DashboardTopColumnView title="Searches" subtitle="past 24 hours" topItemsBinding="topSearches" classNames="three"}}
   </div>
 </div>

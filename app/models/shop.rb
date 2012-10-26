@@ -62,6 +62,11 @@ class Shop
     redis_prefixed 'max_avg_purchase'
   end
 
+  # Internal: Redis RVP key.
+  def revenue_per_visit_key
+    redis_prefixed 'revenue_per_visit'
+  end
+
   # Internal: Redis conversion rate key.
   def conversion_rate_key
     redis_prefixed 'conversion_rate'
@@ -120,6 +125,11 @@ class Shop
   # Public: Get max average purchase.
   def max_avg_purchase
     $redis.get(max_avg_purchase_key).to_f
+  end
+
+  # Public: Get RVP.
+  def revenue_per_visit
+    $redis.get(revenue_per_visit_key).to_f
   end
 
   # Public: Get conversion rate.
@@ -201,6 +211,7 @@ class Shop
   def reset_redis_keys
     $redis.set avg_purchase_key, 0.0 unless avg_purchase
     $redis.set max_avg_purchase_key, 0.0 unless max_avg_purchase
+    $redis.set revenue_per_visit_key, 0.0 unless revenue_per_visit
     $redis.set conversion_rate_key, 0.0 unless conversion_rate
     $redis.set max_conversion_rate_key, 0.0 unless max_conversion_rate
     $redis.set total_orders_today_key, 0.0 unless total_orders_today

@@ -9,9 +9,11 @@
         </div>
       {{/unless}}
     {{else}}
-        <div class="alert-box alert">
-          Please, <a {{action goToSettings href=true}}>install the tracking
-            script.</a>
+        <div class="alert-box secondary">
+					<div class="text-center">
+          We currently haven't captured any data from your store.  <a class="button success" {{action goToSettings href=true}}>Install The Tracking
+            Script Now!</a>
+					</div>
         </div>
     {{/if}}
   {{/if}}

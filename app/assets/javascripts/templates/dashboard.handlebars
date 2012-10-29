@@ -1,24 +1,9 @@
 <div class="twelve columns">
   <div class="row">
-    <div class="three columns metric">
-      {{#view SS.AnimatedNumbersView valueBinding="totalSalesToday"}}<h2>{{money view.animatedValue}}</h2>{{/view}}
-      <h5 class="subheader"><strong>Total</strong> sales</h5>
-      <h5 class="subheader short">Today</h5>
-      {{#view SS.AnimatedNumbersView valueBinding="maxTotalSalesToday"}}
-        <h5 class="subheader short">30 day max <strong>{{money view.animatedValue}}</strong></h5>
-      {{/view}}
-    </div>
-    <div class="three columns metric">
-      {{#view SS.AnimatedNumbersView valueBinding="revenuePerVisit"}}<h2>{{money view.animatedValue}}</h2>{{/view}}
-      <h5 class="subheader"><strong>Revenue</strong> per visitor</h5>
-      {{#view SS.AnimatedNumbersView valueBinding="maxRevenuePerVisit"}}
-        <h5 class="subheader short">30 day max <strong>{{money view.animatedValue}}</strong></h5>
-      {{/view}}
-    </div>
-    <div class="three columns metric">
+		<div class="three columns metric">
       {{#view SS.AnimatedNumbersView valueBinding="conversionRate"}}<h2>{{percentage view.animatedValue}}</h2>{{/view}}
       {{view SS.GaugeView numberBinding="conversionRate" maxNumberBinding="maxConversionRate"}}
-      <h5 class="subheader"><strong>Conversion</strong> rate</h5>
+      <h5 class="subheader"><strong>CONVERSION</strong> RATE</h5>
       {{#view SS.AnimatedNumbersView valueBinding="maxConversionRate"}}
         <h5 class="subheader short">30 day max <strong>{{percentage view.animatedValue}}</strong></h5>
       {{/view}}
@@ -26,8 +11,22 @@
     <div class="three columns metric">
       {{#view SS.AnimatedNumbersView valueBinding="avgPurchase"}}<h2>{{money view.animatedValue}}</h2>{{/view}}
       {{view SS.GaugeView numberBinding="avgPurchase" maxNumberBinding="maxAvgPurchase"}}
-      <h5 class="subheader"><strong>Avg</strong> purchase</h5>
+      <h5 class="subheader"><strong>AVG</strong> PURCHASE</h5>
       {{#view SS.AnimatedNumbersView valueBinding="maxAvgPurchase"}}
+        <h5 class="subheader short">30 day max <strong>{{money view.animatedValue}}</strong></h5>
+      {{/view}}
+    </div>
+		<div class="three columns metric">
+      {{#view SS.AnimatedNumbersView valueBinding="revenuePerVisit"}}<h2>{{money view.animatedValue}}</h2>{{/view}}
+      <h5 class="subheader"><strong>REVENUE</strong> PER VISITOR</h5>
+      {{#view SS.AnimatedNumbersView valueBinding="maxRevenuePerVisit"}}
+        <h5 class="subheader short">30 day max <strong>{{money view.animatedValue}}</strong></h5>
+      {{/view}}
+    </div>
+    <div class="three columns metric">
+      {{#view SS.AnimatedNumbersView valueBinding="totalSalesToday"}}<h2>{{money view.animatedValue}}</h2>{{/view}}
+      <h5 class="subheader"><strong>SALES</strong> TODAY</h5>
+      {{#view SS.AnimatedNumbersView valueBinding="maxTotalSalesToday"}}
         <h5 class="subheader short">30 day max <strong>{{money view.animatedValue}}</strong></h5>
       {{/view}}
     </div>

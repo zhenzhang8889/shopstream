@@ -16,6 +16,7 @@ SS.Shop = DS.Model.extend
   avgPurchase: DS.attr 'number'
   maxAvgPurchase: DS.attr 'number'
   revenuePerVisit: DS.attr 'number'
+  maxRevenuePerVisit: DS.attr 'number'
   conversionRate: DS.attr 'number'
   maxConversionRate: DS.attr 'number'
   totalOrdersToday: DS.attr 'number'

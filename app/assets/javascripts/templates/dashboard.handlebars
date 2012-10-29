@@ -36,6 +36,9 @@
     <div class="two columns metric">
       {{#view SS.AnimatedNumbersView valueBinding="revenuePerVisit"}}<h2>{{money view.animatedValue}}</h2>{{/view}}
       <h5 class="subheader"><strong>Revenue</strong> per visit</h5>
+      {{#view SS.AnimatedNumbersView valueBinding="maxRevenuePerVisit"}}
+        <h5 class="subheader short">30 day max <strong>{{money view.animatedValue}}</strong></h5>
+      {{/view}}
     </div>
 
 

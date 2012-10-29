@@ -65,6 +65,11 @@ SS.Shop = DS.Model.extend
       tickDecimals: 0
     xaxis:
       ticks: [[0, "0:00"], [6, "6:00"], [12, "12:00"], [18, "18:00"]]
+    legend:
+      noColumns: 2
+      margin: [0, 225]
+    grid:
+      borderWidth: 0
     series:
       lines:
         lineWidth: 2

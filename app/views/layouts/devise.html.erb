@@ -32,7 +32,7 @@
           </li>
           <li class="divider show-for-medium-and-up"></li>
           <li class="has-dropdown">
-            <%= link_to current_user.email, '#' %>
+            <%= link_to current_user.name, '#' %>
             <ul class="dropdown">
               <li><%= link_to 'Account settings', edit_user_registration_path %></li>
               <li><%= link_to 'Log out', destroy_user_session_path, method: :delete %></li>

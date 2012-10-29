@@ -35,15 +35,18 @@
       </li>
 
       {{#if isShop}}
-  			<li class="divider show-for-medium-and-up"></li>
-  			<li><a {{action goToSettings href=true}}><i class="foundicon-tools"></i></a></li>
+        <li class="divider show-for-medium-and-up"></li>
+        <li><a {{action goToSettings href=true}}><i class="foundicon-tools"></i></a></li>
+
+        <li class="divider show-for-medium-and-up"></li>
+        <li><a {{action toggleSoundOnSales target="controller"}}><i {{bindAttr class=":foundicon-accessibility-speaker soundOnSales::no-sound"}}></i></a></li>
       {{/if}}
 
       <li class="divider show-for-medium-and-up"></li>
       <li class="has-dropdown">
-        <a href="#">{{SS.user.email}}</a>
+        <a href="#">{{SS.user.name}}</a>
         <ul class="dropdown">
-					<li><a href="/users/edit">Account settings</a></li>
+          <li><a href="/users/edit">Account settings</a></li>
           <li><a href="/users/sign_out" data-method="delete">Log out</a></li>
         </ul>
       </li>

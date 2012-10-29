@@ -62,6 +62,16 @@ class Shop
     redis_prefixed 'max_avg_purchase'
   end
 
+  # Internal: Redis RVP key.
+  def revenue_per_visit_key
+    redis_prefixed 'revenue_per_visit'
+  end
+
+  # Internal: Redis max RVP key.
+  def max_revenue_per_visit_key
+    redis_prefixed 'max_revenue_per_visit'
+  end
+
   # Internal: Redis conversion rate key.
   def conversion_rate_key
     redis_prefixed 'conversion_rate'
@@ -72,9 +82,19 @@ class Shop
     redis_prefixed 'max_conversion_rate'
   end
 
+  # Internal: Redis total orders today key.
+  def total_orders_today_key
+    redis_prefixed 'total_orders_today'
+  end
+
   # Internal: Redis total sales today key.
   def total_sales_today_key
     redis_prefixed 'total_sales_today'
+  end
+
+  # Internal: Redis max total sales key.
+  def max_total_sales_today_key
+    redis_prefixed 'max_total_sales_today'
   end
 
   # Internal: Redis checkout distribution key.
@@ -97,6 +117,11 @@ class Shop
     redis_prefixed 'top_products'
   end
 
+  # Internal: Redis last tracked at key.
+  def last_tracked_at_key
+    redis_prefixed 'last_tracked_at'
+  end
+
   # Public: Get avg purchase.
   def avg_purchase
     $redis.get(avg_purchase_key).to_f
@@ -105,6 +130,16 @@ class Shop
   # Public: Get max average purchase.
   def max_avg_purchase
     $redis.get(max_avg_purchase_key).to_f
+  end
+
+  # Public: Get RVP.
+  def revenue_per_visit
+    $redis.get(revenue_per_visit_key).to_f
+  end
+
+  # Public: Get max RVP.
+  def max_revenue_per_visit
+    $redis.get(max_revenue_per_visit_key).to_f
   end
 
   # Public: Get conversion rate.
@@ -117,9 +152,19 @@ class Shop
     $redis.get(max_conversion_rate_key).to_f
   end
 
+  # Public: Get total orders today.
+  def total_orders_today
+    $redis.get(total_orders_today_key).to_f
+  end
+
   # Public: Get total sales today.
   def total_sales_today
     $redis.get(total_sales_today_key).to_f
+  end
+
+  # Public: Get max total sales.
+  def max_total_sales_today
+    $redis.get(max_total_sales_today_key).to_f
   end
 
   # Public: Get checkout distribution.
@@ -142,6 +187,25 @@ class Shop
     $redis.zrange top_products_key, 0, 9
   end
 
+  # Public: Query when the store has tracked anything.
+  def last_tracked_at
+    $redis.get(last_tracked_at_key).try :to_time
+  end
+
+  # Public: Check if store was ever tracked.
+  def ever_tracked?
+    !!last_tracked_at
+  end
+
+  # Public: Check if store was tracked in past 24 hours.
+  def tracked_recently?
+    if ever_tracked?
+      last_tracked_at < 24.hours.ago
+    else
+      false
+    end
+  end
+
   # Internal: Generate webhook url for specified action.
   def webhook_url(action)
     "http://#{ENV['COLLECTOR_HOST']}/webhooks/shopify/#{token}/#{action}"
@@ -157,10 +221,15 @@ class Shop
   def reset_redis_keys
     $redis.set avg_purchase_key, 0.0 unless avg_purchase
     $redis.set max_avg_purchase_key, 0.0 unless max_avg_purchase
+    $redis.set revenue_per_visit_key, 0.0 unless revenue_per_visit
+    $redis.set max_revenue_per_visit_key, 0.0 unless max_revenue_per_visit
     $redis.set conversion_rate_key, 0.0 unless conversion_rate
     $redis.set max_conversion_rate_key, 0.0 unless max_conversion_rate
+    $redis.set total_orders_today_key, 0.0 unless total_orders_today
     $redis.set total_sales_today_key, 0.0 unless total_sales_today
+    $redis.set max_total_sales_today_key, 0.0 unless max_total_sales_today
     $redis.set checkout_distribution_key, '[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]' unless checkout_distribution
+    $redis.set last_tracked_at_key, '' unless last_tracked_at
   end
 
   # Internal: Find shops interested in daily reports, for specified `time`.

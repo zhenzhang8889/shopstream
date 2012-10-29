@@ -38,7 +38,7 @@
 </div>
 <div class="row">
   <div class="ten columns offset-by-two">
-    <button class="button success" {{action save target="controller"}}>Save Changes</button>
+    <button class="button success radius" {{action save target="controller"}}>Save Changes</button>
   </div>
 
   <div class="ten columns offset-by-two">
@@ -47,7 +47,7 @@
     <p>Once your store is deleted, all the information captured will be immediately and permanently deleted. If you have a paying account you will not be charged again but you are responsible for any charges already incurred.</p>
 
     {{#if isCustomShop}}
-      <p><b>I understand this is irreversible:</b> <a class="button tiny alert" {{action deleteShop target="controller"}}>Delete Shop</a></p>
+      <p><b>I understand this is irreversible:</b> <a class="button tiny alert radius" {{action deleteShop target="controller"}}>Delete Shop</a></p>
     {{else}}
       <p>You should delete this store by uninstalling "shopstream" app from your Shopify shop.
     {{/if}}
@@ -59,15 +59,15 @@
     <div class="twelve column">
       <div class="">
         <h4>Tracking Code</h4>
-        <div class="panel">
-        <p>To start using ShopStream, you need to install our javascript tracker in your store. It is really simple, just add the following code to all pages in your website:</p>
-        <code>
-        <p><pre>&lt;script type=&quot;text/javascript&quot; src=&quot;{{trackerScriptUrl}}&quot;&gt;&lt;/script&gt;</pre></p>
-        </code>
+        <div class="panel radius">
+          <p>To start using ShopStream, you need to install our javascript tracker in your store. It is really simple, just add the following code to all pages in your website:</p>
+          <code>
+          <p><pre>&lt;script type=&quot;text/javascript&quot; src=&quot;{{trackerScriptUrl}}&quot;&gt;&lt;/script&gt;</pre></p>
+          </code>
 
-        <p>Then, add the tracker to your website checkout:</p>
-        <code>
-        <p><pre>
+          <p>Then, add the tracker to your website checkout:</p>
+          <code>
+            <p><pre>
 _shopstream.addOrder(
   "Order name", // order name, required
   20.02, // order total, required
@@ -81,24 +81,9 @@ _shopstream.addItem(
   2 // item quantity, required
 );
 _shopstream.trackOrder();
-        </pre></p>
-      </code>
-      </div>
-
-      <!-- <h5>Not a developer? </h5>
-        <label>Email the setup instructions to your developers:</label>
-        <div class="row">
-          <div class="five columns">
-            <div class="row collapse">
-              <div class="eight mobile-three columns">
-                <input type="text" value="your developer's email"/>
-              </div>
-              <div class="four mobile-one columns">
-                <a href="mailto:contact@shopstream.co" class="postfix button expand">Send Instructions</a>
-              </div>
-            </div>
-          </div>
-        </div> -->
+          </pre></p>
+        </code>
+        </div>
       </div>
     </div>
   </div>

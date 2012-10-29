@@ -1,30 +1,50 @@
 <div class="twelve columns">
   <div class="row">
-    <div class="two columns metric">
-      <h2>{{percentage conversionRate}}</h2>
-      {{view SS.GaugeView numberBinding="conversionRate" maxNumberBinding="maxConversionRate"}}
-      <h5 class="subheader"><strong>Conversion</strong> rate</h5>
-      <h5 class="subheader short">30 day max <strong>{{percentage maxConversionRate}}</strong></h5>
-    </div>
-    <div class="two columns metric">
-      <h2>{{money avgPurchase}}</h2>
-      {{view SS.GaugeView numberBinding="avgPurchase" maxNumberBinding="maxAvgPurchase"}}
-      <h5 class="subheader"><strong>Avg</strong> purchase</h5>
-      <h5 class="subheader short">30 day max <strong>{{money maxAvgPurchase}}</strong></h5>
-    </div>
-    <div class="two columns metric">
-      <h2>{{money totalSalesToday}}</h2>
+    <div class="three columns metric">
+      {{#view SS.AnimatedNumbersView valueBinding="totalSalesToday"}}<h2>{{money view.animatedValue}}</h2>{{/view}}
       <h5 class="subheader"><strong>Total</strong> sales</h5>
       <h5 class="subheader short">Today</h5>
+      {{#view SS.AnimatedNumbersView valueBinding="maxTotalSalesToday"}}
+        <h5 class="subheader short">30 day max <strong>{{money view.animatedValue}}</strong></h5>
+      {{/view}}
     </div>
-    <div class="six columns chart">
-      {{view SS.FlotChartView seriesBinding="checkoutDistributionSeries" optionsBinding="checkoutDistributionChartOptions" class="co-distr-chart"}}
+    <div class="three columns metric">
+      {{#view SS.AnimatedNumbersView valueBinding="revenuePerVisit"}}<h2>{{money view.animatedValue}}</h2>{{/view}}
+      <h5 class="subheader"><strong>Revenue</strong> per visitor</h5>
+      {{#view SS.AnimatedNumbersView valueBinding="maxRevenuePerVisit"}}
+        <h5 class="subheader short">30 day max <strong>{{money view.animatedValue}}</strong></h5>
+      {{/view}}
+    </div>
+    <div class="three columns metric">
+      {{#view SS.AnimatedNumbersView valueBinding="conversionRate"}}<h2>{{percentage view.animatedValue}}</h2>{{/view}}
+      {{view SS.GaugeView numberBinding="conversionRate" maxNumberBinding="maxConversionRate"}}
+      <h5 class="subheader"><strong>Conversion</strong> rate</h5>
+      {{#view SS.AnimatedNumbersView valueBinding="maxConversionRate"}}
+        <h5 class="subheader short">30 day max <strong>{{percentage view.animatedValue}}</strong></h5>
+      {{/view}}
+    </div>
+    <div class="three columns metric">
+      {{#view SS.AnimatedNumbersView valueBinding="avgPurchase"}}<h2>{{money view.animatedValue}}</h2>{{/view}}
+      {{view SS.GaugeView numberBinding="avgPurchase" maxNumberBinding="maxAvgPurchase"}}
+      <h5 class="subheader"><strong>Avg</strong> purchase</h5>
+      {{#view SS.AnimatedNumbersView valueBinding="maxAvgPurchase"}}
+        <h5 class="subheader short">30 day max <strong>{{money view.animatedValue}}</strong></h5>
+      {{/view}}
     </div>
   </div>
 
   <div class="row content">
-    {{view SS.DashboardTopColumnView title="Products" subtitle="past 2 days" topItemsBinding="topProducts" classNames="four"}}
-    {{view SS.DashboardTopColumnView title="Links" subtitle="overall" topItemsBinding="topLinks" classNames="four"}}
-    {{view SS.DashboardTopColumnView title="Searches" subtitle="overall" topItemsBinding="topSearches" classNames="four"}}
+    <div class="twelve columns chart">
+      {{view SS.FlotChartView seriesBinding="checkoutDistributionSeries" optionsBinding="checkoutDistributionChartOptions" class="co-distr-chart"}}
+      {{#view SS.AnimatedNumbersView valueBinding="totalOrdersToday"}}
+        <h4 class="text-center">{{number view.animatedValue}} orders today</h4>
+      {{/view}}
+    </div>
+  </div>
+
+  <div class="row content">
+    {{view SS.DashboardTopColumnView title="Products" subtitle="Past 24 hours" topItemsBinding="topProducts" classNames="four"}}
+    {{view SS.DashboardTopColumnView title="Links" subtitle="Past 24 hours" topItemsBinding="topLinks" classNames="four"}}
+    {{view SS.DashboardTopColumnView title="Searches" subtitle="Past 24 hours" topItemsBinding="topSearches" classNames="four"}}
   </div>
 </div>

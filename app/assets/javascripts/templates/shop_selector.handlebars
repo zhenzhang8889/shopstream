@@ -1,7 +1,7 @@
 <div class="twelve columns">
   {{#collection SS.ShopSelectorCollectionView contentBinding="content"}}
     {{#with view.content}}
-      <div class="panel">
+      <div class="panel radius">
         <h5>
           <a {{action goToDashboard this href=true}}>{{name}}</a>
           <small>
@@ -13,6 +13,8 @@
           </small>
         </h5>
         <h6 class="subheader super-short">
+          <strong>{{totalOrdersToday}}</strong> orders
+          /
           <strong>{{money totalSalesToday}}</strong> today
           /
           <strong>{{money avgPurchase}}</strong> avg
@@ -25,7 +27,7 @@
 
   <div class="row">
     <div class="two columns offset-by-five">
-      <a {{action goToAddShop href=true}} class="button success twelve">Add shop</a>
+      <a {{action goToAddShop href=true}} class="button success radius twelve">Add shop</a>
     </div>
   </div>
 </div>

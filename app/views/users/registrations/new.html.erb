@@ -11,10 +11,10 @@
         <%= render partial: 'layouts/flashes' %>
         <%= f.error_notification %>
 
-        <%= f.input :email, label: 'Your Email Address:', placeholder: 'myname@mycompany.com' %>
-        <%= f.input :password, label: 'Choose a Password:', placeholder: 'Desired password' %>
-        <%= f.input :password_confirmation, label: 'Confirm your password:', placeholder: 'Confirm' %>
-
+        <%= f.input :email, label: 'Email address', placeholder: 'myname@mycompany.com' %>
+        <%= f.input :name, label: 'Name', placeholder: 'John Doe' %>
+        <%= f.input :password, placeholder: 'Desired password' %>
+        <%= f.input :password_confirmation, placeholder: 'Confirm' %>
         <%= f.button :submit, 'Start your free trial now!', class: 'success' %>
         <p class="terms-notice">by clicking this button, you accept our <a href="http://shopstream.co/terms">terms</a>.</p>
       <% end %>

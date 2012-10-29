@@ -7,15 +7,21 @@ SS.Shop = DS.Model.extend
   trackerScriptUrl: DS.attr 'string'
   sendDailyNotifications: DS.attr 'boolean'
   soundOnSales: DS.attr 'boolean'
+  everTracked: DS.attr 'boolean'
+  trackedRecently: DS.attr 'boolean'
 
   user: DS.belongsTo('SS.User', key: 'user_id')
   feedItems: DS.hasMany('SS.FeedItem', embedded: true)
 
   avgPurchase: DS.attr 'number'
   maxAvgPurchase: DS.attr 'number'
+  revenuePerVisit: DS.attr 'number'
+  maxRevenuePerVisit: DS.attr 'number'
   conversionRate: DS.attr 'number'
   maxConversionRate: DS.attr 'number'
+  totalOrdersToday: DS.attr 'number'
   totalSalesToday: DS.attr 'number'
+  maxTotalSalesToday: DS.attr 'number'
   checkoutDistribution: DS.attr 'array'
   topLinks: DS.attr 'array'
   topSearches: DS.attr 'array'
@@ -56,8 +62,14 @@ SS.Shop = DS.Model.extend
     yaxis:
       min: 0
       minTickSize: 1
+      tickDecimals: 0
     xaxis:
-      tickSize: 4
+      ticks: [[0, "0:00"], [6, "6:00"], [12, "12:00"], [18, "18:00"]]
+    legend:
+      noColumns: 2
+      margin: [0, 225]
+    grid:
+      borderWidth: 0
     series:
       lines:
         lineWidth: 2
@@ -67,6 +79,9 @@ SS.Shop = DS.Model.extend
     if !@get('pusherSetup') && !!@get('token')
       channel = SS.pusher.subscribe @get('pusherChannelName')
       channel.bind 'metrics-updated', (data) =>
+        @set 'everTracked', true
+        @set 'trackedRecently', true
+
         mappedData = {}
 
         for k, v of data

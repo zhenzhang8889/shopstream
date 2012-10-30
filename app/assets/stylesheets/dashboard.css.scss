@@ -1,6 +1,10 @@
 .metric {
   text-align: center;
 
+  .title {
+    text-transform: uppercase;
+  }
+
   canvas {
     width: 75%;
   }

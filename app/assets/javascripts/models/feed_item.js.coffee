@@ -10,7 +10,7 @@ SS.FeedItem = DS.Model.extend
 
   # Public: Get actor name.
   actorName: (->
-    if @get('isNewCart')
+    if @get('isNewCart') or Ember.none(@get('activityAttributes.customer.first_name'))
       'Someone'
     else
       "#{@get('activityAttributes.customer.first_name')} #{@get('activityAttributes.customer.last_name')}"

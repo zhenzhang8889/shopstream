@@ -200,7 +200,7 @@ class Shop
   # Public: Check if store was tracked in past 24 hours.
   def tracked_recently?
     if ever_tracked?
-      last_tracked_at < 24.hours.ago
+      last_tracked_at > 24.hours.ago
     else
       false
     end

@@ -3,7 +3,7 @@ class ShopifyShop < Shop
   field :shopify_token, type: String
   field :shopify_attributes, type: Hash, default: {}
 
-  validates :shopify_id, presence: true
+  validates :shopify_id, presence: true, uniqueness: true
   validates :shopify_token, presence: true
 
   attr_accessible :shopify_id, :shopify_token, :shopify_attributes, as: :admin

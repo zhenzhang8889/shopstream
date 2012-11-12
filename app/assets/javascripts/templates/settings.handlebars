@@ -68,20 +68,22 @@
           <p>Then, add the tracker to your website checkout:</p>
           <code>
             <p><pre>
-_shopstream.addOrder(
+var _shopstream = _shopstream || [];
+
+_shopstream.push(['addOrder',
   "Order name", // order name, required
   20.02, // order total, required
   "email@customer.com", // customer email, required
   "first", // customer first name, optional
   "last" // customer last name, optional
-);
-_shopstream.addItem(
+]);
+_shopstream.push(['addItem',
   "SOME123SKU", // item SKU, required
   "Title", // item name, required
   10.01, // item price, required
   2 // item quantity, required
-);
-_shopstream.trackOrder();
+]);
+_shopstream.push(['trackOrder']);
           </pre></p>
         </code>
         </div>

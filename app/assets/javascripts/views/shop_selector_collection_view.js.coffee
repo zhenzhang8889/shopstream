@@ -1,5 +1,5 @@
 SS.ShopSelectorCollectionView = Ember.CollectionView.extend
-  classNames: ['block-grid', 'two-up']
+  classNames: ['block-grid', 'two-up', 'mobile-one-up']
   tagName: 'ul'
   itemViewClass: Ember.View.extend
     classNames: ['text-center']

@@ -23,3 +23,9 @@
     }
   }
 }
+
+@media only screen and (max-width: 520px) {
+  .metric:nth-of-type(3) {
+    float: right;
+  }
+}

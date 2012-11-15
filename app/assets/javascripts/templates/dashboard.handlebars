@@ -1,23 +1,23 @@
 <div class="twelve columns">
   <div class="row">
-    <div class="three columns metric">
+    <div class="three mobile-two columns metric">
       {{#view SS.AnimatedNumbersView valueBinding="conversionRate"}}<h2>{{percentage view.animatedValue}}</h2>{{/view}}
       {{view SS.GaugeView numberBinding="conversionRate" maxNumberBinding="maxConversionRate"}}
       <h5 class="subheader title"><strong>Conversion</strong> rate</h5>
       <h5 class="subheader short">30 day max <strong>{{percentage maxConversionRate}}</strong></h5>
     </div>
-    <div class="three columns metric">
+    <div class="three mobile-two columns metric">
       {{#view SS.AnimatedNumbersView valueBinding="avgPurchase"}}<h2>{{money view.animatedValue}}</h2>{{/view}}
       {{view SS.GaugeView numberBinding="avgPurchase" maxNumberBinding="maxAvgPurchase"}}
       <h5 class="subheader title"><strong>Avg</strong> purchase</h5>
       <h5 class="subheader short">30 day max <strong>{{money maxAvgPurchase}}</strong></h5>
     </div>
-    <div class="three columns metric">
+    <div class="three mobile-two columns metric">
       {{#view SS.AnimatedNumbersView valueBinding="revenuePerVisit"}}<h2>{{money view.animatedValue}}</h2>{{/view}}
       <h5 class="subheader title"><strong>Revenue</strong> per visitor</h5>
       <h5 class="subheader short">30 day max <strong>{{money maxRevenuePerVisit}}</strong></h5>
     </div>
-    <div class="three columns metric">
+    <div class="three mobile-two columns metric">
       {{#view SS.AnimatedNumbersView valueBinding="totalSalesToday"}}<h2>{{money view.animatedValue}}</h2>{{/view}}
       <h5 class="subheader title"><strong>Sales</strong> today</h5>
       <h5 class="subheader short">30 day max <strong>{{money maxTotalSalesToday}}</strong></h5>

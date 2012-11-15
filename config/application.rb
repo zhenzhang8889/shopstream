@@ -72,5 +72,10 @@ module ShopstreamApi
       Devise::UnlocksController.layout 'devise'
       Devise::PasswordsController.layout 'devise'
     end
+
+    config.generators do |g|
+      g.view_specs false
+      g.helper_specs false
+    end
   end
 end

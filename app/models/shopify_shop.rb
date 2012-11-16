@@ -15,7 +15,7 @@ class ShopifyShop < Shop
     self.domain = shopify_attributes['domain']
     self.name = shopify_attributes['name']
     self.timezone = shopify_attributes['timezone'].sub /\([^)]*\) /, ''
-  end 
+  end
 
   # Public: Get ShopifyAPI::Shop for current shop.
   def shopify_shop

@@ -52,13 +52,83 @@ describe ShopifyShop do
     end
   end
 
-  describe '#setup_shopify_billing'
+  describe '#with_shopify_session' do
+    it 'callcs .with_shopify_session' do
+      ShopifyShop.should_receive(:with_shopify_session).with shop.domain, shop.shopify_token
+      shop.with_shopify_session do; end
+    end
+  end
 
-  describe '#with_shopify_session'
+  describe '.shopify_shop' do
+    it 'creates session' do
+      ShopifyAPI::Session.should_receive(:temp).with shop.domain, shop.token
+      ShopifyShop.shopify_shop shop.domain, shop.token
+    end
 
-  describe '.shopify_shop'
+    it 'gets current shop' do
+      ShopifyAPI::Shop.should_receive :current
+      ShopifyShop.shopify_shop shop.domain, shop.token
+    end
+  end
 
-  describe '.with_shopify_session'
+  describe '.with_shopify_session' do
+    it 'creates session' do
+      ShopifyAPI::Session.should_receive(:temp).with shop.domain, shop.token
+      ShopifyShop.with_shopify_session shop.domain, shop.token do; end
+    end
+  end
 
-  describe '.create_with_omniauth_and_user'
+  describe '.create_with_omniauth_and_user' do
+    context 'shop is invalid' do
+      before { ShopifyShop.stub shopify_shop: nil }
+
+      it 'returns nil' do
+        expect(ShopifyShop.create_with_omniauth_and_user(shop.domain, 'abc', shop.user)).to eq nil
+      end
+    end
+
+    context 'shop is valid' do
+      before { ShopifyShop.stub shopify_shop: double('shopify-api-shop').as_null_object }
+      let(:mock_shop) { double('shop', save: true).as_null_object }
+
+      it 'creates shopify shop' do
+        ShopifyShop.should_receive(:new).at_least(1).and_return mock_shop
+        ShopifyShop.create_with_omniauth_and_user shop.domain, 'abc', shop.user
+      end
+
+      it 'assigns the user' do
+        ShopifyShop.should_receive(:new).at_least(1).and_return mock_shop
+        mock_shop.should_receive(:user=).with shop.user
+
+        ShopifyShop.create_with_omniauth_and_user shop.domain, 'abc', shop.user
+      end
+
+      it 'extracts attributes' do
+        ShopifyShop.should_receive(:new).at_least(1).and_return mock_shop
+        mock_shop.should_receive(:extract_shopify_attributes)
+
+        ShopifyShop.create_with_omniauth_and_user shop.domain, 'abc', shop.user
+      end
+
+      it 'saves' do
+        ShopifyShop.should_receive(:new).at_least(1).and_return mock_shop
+        mock_shop.should_receive(:save)
+
+        ShopifyShop.create_with_omniauth_and_user shop.domain, 'abc', shop.user
+      end
+
+      it 'sets up shopify stuff' do
+        ShopifyShop.should_receive(:new).at_least(1).and_return mock_shop
+        mock_shop.should_receive(:setup_shopify_shop)
+
+        ShopifyShop.create_with_omniauth_and_user shop.domain, 'abc', shop.user
+      end
+
+      it 'returns shop' do
+        ShopifyShop.should_receive(:new).at_least(1).and_return mock_shop
+
+        expect(ShopifyShop.create_with_omniauth_and_user(shop.domain, 'abc', shop.user)).to eq mock_shop
+      end
+    end
+  end
 end

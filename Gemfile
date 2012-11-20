@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '1.9.3'
 
-gem 'rails', '3.2.8'
+gem 'rails', '3.2.9'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -26,6 +26,17 @@ gem 'rack-cors', require: 'rack/cors'
 group :development do
   gem 'pry-rails'
   gem 'letter_opener'
+end
+
+group :test do
+  gem 'database_cleaner', '~> 0.8.0'
+  gem 'mongoid-rspec', '~> 1.4.6'
+  gem 'factory_girl_rails', '~> 4.0.0'
+  gem 'faker'
+end
+
+group :development, :test do
+  gem 'rspec-rails', '~> 2.11.0'
 end
 
 group :assets do

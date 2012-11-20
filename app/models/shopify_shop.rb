@@ -89,10 +89,16 @@ class ShopifyShop < Shop
   # token - The String shopify shop token.
   # block - A block of code to be executed within the session.
   def self.with_shopify_session(shop, token, &block)
+    retried = nil
     logger.debug "Creating new session #{shop} - #{token}"
 
     ShopifyAPI::Session.temp shop, token do
       yield
+    end
+  rescue ActiveResource::Redirection => ex
+    unless retried
+      domain = URI.parse(ex.response['Location']).host
+      retried = true and retry
     end
   end
 

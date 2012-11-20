@@ -2,6 +2,7 @@ class ShopifyShop < Shop
   field :shopify_id, type: Integer
   field :shopify_token, type: String
   field :shopify_attributes, type: Hash, default: {}
+  field :myshopify, type: String, default: ''
 
   validates :shopify_id, presence: true, uniqueness: true
   validates :shopify_token, presence: true
@@ -13,9 +14,10 @@ class ShopifyShop < Shop
   # Internal: Extract required shop attributes from shopify payload.
   def extract_shopify_attributes
     self.domain = shopify_attributes['domain']
+    self.myshopify = shopify_attributes['myshopify_domain']
     self.name = shopify_attributes['name']
     self.timezone = shopify_attributes['timezone'].sub /\([^)]*\) /, ''
-  end 
+  end
 
   # Public: Get ShopifyAPI::Shop for current shop.
   def shopify_shop
@@ -70,9 +72,9 @@ class ShopifyShop < Shop
   end 
 
   def with_shopify_session(&block)
-    ShopifyShop.with_shopify_session domain, shopify_token, &block
+    ShopifyShop.with_shopify_session myshopify || domain, shopify_token, &block
   end
- 
+
   # Public: Get ShopifyAPI::Shop.
   #
   # shop  - The String shop domain.

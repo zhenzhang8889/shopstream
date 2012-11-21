@@ -39,7 +39,7 @@ class Shop
 
   # Internal: Get URL of tracker script for current shop.
   def tracker_script_url
-    "http://#{ENV['COLLECTOR_HOST']}/track-#{token}.js"
+    "https://#{ENV['COLLECTOR_HOST']}/track-#{token}.js"
   end
 
   # Internal: Redis prefix.

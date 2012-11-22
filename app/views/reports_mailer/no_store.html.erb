@@ -1,0 +1,7 @@
+<p>Hello <%= @user.name %>,</p>
+
+<p>It's been <%= @days_since_signup %> <% 'day'.pluralize @days_since_signup %> since you signed up, and we noticed that you haven't tracked a store yet.</p>
+
+<p><%= link_to 'Track one now', root_url %>!</p>
+
+<p>Have a nice day!</p>

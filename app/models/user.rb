@@ -1,5 +1,7 @@
 class User
   include Mongoid::Document
+  include Mongoid::Timestamps
+
   devise :database_authenticatable, :registerable, :recoverable, :rememberable,
     :token_authenticatable, :validatable, :confirmable
 
@@ -24,4 +26,22 @@ class User
   has_many :shops
 
   before_save :ensure_authentication_token
+
+  def hours_since_signup
+    seconds = Time.now - created_at
+
+    (seconds / 60 / 60).to_i
+  end
+
+  def days_since_signup
+    (hours_since_signup / 24).to_i
+  end
+
+  def should_receive_no_store_notification?
+    shops.blank? && [1 * 24, 3 * 24, 7 * 24].include?(hours_since_signup)
+  end
+
+  def self.interested_in_no_store_notification
+    User.all.to_a.select &:should_receive_no_store_notification?
+  end
 end

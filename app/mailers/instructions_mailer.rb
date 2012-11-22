@@ -4,6 +4,9 @@ class InstructionsMailer < ActionMailer::Base
   def instructions(shop, developer)
     @shop = shop
 
-    mail to: developer, subject: 'Help set up the shop'
+    @to_self = @shop.user.email == developer
+    subject = @to_self ? 'Shop setup instructions' : "Help #{@shop.user.name} set up the shop"
+
+    mail to: developer, subject: subject
   end
 end

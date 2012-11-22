@@ -1,8 +1,10 @@
 <p>Hello,</p>
 
-<p>
-  We are contacting you on behalf of <%= @shop.user.name %>, the owner of <%= @shop.name %> because they need your help with setting up ShopStream tracking for their shop.
-</p>
+<%- unless @to_self %>
+  <p>
+    We are contacting you on behalf of <%= @shop.user.name %>, the owner of <%= @shop.name %> because they need your help with setting up ShopStream tracking for their shop.
+  </p>
+<% end %>
 
 <p>To start tracking, simply add this line to every page of your shop.</p>
 

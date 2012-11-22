@@ -3,7 +3,8 @@
 <p>We've been tracking your store <%= @shop.name %> and here's your daily report:</p>
 
 <p>
-  Average Order size: <%= @shop.avg_purchase %><br>
+  Average Order: <%= @shop.avg_purchase %><br>
+  Revenue Per Visitor: <%= @shop.avg_purchase %><br>
   Conversion Rate: <%= @shop.conversion_rate %><br>
   Total Sales Today: <%= number_to_currency @shop.total_sales_today %><br>
 </p>

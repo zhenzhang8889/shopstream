@@ -1,7 +1,7 @@
 class User
   include Mongoid::Document
   devise :database_authenticatable, :registerable, :recoverable, :rememberable,
-    :token_authenticatable, :validatable
+    :token_authenticatable, :validatable, :confirmable
 
   field :email, type: String, default: ''
   field :name, type: String, default: ''
@@ -11,6 +11,11 @@ class User
   field :reset_password_sent_at, type: Time
 
   field :remember_created_at, type: Time
+
+  field :confirmation_token, type: String
+  field :confirmed_at, type: Time
+  field :confirmation_sent_at, type: Time
+  field :unconfirmed_email, type: String
 
   field :authentication_token, type: String
 

@@ -189,7 +189,7 @@ class Shop
 
   # Public: Query when the store has tracked anything.
   def last_tracked_at
-    $redis.get(last_tracked_at_key).try :to_time
+    $redis.get(last_tracked_at_key).try(:to_time)
   end
 
   # Public: Check if store was ever tracked.
@@ -247,6 +247,29 @@ class Shop
     end
 
     shops
+  end
+
+  def hours_not_tracked
+    seconds = Time.now - (last_tracked_at || created_at)
+    (seconds / 60 / 60).to_i
+  end
+
+  def days_not_tracked
+    (hours_not_tracked / 24).to_i
+  end
+
+  def interested_in_tracked_nothing_notification?
+    if !tracked_recently? || !ever_tracked?
+      if ever_tracked?
+        hours_not_tracked % 24 == 0
+      else
+        [3 * 24, 6 * 24, 9 * 24].include? hours_not_tracked
+      end
+    end
+  end
+
+  def self.interested_in_tracked_nothing_notification
+    Shop.all.to_a.select &:interested_in_tracked_nothing_notification?
   end
 
   def set_timezone_name

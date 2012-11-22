@@ -1,0 +1,9 @@
+<p>Hello <%= @shop.user.name %>,</p>
+
+<%- if @kind == :recently %>
+  <p>We have not tracked anything for your shop, <%= @shop.name %>, in last 24 hours. Possibly, you have removed tracking code. Do you need any help?</p>
+<% else %>
+  <p>It's been <%= @shop.days_not_tracked %> <%= 'day'.pluralize @shop.days_not_tracked %> since you added the store <%= @shop.name %> and we noticed that nothing was tracked since. You might have not installed the tracking code. Do you need any help?</p>
+<% end %>
+
+<p>Have a nice day!</p>

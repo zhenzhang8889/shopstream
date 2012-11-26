@@ -13,6 +13,7 @@ SS.Shop = DS.Model.extend
   user: DS.belongsTo('SS.User', key: 'user_id')
   feedItems: DS.hasMany('SS.FeedItem', embedded: true)
 
+  liveVisitors: DS.attr 'number'
   avgPurchase: DS.attr 'number'
   maxAvgPurchase: DS.attr 'number'
   revenuePerVisit: DS.attr 'number'

@@ -52,6 +52,12 @@ class Shop
     "#{redis_prefix}_#{key}"
   end
 
+  # Internal: Redis live visitors key.
+
+  def live_visitors_key
+    redis_prefixed 'live_visitors'
+  end
+
   # Internal: Redis average purchase key.
   def avg_purchase_key
     redis_prefixed 'avg_purchase'
@@ -120,6 +126,11 @@ class Shop
   # Internal: Redis last tracked at key.
   def last_tracked_at_key
     redis_prefixed 'last_tracked_at'
+  end
+
+  # Public: Get live visitors.
+  def live_visitors
+    $redis.get(live_visitors_key).to_i
   end
 
   # Public: Get avg purchase.

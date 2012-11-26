@@ -16,6 +16,9 @@
       {{#view SS.AnimatedNumbersView valueBinding="revenuePerVisit"}}<h2>{{money view.animatedValue}}</h2>{{/view}}
       <h5 class="subheader title"><strong>Revenue</strong> per visitor</h5>
       <h5 class="subheader short">30 day max <strong>{{money maxRevenuePerVisit}}</strong></h5>
+
+      {{#view SS.AnimatedNumbersView valueBinding="liveVisitors"}}<h2>{{number view.animatedValue}}</h2>{{/view}}
+      <h5 class="subheader title"><strong>Live</strong> visitors</h5>
     </div>
     <div class="three mobile-two columns metric">
       {{#view SS.AnimatedNumbersView valueBinding="totalSalesToday"}}<h2>{{money view.animatedValue}}</h2>{{/view}}

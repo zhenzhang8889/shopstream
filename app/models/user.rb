@@ -3,7 +3,7 @@ class User
   include Mongoid::Timestamps
 
   devise :database_authenticatable, :registerable, :recoverable, :rememberable,
-    :token_authenticatable, :validatable, :confirmable
+    :token_authenticatable, :validatable
 
   field :email, type: String, default: ''
   field :name, type: String, default: ''

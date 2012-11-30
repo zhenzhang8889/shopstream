@@ -26,7 +26,7 @@ ShopstreamApi::Application.routes.draw do
     match '/auth/shopify/callback' => 'omniauth_callbacks#shopify'
   end
 
-  resources :shops, only: [] do
+  resources :shops, only: [:show] do
     get :connect, on: :collection
   end
 

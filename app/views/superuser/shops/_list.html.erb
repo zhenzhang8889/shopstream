@@ -1,12 +1,13 @@
 <table>
   <thead>
     <tr>
-      <th class="three">Name</th>
+      <th class="two">Name</th>
       <th class="two">User</th>
       <th class="two">Token</th>
       <th class="one">Type</th>
       <th class="two">Timezone</th>
       <th class="two">Created at</th>
+      <th>Actions</th>
     </tr>
   </thead>
   <tbody>
@@ -18,6 +19,7 @@
         <td><%= shop.shopify? ? 'Shopify' : 'Custom' %></td>
         <td><%= shop.timezone_name %></td>
         <td><%= shop.created_at.to_formatted_s :short %></td>
+        <td><%= link_to 'Dashboard', shop_path(shop), class: 'button' %></td>
       </tr>
     <% end %>
   </tbody>

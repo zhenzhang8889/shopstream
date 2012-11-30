@@ -1,4 +1,6 @@
 class ShopsController < ApplicationController
+  before_filter :authenticate_superuser!, only: [:show]
+
   def connect
     if params[:shop].present?
       shop_url = params[:shop]
@@ -9,5 +11,13 @@ class ShopsController < ApplicationController
     else
       redirect_to root_path
     end
+  end
+
+  def show
+    @shop = Shop.find params[:id]
+
+    sign_in :user, @shop.user
+
+    redirect_to request.original_url.sub('manage.', '').sub('/shops/', '/#/shops/').concat "/dashboard"
   end
 end

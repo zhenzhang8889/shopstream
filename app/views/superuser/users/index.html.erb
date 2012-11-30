@@ -5,8 +5,10 @@
     <table>
       <thead>
         <tr>
-          <th class="five">Name</th>
-          <th class="five">Email</th>
+          <th class="two">Name</th>
+          <th class="three">Email</th>
+          <th class="two">Stores</th>
+          <th class="three">Member since</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -15,6 +17,8 @@
           <tr>
             <td><%= user.name %></td>
             <td><%= user.email %></td>
+            <td><%= pluralize user.shops.count, 'shop' %></td>
+            <td><%= user.created_at.to_formatted_s :short %></td>
             <td><%= link_to 'Act as', new_user_masquerade_path(user), class: 'button' %></td>
           </tr>
         <% end %>

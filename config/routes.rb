@@ -7,7 +7,7 @@ ShopstreamApi::Application.routes.draw do
     scope module: 'superuser' do
       resource :dashboard, controller: 'dashboard', only: [:show]
 
-      resources :users, only: [:index] do
+      resources :users, only: [:index, :show] do
         resources :masquerades, only: [:new]
       end
 

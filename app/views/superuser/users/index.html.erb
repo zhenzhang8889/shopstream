@@ -15,15 +15,16 @@
       <tbody>
         <% @users.each do |user| %>
           <tr>
-            <td><%= user.name %></td>
+            <td><%= link_to user.name, user_path(user) %></td>
             <td><%= user.email %></td>
             <td><%= pluralize user.shops.count, 'shop' %></td>
             <td><%= user.created_at.to_formatted_s :short %></td>
             <td><%= link_to 'Act as', new_user_masquerade_path(user), class: 'button' %></td>
           </tr>
         <% end %>
-      </table>
+      </tbody>
+    </table>
 
-      <%= paginate @users %>
-    </div>
+    <%= paginate @users %>
   </div>
+</div>

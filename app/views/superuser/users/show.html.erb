@@ -1,0 +1,19 @@
+<div class="twelve columns">
+  <div class="row">
+    <h3><%= @user.name %></h3>
+    <%= link_to 'Act as', new_user_masquerade_path(@user), class: 'tiny button' %>
+
+    <p>
+      <b>Email:</b> <%= @user.email %><br>
+      <b>Member since:</b> <%= @user.created_at.to_formatted_s :short %></br>
+    </p>
+
+    <h4>Shops <small><%= pluralize @shops.count, 'shop' %></h4>
+
+    <%- if @shops.present? %>
+      <%= render partial: 'superuser/shops/list' %>
+    <% else %>
+      <p>No shops.</p>
+    <% end %>
+  </div>
+</div>

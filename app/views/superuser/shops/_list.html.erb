@@ -1,0 +1,24 @@
+<table>
+  <thead>
+    <tr>
+      <th class="three">Name</th>
+      <th class="two">User</th>
+      <th class="two">Token</th>
+      <th class="one">Type</th>
+      <th class="two">Timezone</th>
+      <th class="two">Created at</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @shops.each do |shop| %>
+      <tr>
+        <td><%= shop.name %> — <%= shop.domain %></td>
+        <td><%= link_to shop.user.name, user_path(shop.user) %></td>
+        <td><%= shop.token %></td>
+        <td><%= shop.shopify? ? 'Shopify' : 'Custom' %></td>
+        <td><%= shop.timezone_name %></td>
+        <td><%= shop.created_at.to_formatted_s :short %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

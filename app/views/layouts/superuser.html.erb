@@ -30,6 +30,11 @@
               Users <span class="label round"><%= User.count %></span>
             <% end %>
           </li>
+          <li>
+            <%= link_to shops_path do %>
+              Shops <span class="label round"><%= Shop.count %></span>
+            <% end %>
+          </li>
         </ul>
 
         <ul class="right">

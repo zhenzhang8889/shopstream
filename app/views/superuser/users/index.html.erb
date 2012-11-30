@@ -1,6 +1,6 @@
 <div class="twelve columns">
   <div class="row">
-    <h3>Users <small><%= User.count %> users</small></h3>
+    <h3>Users <small><%= pluralize User.count, 'user' %></small></h3>
 
     <table class="twelve">
       <thead>

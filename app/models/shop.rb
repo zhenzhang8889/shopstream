@@ -227,6 +227,14 @@ class Shop
     self.token = Devise.friendly_token
   end
 
+  def shopify?
+    _type == "ShopifyShop"
+  end
+
+  def custom?
+    _type == "CustomShop"
+  end
+
   # Internal: Reset all redis keys to default values in case those values are
   # blank currently.
   def reset_redis_keys

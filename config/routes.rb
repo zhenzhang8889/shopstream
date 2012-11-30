@@ -11,6 +11,8 @@ ShopstreamApi::Application.routes.draw do
         resources :masquerades, only: [:new]
       end
 
+      resources :shops, only: [:index]
+
       root to: 'users#index'
     end
   end

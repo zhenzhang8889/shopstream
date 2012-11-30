@@ -25,7 +25,11 @@
       <section>
         <ul class="left">
           <li class="divider"></li>
-          <li><%= link_to 'Users', users_path %></li>
+          <li>
+            <%= link_to users_path do %>
+              Users <span class="label round"><%= User.count %></span>
+            <% end %>
+          </li>
         </ul>
 
         <ul class="right">

@@ -19,7 +19,7 @@
             <td><%= user.email %></td>
             <td><%= pluralize user.shops.count, 'shop' %></td>
             <td><%= user.created_at.to_formatted_s :short %></td>
-            <td><%= link_to 'Act as', new_user_masquerade_path(user), class: 'button' %></td>
+            <td><%= link_to 'Act as', new_user_masquerade_path(user), class: 'button', target: '_blank' %></td>
           </tr>
         <% end %>
       </tbody>

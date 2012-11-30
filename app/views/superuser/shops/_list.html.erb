@@ -19,7 +19,7 @@
         <td><%= shop.shopify? ? 'Shopify' : 'Custom' %></td>
         <td><%= shop.timezone_name %></td>
         <td><%= shop.created_at.to_formatted_s :short %></td>
-        <td><%= link_to 'Dashboard', shop_path(shop), class: 'button' %></td>
+        <td><%= link_to 'Dashboard', shop_path(shop), class: 'button', target: 'blank' %></td>
       </tr>
     <% end %>
   </tbody>

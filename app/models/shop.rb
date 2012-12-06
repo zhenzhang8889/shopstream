@@ -7,6 +7,7 @@ class Shop
   field :domain, type: String
   field :timezone, type: String
   field :timezone_name, type: String
+  field :timezone_abbr, type: String
   field :send_daily_notifications, type: Boolean, default: true
   field :sound_on_sales, type: Boolean, default: true
 
@@ -24,8 +25,8 @@ class Shop
     :sound_on_sales, as: :admin
 
   before_create :generate_token
-  after_create :set_timezone_name
   after_create :reset_redis_keys
+  before_save :set_timezone_name
 
   # Public: Get 10 most recent feed items.
   def feed
@@ -292,7 +293,8 @@ class Shop
   end
 
   def set_timezone_name
-    self.update_attribute :timezone_name, tz.to_s
+    self.timezone_name = tz.to_s
+    self.timezone_abbr = tz.tzinfo.name
   end
 
   def active_model_serializer

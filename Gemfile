@@ -15,7 +15,7 @@ gem 'redis', '~> 3.0.0.rc2'
 gem 'hiredis', '~> 0.4.5'
 gem 'simple_form'
 gem 'shopify_app'
-gem 'active_model_serializers', git: 'git://github.com/josevalim/active_model_serializers.git'
+gem 'active_model_serializers', git: 'git://github.com/rails-api/active_model_serializers.git'
 gem 'puma'
 gem 'rack-cors', require: 'rack/cors'
 

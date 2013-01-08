@@ -23,7 +23,7 @@ class User
 
   validates :name, presence: true
 
-  has_many :shops
+  has_many :shops, dependent: :destroy
 
   before_save :ensure_authentication_token
 
@@ -42,6 +42,6 @@ class User
   end
 
   def self.interested_in_no_store_notification
-    User.all.to_a.select &:should_receive_no_store_notification?
+    User.all.to_a.select(&:should_receive_no_store_notification?)
   end
 end

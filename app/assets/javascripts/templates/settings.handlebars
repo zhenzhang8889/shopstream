@@ -62,7 +62,7 @@
         <div class="panel radius">
           <p>To start using ShopStream, you need to install our javascript tracker in your store. It is really simple, just add the following code to all pages in your website:</p>
           <code>
-          <p><pre>&lt;script type=&quot;text/javascript&quot; src=&quot;{{trackerScriptUrl}}&quot;&gt;&lt;/script&gt;</pre></p>
+            <p><pre>&lt;script type=&quot;text/javascript&quot; src=&quot;{{trackerScriptUrl}}&quot;&gt;&lt;/script&gt;</pre></p>
           </code>
 
           <p>Then, add the tracker to your website checkout:</p>
@@ -84,8 +84,10 @@ _shopstream.push(['addItem',
   2 // item quantity, required
 ]);
 _shopstream.push(['trackOrder']);
-          </pre></p>
-        </code>
+            </pre></p>
+          </code>
+
+          <p>It is recommended that both are placed inside <pre>head</pre>, before any other script.</p>
         </div>
       </div>
     </div>

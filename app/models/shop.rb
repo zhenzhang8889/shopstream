@@ -17,7 +17,7 @@ class Shop
   validates :token, uniqueness: true
   validates :name, presence: true
   validates :domain, presence: true
-  validates :timezone, presence: true, inclusion: { in: ActiveSupport::TimeZone.zones_map.keys }
+  validates :timezone, presence: true, inclusion: { in: ActiveSupport::TimeZone::MAPPING.to_a.flatten }
 
   attr_accessible :name, :domain, :timezone, :send_daily_notifications,
     :sound_on_sales
@@ -289,7 +289,7 @@ class Shop
   end
 
   def self.interested_in_tracked_nothing_notification
-    Shop.all.to_a.select &:interested_in_tracked_nothing_notification?
+    Shop.all.to_a.select(&:interested_in_tracked_nothing_notification?)
   end
 
   def set_timezone_name

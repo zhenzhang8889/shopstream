@@ -13,7 +13,7 @@ ShopstreamApi::Application.routes.draw do
 
       resources :shops, only: [:index]
 
-      root to: 'users#index'
+      root to: 'dashboard#show'
     end
   end
 

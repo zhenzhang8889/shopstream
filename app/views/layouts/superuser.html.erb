@@ -25,6 +25,7 @@
       <section>
         <ul class="left">
           <li class="divider"></li>
+          <li><%= link_to 'Dashboard', dashboard_path %></li>
           <li>
             <%= link_to users_path do %>
               Users <span class="label round"><%= User.count %></span>

@@ -292,6 +292,18 @@ class Shop
     Shop.all.to_a.select(&:interested_in_tracked_nothing_notification?)
   end
 
+  def self.active
+    all.select(&:tracked_recently?)
+  end
+
+  def self.inactive
+    all.select(&:ever_tracked?).reject(&:tracked_recently?)
+  end
+
+  def self.never_tracked
+    all.reject(&:ever_tracked?)
+  end
+
   def set_timezone_name
     self.timezone_name = tz.to_s
     self.timezone_abbr = tz.tzinfo.name

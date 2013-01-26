@@ -20,7 +20,7 @@ describe Shop do
 
   describe '#tracker_script_url' do
     it 'generates tracker script URL based on token' do
-      expect(shop.tracker_script_url).to eq "http://collector.shopstream.dev/track-#{shop.token}.js"
+      expect(shop.tracker_script_url).to eq "https://collector.shopstream.dev/track-#{shop.token}.js"
     end
   end
 

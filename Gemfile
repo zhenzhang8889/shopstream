@@ -11,7 +11,7 @@ gem 'mongoid'
 gem 'devise'
 gem 'cancan'
 gem 'kaminari'
-gem 'redis', '~> 3.0.0.rc2'
+gem 'redis', '~> 3.0.2'
 gem 'hiredis', '~> 0.4.5'
 gem 'simple_form'
 gem 'shopify_app'
@@ -41,12 +41,12 @@ group :assets do
 
   gem 'uglifier', '>= 1.0.3'
 
-  gem 'compass-rails', '~> 1.0.3'
-  gem 'zurb-foundation', git: 'git://github.com/zurb/foundation.git'
+  gem 'compass-rails'
+  gem 'zurb-foundation'
 end
 
 gem 'jquery-rails', '2.0.3'
-gem 'ember-rails', git: 'git://github.com/emberjs/ember-rails.git'
+gem 'ember-rails'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

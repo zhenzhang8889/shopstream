@@ -1,29 +1,9 @@
 GIT
-  remote: git://github.com/emberjs/ember-rails.git
-  revision: 74cfe6d28e35cfe2399c63e20a4708682e491934
-  specs:
-    ember-rails (0.8.0)
-      active_model_serializers
-      barber
-      execjs (>= 1.2)
-      railties (~> 3.1)
-
-GIT
   remote: git://github.com/rails-api/active_model_serializers.git
-  revision: 7f87c9b3f2bb26372d75a5c10025e5dd881d6688
+  revision: cef10cf01dfe18f72060bda279d5246c156ae737
   specs:
     active_model_serializers (0.5.2)
       activemodel (>= 3.0)
-
-GIT
-  remote: git://github.com/zurb/foundation.git
-  revision: 06a8f20433420c231f6a294ee1999e87ff8c69c3
-  specs:
-    zurb-foundation (3.2.3)
-      compass (>= 0.12.2)
-      modular-scale (>= 1.0.2)
-      rake
-      sass (>= 3.2.0)
 
 GEM
   remote: https://rubygems.org/
@@ -57,12 +37,10 @@ GEM
       multi_json (~> 1.0)
     addressable (2.3.2)
     arel (3.0.2)
-    barber (0.1.3)
-      execjs
     bcrypt-ruby (3.0.1)
     builder (3.0.4)
     cancan (1.6.8)
-    chunky_png (1.2.6)
+    chunky_png (1.2.7)
     coderay (1.0.8)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
@@ -78,12 +56,16 @@ GEM
     compass-rails (1.0.3)
       compass (>= 0.12.2, < 0.14)
     database_cleaner (0.8.0)
-    devise (2.1.2)
+    devise (2.2.2)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.1)
       railties (~> 3.1)
       warden (~> 1.2.1)
     diff-lcs (1.1.3)
+    ember-rails (0.8.0)
+      active_model_serializers
+      execjs (>= 1.2)
+      railties (~> 3.1)
     erubis (2.7.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
@@ -122,12 +104,13 @@ GEM
       treetop (~> 1.4.8)
     method_source (0.8.1)
     mime-types (1.19)
-    modular-scale (1.0.2)
-      compass (>= 0.11.5)
-      sassy-math (>= 1.2)
-    mongoid (3.0.15)
+    modular-scale (1.0.6)
+      compass (>= 0.12.1)
+      sass (>= 3.2.0)
+      sassy-math (>= 1.5)
+    mongoid (3.0.19)
       activemodel (~> 3.1)
-      moped (~> 1.1)
+      moped (~> 1.2)
       origin (~> 1.0)
       tzinfo (~> 0.3.22)
     mongoid-rspec (1.4.6)
@@ -154,15 +137,15 @@ GEM
     origin (1.0.11)
     orm_adapter (0.4.0)
     polyglot (0.3.3)
-    pry (0.9.10)
+    pry (0.9.11.4)
       coderay (~> 1.0.5)
       method_source (~> 0.8)
-      slop (~> 3.3.1)
+      slop (~> 3.4)
     pry-rails (0.2.2)
       pry (>= 0.9.10)
     puma (1.6.3)
       rack (~> 1.2)
-    rack (1.4.3)
+    rack (1.4.4)
     rack-cache (1.2)
       rack (>= 0.4)
     rack-cors (0.2.7)
@@ -203,12 +186,12 @@ GEM
       activesupport (>= 3.0)
       railties (>= 3.0)
       rspec (~> 2.11.0)
-    sass (3.2.4)
-    sass-rails (3.2.5)
+    sass (3.2.5)
+    sass-rails (3.2.6)
       railties (~> 3.2.0)
       sass (>= 3.1.10)
       tilt (~> 1.3)
-    sassy-math (1.2)
+    sassy-math (1.5)
       compass (~> 0.11)
     shopify_api (3.0.3)
       activeresource (>= 3.0.0)
@@ -220,13 +203,13 @@ GEM
     simple_form (2.0.4)
       actionpack (~> 3.0)
       activemodel (~> 3.0)
-    slop (3.3.3)
+    slop (3.4.3)
     sprockets (2.2.2)
       hike (~> 1.2)
       multi_json (~> 1.0)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
-    thor (0.16.0)
+    thor (0.17.0)
     tilt (1.3.3)
     treetop (1.4.12)
       polyglot
@@ -237,6 +220,11 @@ GEM
       multi_json (~> 1.0, >= 1.0.2)
     warden (1.2.1)
       rack (>= 1.0)
+    zurb-foundation (3.2.4)
+      compass (>= 0.12.2)
+      modular-scale (= 1.0.6)
+      rake
+      sass (>= 3.2.0)
 
 PLATFORMS
   ruby
@@ -245,10 +233,10 @@ DEPENDENCIES
   active_model_serializers!
   cancan
   coffee-rails (~> 3.2.1)
-  compass-rails (~> 1.0.3)
+  compass-rails
   database_cleaner (~> 0.8.0)
   devise
-  ember-rails!
+  ember-rails
   factory_girl_rails (~> 4.0.0)
   faker
   hiredis (~> 0.4.5)
@@ -261,10 +249,10 @@ DEPENDENCIES
   puma
   rack-cors
   rails (= 3.2.11)
-  redis (~> 3.0.0.rc2)
+  redis (~> 3.0.2)
   rspec-rails (~> 2.11.0)
   sass-rails (~> 3.2.3)
   shopify_app
   simple_form
   uglifier (>= 1.0.3)
-  zurb-foundation!
+  zurb-foundation

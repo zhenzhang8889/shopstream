@@ -1,4 +1,4 @@
-# Shopstream API + Shopify app
+# Shopstream
 
 ### Requirements
 

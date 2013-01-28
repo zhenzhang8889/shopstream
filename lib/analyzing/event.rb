@@ -1,13 +1,13 @@
-# Public: Event, the integral part of the tracking system. Consists of a
-# created_at timestamp, associated model, and data payload.
-#
-# Examples
-#
-#   class LoadEvent
-#     include Analyzing::Event
-#     event_for :page
-#   end
 module Analyzing
+  # Public: Event, the integral part of the tracking system. Consists of a
+  # created_at timestamp, associated model, and data payload.
+  #
+  # Examples
+  #
+  #   class LoadEvent
+  #     include Analyzing::Event
+  #     event_for :page
+  #   end
   module Event
     extend ActiveSupport::Concern
 

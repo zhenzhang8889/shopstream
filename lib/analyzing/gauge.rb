@@ -90,6 +90,13 @@ module Analyzing
       @options = options
     end
 
+    # Public: Get associated events for the gauge period.
+    #
+    # Returns a Hash of event type -> event association.
+    def events
+      object.event_associations_between(period)
+    end
+
     # Internal: Fetch the cached value from cache store, execute block
     # otherwise.
     def cached(&block)

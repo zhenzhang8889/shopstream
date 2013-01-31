@@ -14,6 +14,22 @@ describe Analyzing::Gauge do
   it { should respond_to :period }
   it { should respond_to :options }
 
+  describe '#events' do
+    let(:order_events) do
+      double
+    end
+
+    let(:gauge) do
+      object = double(event_associations_between: { order: order_events })
+      klass.new object: object, period: 1..2
+    end
+
+    it 'returns event associations for the gauge period' do
+      gauge.object.should_receive(:event_associations_between).with(1..2)
+      expect(gauge.events).to eq order: order_events
+    end
+  end
+
   describe '#cached' do
     let(:gauge) do
       gauge = klass.new
@@ -32,8 +48,7 @@ describe Analyzing::Gauge do
   describe '#cache_expiry' do
     let(:gauge) do
       object = double.as_null_object
-      period = 1..5
-      klass.new object: object, period: period
+      klass.new object: object, period: 1..5
     end
 
     it 'calculates difference between period end and start' do
@@ -44,8 +59,7 @@ describe Analyzing::Gauge do
   describe '#cache_key' do
     let(:gauge) do
       object = double(class: { name: 'DaTracked' }, id: 123, simple_cache_key: 'da_tracked/123')
-      period = 1..5
-      klass.new object: object, period: period
+      klass.new object: object, period: 1..5
     end
 
     it 'calculates the cache key' do

@@ -3,10 +3,9 @@ require 'spec_helper'
 describe Analyzing::Gauge do
   let(:klass) do
     Class.new(Analyzing::Gauge) do
-      cattr_accessor :name, :kind, :class_name_kind
+      cattr_accessor :name
       self.name = 'SalesMetric'
-      self.kind = :metric
-      self.class_name_kind = :end
+      kind :metric, position: :end
     end
   end
 
@@ -87,13 +86,13 @@ describe Analyzing::Gauge do
 
     context 'when .kind is defined' do
       before do
-        klass.define_singleton_method(:kind) { :gauge }
+        klass.kind :gauge
       end
 
       context 'when gauge class name kind position is :start' do
         before do
           klass.name = 'GaugeSuperb'
-          klass.define_singleton_method(:class_name_kind) { :start }
+          klass.name_kind_position :start
         end
 
         it 'returns the gauge type' do
@@ -103,7 +102,7 @@ describe Analyzing::Gauge do
 
       context 'when gauge class name kind position is :end' do
         before do
-          klass.define_singleton_method(:class_name_kind) { :end }
+          klass.name_kind_position :end
         end
 
         it 'returns the gauge type' do
@@ -114,18 +113,29 @@ describe Analyzing::Gauge do
 
     context 'when .kind is not defined' do
       it 'raises an exception' do
-        expect { klass.type }.to raise_exception NotImplementedError
+        expect { klass.type }.to raise_exception RuntimeError
       end
     end
 
-    context 'when .class_name_kind is not defined' do
+    context 'when .name_kind_position is not defined' do
       before do
-        klass.define_singleton_method(:kind) { :gauge }
+        klass.kind :gauge
       end
 
       it 'raises an exception' do
-        expect { klass.type }.to raise_exception NotImplementedError
+        expect { klass.type }.to raise_exception RuntimeError
       end
+    end
+  end
+
+  describe '.inherited' do
+    let(:new_class) do
+      Class.new(klass)
+    end
+
+    it 'preserves gauge kind & kind position' do
+      expect(new_class.kind).to eq klass.kind
+      expect(new_class.name_kind_position).to eq klass.name_kind_position
     end
   end
 end

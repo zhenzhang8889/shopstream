@@ -15,13 +15,7 @@ module Analyzing
   #
   #   # Define a new kind of gauge
   #   class Top < Analyzing::Gauge
-  #     def kind
-  #       :top
-  #     end
-  #
-  #     def class_name_kind
-  #       :start
-  #     end
+  #     kind :top, position: :start
   #   end
   #
   #   # Define a new type of gauge
@@ -44,38 +38,67 @@ module Analyzing
       #   AveragePurchaseMetric.type
       #   # => :average_purchase
       def type
-        regexp = class_name_kind == :start ? /^#{kind.to_s.camelize}/ : /#{kind.to_s.camelize}$/
+        regexp = name_kind_position == :start ? /^#{kind.to_s.camelize}/ : /#{kind.to_s.camelize}$/
         name.demodulize.sub(regexp, '').underscore.to_sym
       end
 
-      # Internal: Get the Symbol kind of the gauge. Override this method for
-      # every new kind of gauges you create.
+      # Internal: Get/set the Symbol kind of the gauge.
+      #
+      # new_kind - The new Symbol kind of gauge.]
+      # options  - The optional Hash:
+      #            :position - the Symbol position of kind in class name.
+      #            Equivalent to calling .name_kind_position separately.
       #
       # Examples
       #
+      #   TopThings.kind :top
       #   TopThings.kind
       #   # => :top
       #
       #   AveragePurchaseMetric.kind
       #   # => :metric
-      def kind
-        raise NotImplementedError, '.kind not implemented'
+      def kind(new_kind = nil, options = {})
+        @kind = new_kind if new_kind.present?
+        @name_kind_position = options[:position] if options.has_key?(:position)
+        @kind || raise(RuntimeError, 'kind of gauge is not specified')
       end
 
-      # Internal: Get the position of gauge kind in the class name. It
-      # is used to generate the type of gauge. Override this method for
-      # every new kind of gauges you create.
+      # Internal: Get/set the position of gauge kind in the class name. It
+      # is used to generate the type of gauge.
       #
-      # Possible return values are `:start` or `:end`.
+      # Possible values are `:start` or `:end`.
       #
       # Examples
       #
-      #   TopThings.class_name_kind
+      #   TopThings.name_kind_position :start
+      #   TopThings.name_kind_position
       #   # => :start
       #   TopThings.type
       #   # => :things
-      def class_name_kind
-        raise NotImplementedError, '.class_name_kind not implemented'
+      def name_kind_position(new_position = nil)
+        @name_kind_position = new_position if new_position.present?
+        @name_kind_position || raise(RuntimeError, 'position of gauge kind in class name is not specified')
+      end
+
+      # Internal: Get the class name for gauge of this kind, with the
+      # type specified.
+      #
+      # type - The Symbold type name.
+      #
+      # Returns the String class name.
+      def class_name_for_type(type)
+        if name_kind_position == :start
+          "#{kind}_#{type}".camelize
+        else
+          "#{type}_#{kind}".camelize
+        end
+      end
+
+      # When inheriting, we want to have kind & kind position in subclasses.
+      def inherited(subclass)
+        super
+        subclass.instance_variable_set(:@kind, @kind)
+        subclass.instance_variable_set(:@name_kind_position, @name_kind_position)
       end
     end
 

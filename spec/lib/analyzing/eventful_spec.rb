@@ -70,7 +70,7 @@ describe Analyzing::Eventful do
       Class.new(klass)
     end
 
-    it 'inherits supported event types from the parent' do
+    it 'preserves supported event types from the parent' do
       expect(new_class.event_types).to eq klass.event_types
     end
   end

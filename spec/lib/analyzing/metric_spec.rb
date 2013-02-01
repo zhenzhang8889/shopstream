@@ -8,14 +8,6 @@ describe Analyzing::Metric do
     end
   end
 
-  let(:object) do
-    double
-  end
-
-  let(:period) do
-    1..10
-  end
-
   let(:metric) do
     klass.new
   end
@@ -59,6 +51,44 @@ describe Analyzing::Metric do
       expect(metric.value).to eq 0
       klass.calculate { 0 / 1 }
       expect(metric.value).to eq 0
+    end
+  end
+end
+
+describe Analyzing::Metric::ComputationContext do
+  subject { described_class.new(a: 1, b: 2, c: 3) }
+
+  describe '#compute' do
+    it 'evaluates the block' do
+      blk_double = double
+      blk_double.should_receive(:test)
+      subject.compute { blk_double.test }
+    end
+
+    it 'returns evaluation result' do
+      expect(subject.compute { 1 }).to eq 1
+    end
+
+    it 'evaluates the block in the context of locals' do
+      expect(subject.compute { a }).to eq 1
+    end
+
+    it 'catches division by zero and returns 0' do
+      expect(subject.compute { 1 / 0 }).to eq 0
+    end
+  end
+
+  describe '#method_missing' do
+    context 'local is present' do
+      it 'returns the value of local, wrapped into EventSet' do
+        expect(subject.a).to eq Analyzing::Metric::ComputationContext::EventSet.new(1)
+      end
+    end
+
+    context 'local is not preset' do
+      it 'raises an error' do
+        expect { subject.d }.to raise_exception NoMethodError
+      end
     end
   end
 end

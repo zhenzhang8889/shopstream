@@ -65,12 +65,18 @@ module Analyzing
 
       # Internal: The proxy to the set of event
       class EventSet
+        attr_reader :set
+
         def initialize(set)
           @set = set
         end
 
         def method_missing(name, *args, &block)
           @set.send(name, *args, &block).to_f
+        end
+
+        def ==(other)
+          set == other.set
         end
       end
     end

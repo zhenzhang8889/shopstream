@@ -40,7 +40,7 @@ describe Analyzing::Eventful do
     it 'returns event associations' do
       requests = double
       model.stub(:request_events) { requests }
-      expect(model.event_associations).to eq request: requests
+      expect(model.event_associations).to eq requests: requests
     end
   end
 
@@ -56,7 +56,7 @@ describe Analyzing::Eventful do
         period_requests = double
         model.stub(:request_events) { requests }
         requests.should_receive(:between).with(created_at: period).and_return(period_requests)
-        expect(model.event_associations_between(period)).to eq request: period_requests
+        expect(model.event_associations_between(period)).to eq requests: period_requests
       end
     end
   end

@@ -23,7 +23,7 @@ module Analyzing
     def event_associations
       Hash[event_types.map do |type|
         association = send(:"#{type}_events")
-        [type, association]
+        [type.to_s.pluralize.to_sym, association]
       end]
     end
 

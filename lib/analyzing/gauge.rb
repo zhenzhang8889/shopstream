@@ -38,7 +38,12 @@ module Analyzing
       #   AveragePurchaseMetric.type
       #   # => :average_purchase
       def type
-        regexp = name_kind_position == :start ? /^#{kind.to_s.camelize}/ : /#{kind.to_s.camelize}$/
+        if kind && name_kind_position
+          regexp = name_kind_position == :start ? /^#{kind.to_s.camelize}/ : /#{kind.to_s.camelize}$/
+        else
+          regexp = //
+        end
+
         name.demodulize.sub(regexp, '').underscore.to_sym
       end
 
@@ -58,9 +63,10 @@ module Analyzing
       #   AveragePurchaseMetric.kind
       #   # => :metric
       def kind(new_kind = nil, options = {})
-        @kind = new_kind if new_kind.present?
-        @name_kind_position = options[:position] if options.has_key?(:position)
-        @kind || raise(RuntimeError, 'kind of gauge is not specified')
+        @kind ||= nil
+        @kind = new_kind if new_kind
+        name_kind_position options[:position] if options.has_key?(:position)
+        @kind
       end
 
       # Internal: Get/set the position of gauge kind in the class name. It
@@ -76,8 +82,9 @@ module Analyzing
       #   TopThings.type
       #   # => :things
       def name_kind_position(new_position = nil)
-        @name_kind_position = new_position if new_position.present?
-        @name_kind_position || raise(RuntimeError, 'position of gauge kind in class name is not specified')
+        @name_kind_position ||= nil
+        @name_kind_position = new_position if new_position
+        @name_kind_position
       end
 
       # Internal: Get the class name for gauge of this kind, with the
@@ -97,8 +104,8 @@ module Analyzing
       # When inheriting, we want to have kind & kind position in subclasses.
       def inherited(subclass)
         super
-        subclass.instance_variable_set(:@kind, @kind)
-        subclass.instance_variable_set(:@name_kind_position, @name_kind_position)
+        subclass.instance_variable_set(:@kind, kind)
+        subclass.instance_variable_set(:@name_kind_position, name_kind_position)
       end
     end
 

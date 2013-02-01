@@ -109,23 +109,20 @@ describe Analyzing::Gauge do
           expect(klass.type).to eq :superb
         end
       end
+
+      context 'when gauge class name kind position is not defined' do
+        it 'returns the underscored class name' do
+          expect(klass.type).to eq :superb_gauge
+        end
+      end
     end
 
     context 'when .kind is not defined' do
-      it 'raises an exception' do
-        expect { klass.type }.to raise_exception RuntimeError
+      it 'returns the underscored class name' do
+        expect(klass.type).to eq :superb_gauge
       end
     end
 
-    context 'when .name_kind_position is not defined' do
-      before do
-        klass.kind :gauge
-      end
-
-      it 'raises an exception' do
-        expect { klass.type }.to raise_exception RuntimeError
-      end
-    end
   end
 
   describe '.inherited' do

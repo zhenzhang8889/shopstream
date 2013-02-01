@@ -8,8 +8,12 @@ describe Analyzing::Metric do
     end
   end
 
+  let(:object) do
+    double
+  end
+
   let(:metric) do
-    klass.new
+    klass.new object: object, period: 1..5, extra: 1
   end
 
   it 'is a gauge' do
@@ -51,6 +55,18 @@ describe Analyzing::Metric do
       expect(metric.value).to eq 0
       klass.calculate { 0 / 1 }
       expect(metric.value).to eq 0
+    end
+  end
+
+  describe '#for' do
+    let(:another_metric) do
+      metric.for(period: 1..6)
+    end
+
+    it 'returns a new metric for options specified' do
+      expect(another_metric.object).to eq object
+      expect(another_metric.period).to eq 1..6
+      expect(another_metric.options).to eq object: object, period: 1..6, extra: 1
     end
   end
 end

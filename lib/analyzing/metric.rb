@@ -34,6 +34,11 @@ module Analyzing
       ComputationContext.new(events).compute(&calculated_as)
     end
 
+    # Public: Create a new instance of metric with current options merged.
+    def for(new_options = {})
+      self.class.new(options.merge(new_options))
+    end
+
     # Internal: Computation context for metric value calculation.
     class ComputationContext
       # Internal: Initialize the context.

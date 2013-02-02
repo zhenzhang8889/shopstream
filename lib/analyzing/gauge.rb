@@ -136,7 +136,7 @@ module Analyzing
     # Internal: Calculate the expirty term for cached value. Defaults to
     # difference between period end and start.
     def cache_expiry
-      period.end.to_i - period.begin.to_i
+      period.difference
     end
 
     # Internal: Generate a cache key for the gauge. Takes into account the type

@@ -37,7 +37,15 @@ module Analyzing
     # Public: Calculate change.
     def change
       previous = dup_for(period: period.prev(options[:change]), change: nil)
-      (value / previous.value.to_f) - 1
+      change = value / previous.value.to_f
+
+      if change.nan?
+        0.0
+      elsif change.infinite?
+        1.0
+      else
+        change - 1
+      end
     end
 
     # Public: Create a new instance of metric with current options merged.

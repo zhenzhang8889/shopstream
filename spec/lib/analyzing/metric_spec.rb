@@ -12,8 +12,12 @@ describe Analyzing::Metric do
     double
   end
 
+  let(:period) do
+    1.day.ago..Time.now
+  end
+
   let(:metric) do
-    klass.new object: object, period: 1..5, extra: 1
+    klass.new object: object, period: period, extra: 1
   end
 
   it 'is a gauge' do
@@ -58,9 +62,31 @@ describe Analyzing::Metric do
     end
   end
 
-  describe '#for' do
+  describe '#change' do
+    context 'when metric was initialized with change option' do
+      let(:metric) do
+        klass.new(object: object, period: period, change: 1)
+      end
+      
+      before do
+        metric.stub(:value).and_return(100)
+      end
+
+      it 'computes metric value for previous period' do
+        metric.should_receive(:dup_for).with(period: period.prev(1), change: nil).and_return(double(value: 50))
+        metric.change
+      end
+
+      it 'compares current value with previous value' do
+        metric.stub(:dup_for).and_return(double(value: 50))
+        expect(metric.change).to eq(1)
+      end
+    end
+  end
+
+  describe '#dup_for' do
     let(:another_metric) do
-      metric.for(period: 1..6)
+      metric.dup_for(period: 1..6)
     end
 
     it 'returns a new metric for options specified' do

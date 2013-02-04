@@ -34,8 +34,14 @@ module Analyzing
       ComputationContext.new(events).compute(&calculated_as)
     end
 
+    # Public: Calculate change.
+    def change
+      previous = dup_for(period: period.prev(options[:change]), change: nil)
+      (value / previous.value.to_f) - 1
+    end
+
     # Public: Create a new instance of metric with current options merged.
-    def for(new_options = {})
+    def dup_for(new_options = {})
       self.class.new(options.merge(new_options))
     end
 

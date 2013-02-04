@@ -37,22 +37,26 @@ module Analyzing
 
     # Public: Calculate the max value.
     def max
-      maxes = []
-      options[:max].times { maxes << dup_for(max: nil).value }
-      maxes.max
+      if options[:max]
+        maxes = []
+        options[:max].times { maxes << dup_for(max: nil).value }
+        maxes.max
+      end
     end
 
     # Public: Calculate change.
     def change
-      previous = dup_for(period: period.prev(options[:change]), change: nil)
-      change = value / previous.value.to_f
+      if options[:change]
+        previous = dup_for(period: period.prev(options[:change]), change: nil)
+        change = value / previous.value.to_f
 
-      if change.nan?
-        0.0
-      elsif change.infinite?
-        1.0
-      else
-        change - 1
+        if change.nan?
+          0.0
+        elsif change.infinite?
+          1.0
+        else
+          change - 1
+        end
       end
     end
 

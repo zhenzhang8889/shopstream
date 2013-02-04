@@ -15,7 +15,7 @@ module Analyzing
       # types - The Hash of gauge type -> default options.
       #
       # Examples
-      # 
+      #
       #   class Shop
       #     has_gauges :top, products: {}
       #   end

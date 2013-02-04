@@ -10,6 +10,7 @@ module Analyzing
   #     calculate { orders.sum(:total) }
   #   end
   class Metric < Gauge
+    kind :metric, position: :end
     delegate :calculated_as, to: 'self.class'
 
     class << self
@@ -91,7 +92,8 @@ module Analyzing
         end
 
         def method_missing(name, *args, &block)
-          @set.send(name, *args, &block)
+          value = @set.send(name, *args, &block)
+          value.is_a?(Fixnum) ? value.to_f : value
         end
 
         def ==(other)

@@ -3,6 +3,11 @@ module Analyzing
   module Gaugeable
     extend ActiveSupport::Concern
 
+    # Internal: Generate a simple cache key for the object.
+    def simple_cache_key
+      "#{self.class.name.underscore}/#{id}"
+    end
+
     module ClassMethods
       # Public: Add gauge to the model.
       #

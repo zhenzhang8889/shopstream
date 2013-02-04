@@ -35,6 +35,13 @@ module Analyzing
       ComputationContext.new(events).compute(&calculated_as)
     end
 
+    # Public: Calculate the max value.
+    def max
+      maxes = []
+      options[:max].times { maxes << dup_for(max: nil).value }
+      maxes.max
+    end
+
     # Public: Calculate change.
     def change
       previous = dup_for(period: period.prev(options[:change]), change: nil)

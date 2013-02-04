@@ -54,6 +54,32 @@ describe Analyzing::Metric do
     end
   end
 
+  describe '#max' do
+    context 'when metric was initialized with max option' do
+      let(:metric) { klass.new(object: object, period: period, max: 5) }
+      let(:prev_metrics) { [double(value: 10), double(value: 25), double(value: 50), double(value: 99), double(value: 75)] }
+
+      it 'computes metric value for each of previous periods' do
+        metric.should_receive(:dup_for).with(max: nil).and_return(prev_metrics[0])
+        metric.should_receive(:dup_for).with(max: nil).and_return(prev_metrics[1])
+        metric.should_receive(:dup_for).with(max: nil).and_return(prev_metrics[2])
+        metric.should_receive(:dup_for).with(max: nil).and_return(prev_metrics[3])
+        metric.should_receive(:dup_for).with(max: nil).and_return(prev_metrics[4])
+        prev_metrics.each { |m| m.should_receive(:value) }
+        metric.max
+      end
+
+      it 'returns the max value' do
+        metric.should_receive(:dup_for).with(max: nil).and_return(prev_metrics[0])
+        metric.should_receive(:dup_for).with(max: nil).and_return(prev_metrics[1])
+        metric.should_receive(:dup_for).with(max: nil).and_return(prev_metrics[2])
+        metric.should_receive(:dup_for).with(max: nil).and_return(prev_metrics[3])
+        metric.should_receive(:dup_for).with(max: nil).and_return(prev_metrics[4])
+        expect(metric.max).to eq 99
+      end
+    end
+  end
+
   describe '#change' do
     context 'when metric was initialized with change option' do
       let(:metric) { klass.new(object: object, period: period, change: 1) }

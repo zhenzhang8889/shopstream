@@ -8,9 +8,7 @@ describe Analyzing::Eventful do
     end
   end
 
-  let(:model) do
-    klass.new
-  end
+  let(:model) { klass.new }
 
   describe '.has_events' do
     before do
@@ -33,9 +31,7 @@ describe Analyzing::Eventful do
   end
 
   describe '#event_associations' do
-    before do
-      klass.has_events :requests
-    end
+    before { klass.has_events :requests }
 
     it 'returns event associations' do
       requests = double
@@ -45,9 +41,7 @@ describe Analyzing::Eventful do
   end
 
   describe '#event_associations_between' do
-    before do
-      klass.has_events :requests
-    end
+    before { klass.has_events :requests }
 
     context 'when time range is passed' do
       it 'returns event associations for that period' do
@@ -62,13 +56,8 @@ describe Analyzing::Eventful do
   end
 
   describe '.inherited ' do
-    before do
-      klass.has_events :requests
-    end
-
-    let(:new_class) do
-      Class.new(klass)
-    end
+    before { klass.has_events :requests }
+    let(:new_class) { Class.new(klass) }
 
     it 'preserves supported event types from the parent' do
       expect(new_class.event_types).to eq klass.event_types

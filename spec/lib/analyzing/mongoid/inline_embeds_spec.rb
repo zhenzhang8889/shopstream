@@ -17,9 +17,7 @@ describe Analyzing::Mongoid::InlineEmbeds do
       end
     end
 
-    let(:creator) do
-      klass.const_get :Creator
-    end
+    let(:creator) { klass.const_get :Creator }
 
     it 'creates an embedded document class inside the original class' do
       expect(klass.constants).to include :Creator
@@ -52,9 +50,7 @@ describe Analyzing::Mongoid::InlineEmbeds do
       end
     end
 
-    let(:comment) do
-      klass.const_get :Comment
-    end
+    let(:comment) { klass.const_get :Comment }
 
     it 'creates an embedded document class inside the original class' do
       expect(klass.constants).to include :Comment

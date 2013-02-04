@@ -14,17 +14,12 @@ describe Analyzing::Gauge do
   it { should respond_to :options }
 
   describe '#events' do
-    let(:order_events) do
-      double
-    end
-
-    let(:gauge) do
-      object = double(event_associations_between: { order: order_events })
-      klass.new object: object, period: 1..2
-    end
+    let(:order_events) { double }
+    let(:object) { double(event_associations_between: { order: order_events }) }
+    let(:gauge) { klass.new object: object, period: 1..2 }
 
     it 'returns event associations for the gauge period' do
-      gauge.object.should_receive(:event_associations_between).with(1..2)
+      object.should_receive(:event_associations_between).with(1..2)
       expect(gauge.events).to eq order: order_events
     end
   end
@@ -45,10 +40,7 @@ describe Analyzing::Gauge do
   end
 
   describe '#cache_expiry' do
-    let(:gauge) do
-      object = double.as_null_object
-      klass.new object: object, period: 1..5
-    end
+    let(:gauge) { klass.new object: double.as_null_object, period: 1..5 }
 
     it 'calculates difference between period end and start' do
       expect(gauge.cache_expiry).to eq 4
@@ -56,10 +48,8 @@ describe Analyzing::Gauge do
   end
 
   describe '#cache_key' do
-    let(:gauge) do
-      object = double(class: { name: 'DaTracked' }, id: 123, simple_cache_key: 'da_tracked/123')
-      klass.new object: object, period: 1..5
-    end
+    let(:object) { double(class: { name: 'DaTracked' }, id: 123, simple_cache_key: 'da_tracked/123') }
+    let(:gauge) { klass.new object: object, period: 1..5 }
 
     it 'calculates the cache key' do
       expect(gauge.cache_key).to eq 'metric:sales:da_tracked/123:1-5'
@@ -67,9 +57,7 @@ describe Analyzing::Gauge do
   end
 
   describe '#cache_store' do
-    let(:gauge) do
-      klass.new
-    end
+    let(:gauge) { klass.new }
 
     it 'returns default rails cache store' do
       expect(gauge.cache_store).to eq Rails.cache
@@ -85,9 +73,7 @@ describe Analyzing::Gauge do
     end
 
     context 'when .kind is defined' do
-      before do
-        klass.kind :gauge
-      end
+      before { klass.kind :gauge }
 
       context 'when gauge class name kind position is :start' do
         before do
@@ -101,9 +87,7 @@ describe Analyzing::Gauge do
       end
 
       context 'when gauge class name kind position is :end' do
-        before do
-          klass.name_kind_position :end
-        end
+        before { klass.name_kind_position :end }
 
         it 'returns the gauge type' do
           expect(klass.type).to eq :superb
@@ -126,9 +110,7 @@ describe Analyzing::Gauge do
   end
 
   describe '.inherited' do
-    let(:new_class) do
-      Class.new(klass)
-    end
+    let(:new_class) { Class.new(klass) }
 
     it 'preserves gauge kind & kind position' do
       expect(new_class.kind).to eq klass.kind

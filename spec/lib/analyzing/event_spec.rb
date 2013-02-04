@@ -9,9 +9,7 @@ describe Analyzing::Event do
     end
   end
 
-  let(:load_event) do
-    event_class.new
-  end
+  let(:load_event) { event_class.new }
 
   describe '.included' do
     it 'includes mongoid document' do

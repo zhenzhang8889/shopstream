@@ -8,17 +8,9 @@ describe Analyzing::Metric do
     end
   end
 
-  let(:object) do
-    double
-  end
-
-  let(:period) do
-    1.day.ago..Time.now
-  end
-
-  let(:metric) do
-    klass.new object: object, period: period, extra: 1
-  end
+  let(:object) { double }
+  let(:period) { 1.day.ago..Time.now }
+  let(:metric) { klass.new object: object, period: period, extra: 1 }
 
   it 'is a gauge' do
     expect(klass.ancestors).to include Analyzing::Gauge
@@ -64,13 +56,8 @@ describe Analyzing::Metric do
 
   describe '#change' do
     context 'when metric was initialized with change option' do
-      let(:metric) do
-        klass.new(object: object, period: period, change: 1)
-      end
-
-      let(:prev_metric) do
-        double(value: 50)
-      end
+      let(:metric) { klass.new(object: object, period: period, change: 1) }
+      let(:prev_metric) { double(value: 50) }
 
       before do
         metric.stub(:value).and_return(100)
@@ -87,9 +74,7 @@ describe Analyzing::Metric do
       end
 
       context 'when change is increase' do
-        let(:prev_metric) do
-          double(value: 25)
-        end
+        let(:prev_metric) { double(value: 25) }
 
         it 'reports positive change' do
           expect(metric.change).to be > 0
@@ -101,9 +86,7 @@ describe Analyzing::Metric do
       end
 
       context 'when change is decrease' do
-        let(:prev_metric) do
-          double(value: 200)
-        end
+        let(:prev_metric) { double(value: 200) }
 
         it 'reports negative change' do
           expect(metric.change).to be < 0
@@ -115,9 +98,7 @@ describe Analyzing::Metric do
       end
 
       context 'when previous value is the same' do
-        let(:prev_metric) do
-          double(value: 100)
-        end
+        let(:prev_metric) { double(value: 100) }
 
         it 'reports no change' do
           expect(metric.change).to eq 0
@@ -125,9 +106,7 @@ describe Analyzing::Metric do
       end
 
       context 'when change is increase from 0' do
-        let(:prev_metric) do
-          double(value: 0)
-        end
+        let(:prev_metric) { double(value: 0) }
 
         it 'reports 100% increase' do
           expect(metric.change).to eq 1
@@ -135,9 +114,7 @@ describe Analyzing::Metric do
       end
 
       context 'when change is decrease to 0' do
-        before do
-          metric.stub(:value).and_return(0)
-        end
+        before { metric.stub(:value).and_return(0) }
 
         it 'reports 100% decrease' do
           expect(metric.change).to eq(-1)
@@ -147,9 +124,7 @@ describe Analyzing::Metric do
   end
 
   describe '#dup_for' do
-    let(:another_metric) do
-      metric.dup_for(period: 1..6)
-    end
+    let(:another_metric) { metric.dup_for(period: 1..6) }
 
     it 'returns a new metric for options specified' do
       expect(another_metric.object).to eq object

@@ -16,9 +16,7 @@ describe Analyzing::Gaugeable do
   end
 
   describe '.has_gauges' do
-    before do
-      klass.has_gauges(:top, products: {})
-    end
+    before { klass.has_gauges(:top, products: {}) }
 
     it 'adds the metadata to the class' do
       expect(klass.gauges[:tops][:products]).to be_present
@@ -40,13 +38,8 @@ describe Analyzing::Gaugeable do
   end
 
   describe '.gauge_getter' do
-    before do
-      klass.has_gauges(:top, products: {a: 1})
-    end
-
-    let(:model) do
-      klass.new
-    end
+    before { klass.has_gauges(:top, products: {a: 1}) }
+    let(:model) { klass.new }
 
     it 'defines a getter' do
       expect(klass.new).to respond_to :top_products
@@ -59,13 +52,8 @@ describe Analyzing::Gaugeable do
   end
 
   describe '.inherited' do
-    before do
-      klass.has_gauges(:top, products: {})
-    end
-
-    let(:new_class) do
-      Class.new(klass)
-    end
+    before { klass.has_gauges(:top, products: {}) }
+    let(:new_class) { Class.new(klass) }
 
     it 'preserves supported gauge metadata' do
       expect(new_class.gauges).to eq klass.gauges

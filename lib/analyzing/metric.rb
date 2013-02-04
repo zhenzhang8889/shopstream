@@ -91,7 +91,7 @@ module Analyzing
         end
 
         def method_missing(name, *args, &block)
-          @set.send(name, *args, &block).to_f
+          @set.send(name, *args, &block)
         end
 
         def ==(other)

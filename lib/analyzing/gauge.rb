@@ -120,6 +120,25 @@ module Analyzing
       @options = options
     end
 
+    # Public: Compute the gauge. If there is cached result already, it would be
+    # returned. Requires specific gauge kinds to implement #_compute which would
+    # compute and return the actual gauge value.
+    def compute
+      cached { _compute }
+    end
+
+    # Public: Refresh the gauge. The gauge value will be force computed, even
+    # if it's cached.
+    def refresh
+      force_cache { _compute }
+    end
+
+    # Internal: When implementing own kind of gauges, you must redefine it to
+    # perform needed calculations and return the result that will be cached.
+    def _compute
+      raise NotImplementedError, "You must redefine #_compute on your gauge kind."
+    end
+
     # Public: Create a new instance of gauge with current options merged.
     def dup_for(new_options = {})
       self.class.new(options.merge(new_options))
@@ -136,6 +155,11 @@ module Analyzing
     # otherwise.
     def cached(&block)
       cache_store.fetch(cache_key, expires_in: cache_expiry, &block)
+    end
+
+    # Internal: Execute the block and cache the result.
+    def force_cache(&block)
+      cache_store.fetch(cache_key, expires_in: cache_expiry, force: true, &block)
     end
 
     # Internal: Calculate the expirty term for cached value. Defaults to
@@ -155,7 +179,6 @@ module Analyzing
        [period.begin.to_i, period.end.to_i].join('-')
       ].join(':')
     end
-    alias_method :simple_cache_key, :cache_key
 
     # Internal: Get the cache store.
     def cache_store

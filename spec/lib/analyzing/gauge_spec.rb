@@ -35,11 +35,83 @@ describe Analyzing::Gauge do
     end
   end
 
+  describe '#compute' do
+    before { Rails.cache.clear }
+    after { Rails.cache.clear }
+
+    let(:gauge) do
+      gauge = klass.new
+      gauge.stub(cache_key: 'abc', cache_expiry: 1, _compute: 1)
+      gauge
+    end
+
+    context 'if the value is cached' do
+      before { Rails.cache.write('abc', 1) }
+
+      it 'returns cached value' do
+        expect(gauge.compute).to eq 1
+      end
+
+      it 'does not call _compute' do
+        gauge.should_not_receive(:_compute)
+        gauge.compute
+      end
+    end
+
+    context 'if the value is not cached' do
+      it 'calls _compute' do
+        gauge.should_receive(:_compute)
+        expect(gauge._compute).to eq 1
+      end
+
+      it 'caches the result' do
+        gauge.compute
+        expect(Rails.cache.fetch('abc')).to eq 1
+      end
+    end
+  end
+
+  describe '#refresh' do
+    before { Rails.cache.clear }
+    after { Rails.cache.clear }
+
+    let(:gauge) do
+      gauge = klass.new
+      gauge.stub(cache_key: 'abc', cache_expiry: 1, _compute: 1)
+      gauge
+    end
+
+    context 'when the value is cached' do
+      before { Rails.cache.write('abc', 2) }
+
+      it 'calls _compute' do
+        gauge.should_receive(:_compute)
+        gauge.refresh
+      end
+
+      it 'force-overrides it' do
+        expect(gauge.refresh).to eq 1
+        expect(Rails.cache.fetch('abc')).to eq 1
+      end
+    end
+
+    context 'when the value is not cached' do 
+      it 'calls _compute' do
+        gauge.should_receive(:_compute)
+        gauge.refresh
+      end
+
+      it 'caches the result' do
+        expect(gauge.refresh).to eq 1
+        expect(Rails.cache.fetch('abc')).to eq 1
+      end
+    end
+  end
+
   describe '#cached' do
     let(:gauge) do
       gauge = klass.new
-      gauge.stub(cache_key: 'abc', cache_expiry: 1)
-      gauge.stub(cache_store: double)
+      gauge.stub(cache_key: 'abc', cache_expiry: 1, cache_store: double)
       gauge
     end
 
@@ -47,6 +119,20 @@ describe Analyzing::Gauge do
       blk = ->{ 1 }
       gauge.cache_store.should_receive(:fetch).with('abc', expires_in: 1, &blk)
       gauge.cached(&blk)
+    end
+  end
+
+  describe '#force_cache' do
+    let(:gauge) do
+      gauge = klass.new
+      gauge.stub(cache_key: 'abc', cache_expiry: 1, cache_store: double)
+      gauge
+    end
+
+    it 'forces block execution and caches the result' do
+      blk = ->{ 1 }
+      gauge.cache_store.should_receive(:fetch).with('abc', expires_in: 1, force: true, &blk)
+      gauge.force_cache(&blk)
     end
   end
 

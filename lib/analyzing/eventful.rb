@@ -53,7 +53,12 @@ module Analyzing
         @event_types ||= []
         events.map! { |type| type.to_s.singularize.to_sym }
         @event_types += events
-        events.each { |type| has_many :"#{type}_events" }
+
+        events.each do |type|
+          has_many :"#{type}_events"
+          event_tracker type
+        end
+
         subclasses.each { |sub| sub.has_events(*events) }
         @event_types
       end
@@ -61,6 +66,21 @@ module Analyzing
       # Internal: Get declared event types for the model.
       def event_types
         @event_types
+      end
+
+      # Internal: Define an event tracker method.
+      #
+      # event_type - The Symbol name of event type.
+      # name       - The optional String or Symbol name of the method to
+      #              define. If not passed, it will be constructed based on
+      #              `event_type`.
+      def event_tracker(event_type, name = nil)
+        event_type = event_type.to_s.singularize.to_sym
+        name ||= "track_#{event_type}"
+
+        define_method(name) do |payload = {}|
+          event_associations[event_type].create(payload)
+        end
       end
 
       # When inheriting, we want to have supported event types in subclasses

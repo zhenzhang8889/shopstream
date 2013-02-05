@@ -11,9 +11,7 @@ describe Analyzing::Eventful do
   let(:model) { klass.new }
 
   describe '.has_events' do
-    before do
-      klass.has_events :requests
-    end
+    before { klass.has_events(:requests) }
 
     it 'appends specifies event types to the list of supported events' do
       expect(klass.event_types).to include :request
@@ -25,8 +23,31 @@ describe Analyzing::Eventful do
 
     it 'adds the event to subclasses' do
       another_class = Class.new(klass)
-      klass.has_events :orders
+      klass.has_events(:orders)
       expect(another_class.event_types).to include :order
+    end
+
+    it 'creates the track method for the even type' do
+      expect(model).to respond_to :track_request
+    end
+  end
+
+  describe '.event_tracker' do
+    let(:request_double) { double }
+    let(:model) { klass.new }
+
+    before do
+      klass.event_tracker(:requests)
+      model.stub(:event_associations).and_return(request: request_double)
+    end
+
+    it 'defines a tracker' do
+      expect(model).to respond_to :track_request
+    end
+
+    specify 'the tracker creates a new event document' do
+      request_double.should_receive(:create).with(a: 1, b: 2, c: 3)
+      model.track_request(a: 1, b: 2, c: 3)
     end
   end
 
@@ -61,6 +82,10 @@ describe Analyzing::Eventful do
 
     it 'preserves supported event types from the parent' do
       expect(new_class.event_types).to eq klass.event_types
+    end
+
+    it 'preserves event trackers' do
+      expect(new_class.new).to respond_to :track_request
     end
   end
 end

@@ -38,15 +38,16 @@ describe Analyzing::Gaugeable do
   end
 
   describe '.gauge_getter' do
-    before { klass.has_gauges(:top, products: {a: 1}) }
+    let(:gauge) { double.as_null_object }
     let(:model) { klass.new }
+    before { klass.gauge_getter(:top_products, { klass: gauge, options: { a: 1} }) }
 
     it 'defines a getter' do
-      expect(klass.new).to respond_to :top_products
+      expect(model).to respond_to :top_products
     end
 
     specify 'the getter constructs a new gauge with object and options' do
-      TopProducts.should_receive(:new).with(a: 1, b: 2, period: 1..2, object: model)
+      gauge.should_receive(:new).with(a: 1, b: 2, period: 1..2, object: model)
       model.top_products(1..2, b: 2)
     end
   end

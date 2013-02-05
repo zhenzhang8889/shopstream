@@ -5,8 +5,13 @@ describe Analyzing::Gaugeable do
     kind :top, position: :start
   end
 
+  class Metric < Analyzing::Metric
+    kind :metric, position: :end
+  end
+
   class TopProducts < Top; end
   class TopLinks < Top; end
+  class SalesMetric < Metric; end
 
   let(:klass) do
     Class.new do
@@ -34,6 +39,30 @@ describe Analyzing::Gaugeable do
       another_class = Class.new(klass)
       klass.has_gauges(:top, links: {})
       expect(another_class.gauges).to eq klass.gauges
+    end
+  end
+
+  describe '.has_top' do
+    it 'calls has_gauges' do
+      klass.should_receive(:has_gauges)
+      klass.has_top(products: {})
+    end
+
+    it 'carries types and passes :top as kind' do
+      klass.should_receive(:has_gauges).with(:top, products: {})
+      klass.has_top(products: {})
+    end
+  end
+
+  describe '.has_metric' do
+    it 'calls has_gauges' do
+      klass.should_receive(:has_gauges)
+      klass.has_metric(sales: {})
+    end
+
+    it 'carries types and passes :top as kind' do
+      klass.should_receive(:has_gauges).with(:metric, sales: {})
+      klass.has_metric(sales: {})
     end
   end
 

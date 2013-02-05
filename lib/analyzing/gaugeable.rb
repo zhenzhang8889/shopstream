@@ -9,7 +9,7 @@ module Analyzing
     end
 
     module ClassMethods
-      # Public: Add gauge to the model.
+      # Public: Add gauge to the gaugeable.
       #
       # kind  - The Symbol gauge kind.
       # types - The Hash of gauge type -> default options.
@@ -31,6 +31,18 @@ module Analyzing
         subclasses.each { |sub| sub.has_gauges(kind, types) }
         gauges
       end
+
+      # Public: Add top to the gaugeable.
+      def has_top(types)
+        has_gauges(:top, types)
+      end
+      alias_method :has_tops, :has_top
+
+      # Public: Add metric to the gaugeable.
+      def has_metric(types)
+        has_gauges(:metric, types)
+      end
+      alias_method :has_metrics, :has_metric
 
       # Internal: Get gauges metadata.
       def gauges

@@ -120,6 +120,11 @@ module Analyzing
       @options = options
     end
 
+    # Public: Create a new instance of gauge with current options merged.
+    def dup_for(new_options = {})
+      self.class.new(options.merge(new_options))
+    end
+
     # Public: Get associated events for the gauge period.
     #
     # Returns a Hash of event type -> event association.

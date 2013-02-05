@@ -60,11 +60,6 @@ module Analyzing
       end
     end
 
-    # Public: Create a new instance of metric with current options merged.
-    def dup_for(new_options = {})
-      self.class.new(options.merge(new_options))
-    end
-
     # Internal: Computation context for metric value calculation.
     class ComputationContext
       # Internal: Initialize the context.

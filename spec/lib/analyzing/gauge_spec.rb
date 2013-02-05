@@ -13,10 +13,21 @@ describe Analyzing::Gauge do
   it { should respond_to :period }
   it { should respond_to :options }
 
+  describe '#dup_for' do
+    let(:gauge) { klass.new(object: double, period: 1..2, extra: 1) }
+    let(:another_gauge) { gauge.dup_for(period: 1..6) }
+
+    it 'returns a new metric for options specified' do
+      expect(another_gauge.object).to eq gauge.object
+      expect(another_gauge.period).to eq 1..6
+      expect(another_gauge.options).to eq object: gauge.object, period: 1..6, extra: 1
+    end
+  end
+
   describe '#events' do
     let(:order_events) { double }
     let(:object) { double(event_associations_between: { order: order_events }) }
-    let(:gauge) { klass.new object: object, period: 1..2 }
+    let(:gauge) { klass.new(object: object, period: 1..2) }
 
     it 'returns event associations for the gauge period' do
       object.should_receive(:event_associations_between).with(1..2)

@@ -148,16 +148,6 @@ describe Analyzing::Metric do
       end
     end
   end
-
-  describe '#dup_for' do
-    let(:another_metric) { metric.dup_for(period: 1..6) }
-
-    it 'returns a new metric for options specified' do
-      expect(another_metric.object).to eq object
-      expect(another_metric.period).to eq 1..6
-      expect(another_metric.options).to eq object: object, period: 1..6, extra: 1
-    end
-  end
 end
 
 describe Analyzing::Metric::ComputationContext do

@@ -30,23 +30,29 @@ module Analyzing
       alias_method :calculated_as, :calculate
     end
 
+    def _compute
+      max
+      change
+      value
+    end
+
     # Public: Compute the value of the metric.
     def value
-      ComputationContext.new(events).compute(&calculated_as)
+      @value ||= ComputationContext.new(events).compute(&calculated_as)
     end
 
     # Public: Calculate the max value.
     def max
-      if options[:max]
+      @max ||= begin
         maxes = []
         options[:max].times { maxes << dup_for(max: nil).value }
         maxes.max
-      end
+      end if options[:max]
     end
 
     # Public: Calculate change.
     def change
-      if options[:change]
+      @change ||= begin
         previous = dup_for(period: period.prev(options[:change]), change: nil)
         change = value / previous.value.to_f
 
@@ -57,7 +63,7 @@ module Analyzing
         else
           change - 1
         end
-      end
+      end if options[:change]
     end
 
     # Internal: Computation context for metric value calculation.

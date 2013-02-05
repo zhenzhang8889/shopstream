@@ -52,6 +52,10 @@ module Analyzing
       alias_method :pipeline, :pipe
     end
 
+    def _compute
+      items
+    end
+
     # Public: Get the top items.
     def items
       event.collection.aggregate(pipeline)

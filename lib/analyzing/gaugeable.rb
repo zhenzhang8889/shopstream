@@ -31,6 +31,7 @@ module Analyzing
         subclasses.each { |sub| sub.has_gauges(kind, types) }
         gauges
       end
+      alias_method :has_gauge, :has_gauges
 
       # Public: Add top to the gaugeable.
       def has_top(types)

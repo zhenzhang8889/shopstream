@@ -151,6 +151,11 @@ module Analyzing
       object.event_associations_between(period)
     end
 
+    # Public: Get cache key for associated events.
+    def events_cache_key
+      "[#{events.values.map(&:count).join(',')}]"
+    end
+
     # Internal: Fetch the cached value from cache store, execute block
     # otherwise.
     def cached(&block)

@@ -35,6 +35,22 @@ describe Analyzing::Gauge do
     end
   end
 
+  describe '#events_cache_key' do
+    let(:value1) { double }
+    let(:value2) { double }
+    let(:gauge) { klass.new }
+
+    before do
+      gauge.stub(:events) { { key1: value1, key2: value2 } }
+      value1.stub(:count) { 5 }
+      value2.stub(:count) { 42 }
+    end
+
+    it 'counts associated events' do
+      expect(gauge.events_cache_key).to eq '[5,42]'
+    end
+  end
+
   describe '#compute' do
     before { Rails.cache.clear }
     after { Rails.cache.clear }

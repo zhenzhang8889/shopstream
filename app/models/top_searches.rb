@@ -4,4 +4,5 @@ class TopSearches < Analyzing::Top
   pipe project: { query: "$data.search_query" }
   pipe group: { _id: "$query", count: { "$sum" => 1 } }
   pipe sort: { count: -1 }
+  pipe limit: 10
 end

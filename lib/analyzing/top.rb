@@ -77,5 +77,10 @@ module Analyzing
     def pipeline
       self.class.pipeline.unshift("$match" => event.query.selector)
     end
+
+    # Public: Get JSON representation.
+    def to_json
+      items
+    end
   end
 end

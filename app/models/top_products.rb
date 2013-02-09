@@ -5,4 +5,5 @@ class TopProducts < Analyzing::Top
   pipe project: { sku: "$li.sku", name: "$li.name", revenue: { "$multiply" => ["$li.price", "$li.quantity"] } }
   pipe group: { _id: "$sku", purchases: { "$sum" => 1 }, revenue: { "$sum" => "$revenue" }, name: { "$first" => "$name" } }
   pipe sort: { purchases: -1 }
+  pipe limit: 10
 end

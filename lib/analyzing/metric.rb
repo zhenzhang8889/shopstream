@@ -82,6 +82,14 @@ module Analyzing
       Hash[types.zip(events.values_at(*types))]
     end
 
+    # Public: Get JSON representation.
+    def to_json
+      h = { value: value }
+      h[:max] = max if max
+      h[:change] = change if change
+      h
+    end
+
     # Internal: Computation context for metric value calculation.
     class ComputationContext
       # Internal: Initialize the context.

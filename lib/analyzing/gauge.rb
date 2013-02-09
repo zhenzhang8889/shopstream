@@ -208,5 +208,10 @@ module Analyzing
     def cache_store
       Rails.cache
     end
+
+    # Public: Get JSON representation.
+    def to_json
+      compute
+    end
   end
 end

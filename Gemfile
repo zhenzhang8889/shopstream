@@ -7,7 +7,7 @@ gem 'rails', '3.2.12'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'mongoid'
+gem 'mongoid', '~> 3.1.0'
 gem 'devise'
 gem 'cancan'
 gem 'kaminari'

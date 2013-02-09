@@ -99,7 +99,9 @@ module Analyzing
       end
 
       def to_json
-        values.each(&:to_json)
+        GaugeSet[map do |k, v|
+          [k, v.to_json]
+        end]
       end
     end
   end

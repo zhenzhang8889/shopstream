@@ -79,7 +79,9 @@ module Analyzing
         name ||= "track_#{event_type}"
 
         define_method(name) do |payload = {}|
-          event_associations[event_type].create(payload)
+          event = event_associations[event_type].create(payload)
+          gauges.refresh if respond_to?(:gauges)
+          event
         end
       end
 

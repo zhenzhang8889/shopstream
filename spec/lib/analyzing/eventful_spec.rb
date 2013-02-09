@@ -34,11 +34,15 @@ describe Analyzing::Eventful do
 
   describe '.event_tracker' do
     let(:request_double) { double }
+    let(:requests) { double }
     let(:model) { klass.new }
+    let(:gauges) { double.as_null_object }
 
     before do
       klass.event_tracker(:requests)
-      model.stub(:event_associations).and_return(request: request_double)
+      model.stub(:event_associations) { { request: request_double } }
+      model.stub(:gauges) { gauges }
+      request_double.stub(:create) { requests }
     end
 
     it 'defines a tracker' do
@@ -47,6 +51,15 @@ describe Analyzing::Eventful do
 
     specify 'the tracker creates a new event document' do
       request_double.should_receive(:create).with(a: 1, b: 2, c: 3)
+      model.track_request(a: 1, b: 2, c: 3)
+    end
+
+    specify 'the tracker returns created event' do
+      expect(model.track_request(a: 1, b: 2, c: 3)).to eq requests
+    end
+
+    specify 'the tracker refreshes gauges if there are any' do
+      gauges.should_receive(:refresh)
       model.track_request(a: 1, b: 2, c: 3)
     end
   end

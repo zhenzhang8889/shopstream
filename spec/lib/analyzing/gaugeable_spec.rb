@@ -33,11 +33,13 @@ describe Analyzing::Gaugeable do
       model.stub(top_products: top_products, top_links: top_links, sales_metric: sales_metric)
     end
 
-    it 'returns hash of gauges grouped by kind' do
+    it 'returns gauge set of gauges grouped by kind' do
       expect(model.gauges).to eq(
         tops: { products: top_products, links: top_links },
         metrics: { sales: sales_metric }
       )
+      expect(model.gauges).to be_kind_of Analyzing::Gaugeable::GaugeSet
+      model.gauges.values.each { |v| expect(v).to be_kind_of Analyzing::Gaugeable::GaugeSet }
     end
   end
 
@@ -112,6 +114,23 @@ describe Analyzing::Gaugeable do
 
     it 'preserves gauge getters' do
       expect(new_class.new).to respond_to :top_products
+    end
+  end
+end
+
+describe Analyzing::Gaugeable::GaugeSet do
+  it 'is a kind of hash' do
+    expect(described_class.ancestors).to include Hash
+  end
+
+  describe '#refresh' do
+    let(:value1) { double }
+    let(:value2) { double }
+    let(:set) { described_class[:key1, value1, :key2, value2] }
+
+    it 'calls #refresh on all the values' do
+      [value1, value2].each { |v| v.should_receive(:refresh) }
+      set.refresh
     end
   end
 end

@@ -10,8 +10,8 @@ module Analyzing
 
     # Internal: Get gauges for this instance.
     def gauges
-      Hash[self.class.gauges.map do |kind, types|
-        [kind, Hash[types.map do |type, metadata|
+      GaugeSet[self.class.gauges.map do |kind, types|
+        [kind, GaugeSet[types.map do |type, metadata|
           gauge = send(metadata[:klass].name.underscore)
           [type, gauge]
         end]]
@@ -78,6 +78,12 @@ module Analyzing
       def inherited(subclass)
         super
         subclass.instance_variable_set(:@gauges, @gauges)
+      end
+    end
+
+    class GaugeSet < Hash
+      def refresh
+        values.each(&:refresh)
       end
     end
   end

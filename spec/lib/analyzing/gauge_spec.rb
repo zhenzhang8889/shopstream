@@ -36,17 +36,17 @@ describe Analyzing::Gauge do
   end
 
   describe '#events_cache_key' do
-    let(:value1) { double }
-    let(:value2) { double }
+    let(:event1) { double(created_at: 5) }
+    let(:event2) { double(created_at: 42) }
+    let(:value1) { double(desc: [event1]) }
+    let(:value2) { double(desc: [event2]) }
     let(:gauge) { klass.new }
 
     before do
       gauge.stub(:events) { { key1: value1, key2: value2 } }
-      value1.stub(:count) { 5 }
-      value2.stub(:count) { 42 }
     end
 
-    it 'counts associated events' do
+    it 'gets time of creation of last event' do
       expect(gauge.events_cache_key).to eq '[5,42]'
     end
   end
@@ -102,7 +102,7 @@ describe Analyzing::Gauge do
 
       it 'returns the value' do
         gauge.should_not_receive(:_compute)
-        expect(gauge.refresh).to eq 1
+        expect(gauge.refresh).to eq 2
       end
     end
 

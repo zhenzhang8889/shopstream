@@ -117,6 +117,8 @@ module Analyzing
     def initialize(options = {})
       @object = options[:object]
       @period = options[:period]
+      @period = object.send(@period) if @period.is_a?(Symbol)
+      @period = object.instance_exec(&@period) if @period.respond_to?(:call)
       @options = options
     end
 
@@ -153,7 +155,8 @@ module Analyzing
 
     # Public: Get cache key for associated events.
     def events_cache_key
-      "[#{events.values.map(&:count).join(',')}]"
+      stamps = events.values.map { |e| e.desc(:created_at).last.try(:created_at).to_i }
+      "[#{stamps.join(',')}]"
     end
 
     # Internal: Fetch the cached value from cache store, execute block

@@ -39,7 +39,7 @@ describe Analyzing::Eventful do
 
     before do
       klass.event_tracker(:requests)
-      model.stub(:event_associations) { { request: request_double } }
+      model.stub(:event_associations) { { requests: request_double } }
       model.stub(:refresh_gauges) { true }
       request_double.stub(:create) { requests }
     end

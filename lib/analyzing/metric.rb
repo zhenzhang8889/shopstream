@@ -79,7 +79,7 @@ module Analyzing
     def events
       events = super
       types = self.class.events
-      types.zip(events.values_at(*types))
+      Hash[types.zip(events.values_at(*types))]
     end
 
     # Internal: Computation context for metric value calculation.

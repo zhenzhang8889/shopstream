@@ -1,6 +1,11 @@
 class Shop
   include Mongoid::Document
   include Mongoid::Timestamps
+  include Analyzing::Eventful
+  include Analyzing::Gaugeable
+
+  has_events :requests, :orders
+  has_metrics average_purchase: { period: ->{ today } }
 
   field :token, type: String
   field :name, type: String
@@ -27,6 +32,16 @@ class Shop
   before_create :generate_token
   after_create :reset_redis_keys
   before_save :set_timezone_name
+
+  after_refresh_gauges :push_gauges
+
+  def push_gauges
+    puts "YOLO"
+  end
+
+  def today
+    26.days.ago.beginning_of_day..26.days.ago.end_of_day.ceil
+  end
 
   # Public: Get 10 most recent feed items.
   def feed

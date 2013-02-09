@@ -4,7 +4,7 @@ module Analyzing
     extend ActiveSupport::Concern
 
     included do
-      define_model_callbacks :refresh
+      define_model_callbacks :refresh_gauges
     end
 
     # Internal: Generate a simple cache key for the object.
@@ -41,7 +41,7 @@ module Analyzing
       #     has_gauges :top, products: {}
       #   end
       def has_gauges(kind, types)
-        kind_class = kind.to_s.singularize.camelize.constantize
+        kind_class = "analyzing/#{kind.to_s.singularize}".camelize.constantize
         kind = kind.to_s.pluralize.to_sym
         types.each do |type, options|
           klass = kind_class.class_name_for_type(type).constantize
@@ -78,8 +78,9 @@ module Analyzing
       def gauge_getter(name, metadata)
         klass = metadata[:klass]
 
-        define_method(name) do |period, options = {}|
-          options.reverse_merge!(period: period)
+        define_method(name) do |period = nil, options = {}|
+          options, period = period, nil if period.is_a?(Hash) && !options
+          options.reverse_merge!(period: period) if period
           options.reverse_merge!(metadata[:options])
           klass.new options.merge(object: self)
         end

@@ -79,7 +79,7 @@ module Analyzing
         name ||= "track_#{event_type}"
 
         define_method(name) do |payload = {}|
-          event = event_associations[event_type].create(payload)
+          event = event_associations[event_type.to_s.pluralize.to_sym].create(payload)
           try(:refresh_gauges)
           event
         end

@@ -124,13 +124,13 @@ module Analyzing
     # returned. Requires specific gauge kinds to implement #_compute which would
     # compute and return the actual gauge value.
     def compute
-      cached { _compute }
+      cached(true) { cached { _compute } }
     end
 
     # Public: Refresh the gauge. The gauge value will be force computed, even
     # if it's cached.
     def refresh
-      force_cache { _compute }
+      force_cache { force_cache(true) { _compute } }
     end
 
     # Internal: When implementing own kind of gauges, you must redefine it to
@@ -158,13 +158,15 @@ module Analyzing
 
     # Internal: Fetch the cached value from cache store, execute block
     # otherwise.
-    def cached(&block)
-      cache_store.fetch(cache_key, expires_in: cache_expiry, &block)
+    def cached(simple = true, &block)
+      key = simple ? simple_cache_key : cache_key
+      cache_store.fetch(key, expires_in: cache_expiry, &block)
     end
 
     # Internal: Execute the block and cache the result.
-    def force_cache(&block)
-      cache_store.fetch(cache_key, expires_in: cache_expiry, force: true, &block)
+    def force_cache(simple = true, &block)
+      key = simple ? simple_cache_key : cache_key
+      cache_store.fetch(key, expires_in: cache_expiry, force: true, &block)
     end
 
     # Internal: Calculate the expirty term for cached value. Defaults to
@@ -174,15 +176,29 @@ module Analyzing
     end
 
     # Internal: Generate a cache key for the gauge. Takes into account the type
-    # and kind of the gauge, object class and id, period range. Feel free to
-    # redefine it if you feel like adding additional caching dependencies. The
-    # original version would still be available at `#simple_cache_key`.
+    # and kind of the gauge, object class and id, period range, and dependent
+    # events.
     def cache_key
+      cache_key_components.join(':')
+    end
+
+    # Internal: Generate a cache key for the gauge. Takes into account the type
+    # and kind of the gauge, object class and id, period range.
+    def simple_cache_key
+      simple_cache_key_components.join(':')
+    end
+
+    # Internal: Get simple cache key components.
+    def simple_cache_key_components
       [self.class.kind,
        self.class.type,
        object.simple_cache_key,
-       [period.begin.to_i, period.end.to_i].join('-')
-      ].join(':')
+       [period.begin.to_i, period.end.to_i].join('-')]
+    end
+
+    # Internal: Get cache key components.
+    def cache_key_components
+      simple_cache_key_components.append(events_cache_key)
     end
 
     # Internal: Get the cache store.

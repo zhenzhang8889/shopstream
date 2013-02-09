@@ -57,12 +57,12 @@ describe Analyzing::Gauge do
 
     let(:gauge) do
       gauge = klass.new
-      gauge.stub(cache_key: 'abc', cache_expiry: 1, _compute: 1)
+      gauge.stub(cache_key: 'abc', simple_cache_key: 'simple-abc', cache_expiry: 1, _compute: 1)
       gauge
     end
 
     context 'if the value is cached' do
-      before { Rails.cache.write('abc', 1) }
+      before { Rails.cache.write('simple-abc', 1) }
 
       it 'returns cached value' do
         expect(gauge.compute).to eq 1
@@ -82,7 +82,7 @@ describe Analyzing::Gauge do
 
       it 'caches the result' do
         gauge.compute
-        expect(Rails.cache.fetch('abc')).to eq 1
+        expect(Rails.cache.fetch('simple-abc')).to eq 1
       end
     end
   end
@@ -93,12 +93,12 @@ describe Analyzing::Gauge do
 
     let(:gauge) do
       gauge = klass.new
-      gauge.stub(cache_key: 'abc', cache_expiry: 1, _compute: 1)
+      gauge.stub(cache_key: 'abc', simple_cache_key: 'simple-abc', cache_expiry: 1, _compute: 1)
       gauge
     end
 
     context 'when the value is cached' do
-      before { Rails.cache.write('abc', 2) }
+      before { Rails.cache.write('simple-abc', 2) }
 
       it 'calls _compute' do
         gauge.should_receive(:_compute)
@@ -107,7 +107,7 @@ describe Analyzing::Gauge do
 
       it 'force-overrides it' do
         expect(gauge.refresh).to eq 1
-        expect(Rails.cache.fetch('abc')).to eq 1
+        expect(Rails.cache.fetch('simple-abc')).to eq 1
       end
     end
 
@@ -119,7 +119,7 @@ describe Analyzing::Gauge do
 
       it 'caches the result' do
         expect(gauge.refresh).to eq 1
-        expect(Rails.cache.fetch('abc')).to eq 1
+        expect(Rails.cache.fetch('simple-abc')).to eq 1
       end
     end
   end
@@ -127,28 +127,48 @@ describe Analyzing::Gauge do
   describe '#cached' do
     let(:gauge) do
       gauge = klass.new
-      gauge.stub(cache_key: 'abc', cache_expiry: 1, cache_store: double)
+      gauge.stub(cache_key: 'abc', simple_cache_key: 'simple-abc', cache_expiry: 1, cache_store: double)
       gauge
     end
 
-    it 'fetches the cache entity' do
-      blk = ->{ 1 }
-      gauge.cache_store.should_receive(:fetch).with('abc', expires_in: 1, &blk)
-      gauge.cached(&blk)
+    context 'when using simple key' do
+      it 'fetches the cache entity' do
+        blk = ->{ 1 }
+        gauge.cache_store.should_receive(:fetch).with('simple-abc', expires_in: 1, &blk)
+        gauge.cached(true, &blk)
+      end
+    end
+
+    context 'when using full key' do
+      it 'fetches the cache entity' do
+        blk = ->{ 1 }
+        gauge.cache_store.should_receive(:fetch).with('abc', expires_in: 1, &blk)
+        gauge.cached(false, &blk)
+      end
     end
   end
 
   describe '#force_cache' do
     let(:gauge) do
       gauge = klass.new
-      gauge.stub(cache_key: 'abc', cache_expiry: 1, cache_store: double)
+      gauge.stub(cache_key: 'abc', simple_cache_key: 'simple-abc', cache_expiry: 1, cache_store: double)
       gauge
     end
 
-    it 'forces block execution and caches the result' do
-      blk = ->{ 1 }
-      gauge.cache_store.should_receive(:fetch).with('abc', expires_in: 1, force: true, &blk)
-      gauge.force_cache(&blk)
+    context 'when using simple key' do
+      it 'forces block execution and caches the result' do
+        blk = ->{ 1 }
+        gauge.cache_store.should_receive(:fetch).with('simple-abc', expires_in: 1, force: true, &blk)
+        gauge.force_cache(true, &blk)
+      end
+    end
+
+    context 'when using full key' do
+      it 'forces block execution and caches the result' do
+        blk = ->{ 1 }
+        gauge.cache_store.should_receive(:fetch).with('abc', expires_in: 1, force: true, &blk)
+        gauge.force_cache(false, &blk)
+      end
     end
   end
 
@@ -163,9 +183,19 @@ describe Analyzing::Gauge do
   describe '#cache_key' do
     let(:object) { double(class: { name: 'DaTracked' }, id: 123, simple_cache_key: 'da_tracked/123') }
     let(:gauge) { klass.new object: object, period: 1..5 }
+    before { gauge.stub(:events_cache_key) { '[1]' } }
 
     it 'calculates the cache key' do
-      expect(gauge.cache_key).to eq 'metric:sales:da_tracked/123:1-5'
+      expect(gauge.cache_key).to eq 'metric:sales:da_tracked/123:1-5:[1]'
+    end
+  end
+
+  describe '#simple_cache_key' do
+    let(:object) { double(class: { name: 'DaTracked' }, id: 123, simple_cache_key: 'da_tracked/123') }
+    let(:gauge) { klass.new object: object, period: 1..5 }
+
+    it 'calculates the cache key' do
+      expect(gauge.simple_cache_key).to eq 'metric:sales:da_tracked/123:1-5'
     end
   end
 

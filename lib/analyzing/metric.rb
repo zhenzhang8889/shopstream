@@ -7,6 +7,7 @@ module Analyzing
   # Examples
   #
   #   class SalesMetric < Analyzing::Metric
+  #     events :orders
   #     calculate { orders.sum(:total) }
   #   end
   class Metric < Gauge
@@ -24,10 +25,18 @@ module Analyzing
       #     calculate { orders.sum(:total) / requests.distinct(:client_id).count }
       #   end
       def calculate(&block)
+        @block ||= nil
         @block = block if block_given?
         @block
       end
       alias_method :calculated_as, :calculate
+
+      # Public: Declare dependent events.
+      def events(*events)
+        @events ||= nil
+        @events = events if events.present?
+        @events
+      end
     end
 
     def _compute
@@ -64,6 +73,13 @@ module Analyzing
           change - 1
         end
       end if options[:change]
+    end
+
+    # Internal: Get the associated events. Used for caching.
+    def events
+      events = super
+      types = self.class.events
+      types.zip(events.values_at(*types))
     end
 
     # Internal: Computation context for metric value calculation.

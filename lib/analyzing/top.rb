@@ -68,6 +68,11 @@ module Analyzing
       extend_query ? extend_query.call(event) : event
     end
 
+    # Internal: Get associated events. Needed for cahing.
+    def events
+      { self.class.event => super[self.class.event] }
+    end
+
     # Internal: Get the final aggregation pipeline.
     def pipeline
       self.class.pipeline.unshift("$match" => event.query.selector)

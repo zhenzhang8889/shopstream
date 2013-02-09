@@ -24,6 +24,12 @@ describe Analyzing::Metric do
     end
   end
 
+  describe '.events' do
+    it 'sets the dependent events' do
+      expect(klass.events(:a)).to eq [:a]
+    end
+  end
+
   describe '#value' do
     before do
       metric.stub(:events) { { requests: [double.as_null_object] } }

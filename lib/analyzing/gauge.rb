@@ -130,7 +130,7 @@ module Analyzing
     # Public: Refresh the gauge. The gauge value will be force computed, even
     # if it's cached.
     def refresh
-      force_cache { force_cache(true) { _compute } }
+      cached { force_cache(true) { _compute } }
     end
 
     # Internal: When implementing own kind of gauges, you must redefine it to

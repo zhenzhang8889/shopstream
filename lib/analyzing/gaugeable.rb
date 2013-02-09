@@ -8,6 +8,16 @@ module Analyzing
       "#{self.class.name.underscore}/#{id}"
     end
 
+    # Internal: Get gauges for this instance.
+    def gauges
+      Hash[self.class.gauges.map do |kind, types|
+        [kind, Hash[types.map do |type, metadata|
+          gauge = send(metadata[:klass].name.underscore)
+          [type, gauge]
+        end]]
+      end]
+    end
+
     module ClassMethods
       # Public: Add gauge to the gaugeable.
       #
@@ -22,7 +32,7 @@ module Analyzing
       def has_gauges(kind, types)
         kind_class = kind.to_s.singularize.camelize.constantize
         kind = kind.to_s.pluralize.to_sym
-        types.each_pair do |type, options|
+        types.each do |type, options|
           klass = kind_class.class_name_for_type(type).constantize
           metadata = { kind: kind.to_s.singularize.to_sym, type: type, klass: klass, options: options }
           gauges[kind][type] = metadata

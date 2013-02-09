@@ -20,6 +20,27 @@ describe Analyzing::Gaugeable do
     end
   end
 
+  let(:model) { klass.new }
+
+  describe '#gauges' do
+    let(:top_products) { double }
+    let(:top_links) { double }
+    let(:sales_metric) { double }
+
+    before do
+      klass.has_top products: {}, links: {}
+      klass.has_metrics sales: {}
+      model.stub(top_products: top_products, top_links: top_links, sales_metric: sales_metric)
+    end
+
+    it 'returns hash of gauges grouped by kind' do
+      expect(model.gauges).to eq(
+        tops: { products: top_products, links: top_links },
+        metrics: { sales: sales_metric }
+      )
+    end
+  end
+
   describe '.has_gauges' do
     before { klass.has_gauges(:top, products: {}) }
 

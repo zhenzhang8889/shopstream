@@ -124,13 +124,13 @@ module Analyzing
     # returned. Requires specific gauge kinds to implement #_compute which would
     # compute and return the actual gauge value.
     def compute
-      cached(true) { cached { _compute } }
+      cached { cached(false) { _compute } }
     end
 
     # Public: Refresh the gauge. The gauge value will be force computed, even
     # if it's cached.
     def refresh
-      cached { force_cache(true) { _compute } }
+      cached(false) { force_cache { _compute } }
     end
 
     # Internal: When implementing own kind of gauges, you must redefine it to

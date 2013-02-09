@@ -80,7 +80,7 @@ module Analyzing
 
         define_method(name) do |payload = {}|
           event = event_associations[event_type].create(payload)
-          gauges.refresh if respond_to?(:gauges)
+          try(:refresh_gauges)
           event
         end
       end

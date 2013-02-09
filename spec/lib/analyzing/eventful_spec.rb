@@ -36,12 +36,11 @@ describe Analyzing::Eventful do
     let(:request_double) { double }
     let(:requests) { double }
     let(:model) { klass.new }
-    let(:gauges) { double.as_null_object }
 
     before do
       klass.event_tracker(:requests)
       model.stub(:event_associations) { { request: request_double } }
-      model.stub(:gauges) { gauges }
+      model.stub(:refresh_gauges) { true }
       request_double.stub(:create) { requests }
     end
 
@@ -59,7 +58,7 @@ describe Analyzing::Eventful do
     end
 
     specify 'the tracker refreshes gauges if there are any' do
-      gauges.should_receive(:refresh)
+      model.should_receive(:refresh_gauges)
       model.track_request(a: 1, b: 2, c: 3)
     end
   end

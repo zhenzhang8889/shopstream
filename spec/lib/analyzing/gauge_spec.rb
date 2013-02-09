@@ -97,21 +97,16 @@ describe Analyzing::Gauge do
       gauge
     end
 
-    context 'when the value is cached' do
-      before { Rails.cache.write('simple-abc', 2) }
+    context 'when the value if fully cached' do
+      before { Rails.cache.write('abc', 2) }
 
-      it 'calls _compute' do
-        gauge.should_receive(:_compute)
-        gauge.refresh
-      end
-
-      it 'force-overrides it' do
+      it 'returns the value' do
+        gauge.should_not_receive(:_compute)
         expect(gauge.refresh).to eq 1
-        expect(Rails.cache.fetch('simple-abc')).to eq 1
       end
     end
 
-    context 'when the value is not cached' do 
+    context 'when the value is not fully cached' do
       it 'calls _compute' do
         gauge.should_receive(:_compute)
         gauge.refresh
@@ -119,7 +114,7 @@ describe Analyzing::Gauge do
 
       it 'caches the result' do
         expect(gauge.refresh).to eq 1
-        expect(Rails.cache.fetch('simple-abc')).to eq 1
+        expect(Rails.cache.fetch('abc')).to eq 1
       end
     end
   end

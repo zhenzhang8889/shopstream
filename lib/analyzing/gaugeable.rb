@@ -3,6 +3,10 @@ module Analyzing
   module Gaugeable
     extend ActiveSupport::Concern
 
+    included do
+      define_model_callbacks :refresh
+    end
+
     # Internal: Generate a simple cache key for the object.
     def simple_cache_key
       "#{self.class.name.underscore}/#{id}"
@@ -16,6 +20,13 @@ module Analyzing
           [type, gauge]
         end]]
       end]
+    end
+
+    # Internal: Refresh gauges.
+    def refresh_gauges
+      run_callbacks(:refresh_gauges) do
+        gauges.refresh
+      end
     end
 
     module ClassMethods

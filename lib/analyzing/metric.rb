@@ -54,7 +54,7 @@ module Analyzing
     def max
       @max ||= begin
         maxes = []
-        options[:max].times { maxes << dup_for(max: nil).value }
+        options[:max].times { |t| maxes << dup_for(max: nil, extend_cache_life: options[:max] - t, period: period.prev(t + 1)).value }
         maxes.max
       end if options[:max]
     end
@@ -80,6 +80,15 @@ module Analyzing
       events = super
       types = self.class.events
       Hash[types.zip(events.values_at(*types))]
+    end
+
+    # Internal: Calculate the expiry term for cached value.
+    def cache_expiry
+      if options[:extend_cache_life]
+        (1 + options[:extend_cache_life]) * super
+      else
+        super
+      end
     end
 
     # Public: Get JSON representation.

@@ -66,21 +66,18 @@ describe Analyzing::Metric do
       let(:prev_metrics) { [double(value: 10), double(value: 25), double(value: 50), double(value: 99), double(value: 75)] }
 
       it 'computes metric value for each of previous periods' do
-        metric.should_receive(:dup_for).with(max: nil).and_return(prev_metrics[0])
-        metric.should_receive(:dup_for).with(max: nil).and_return(prev_metrics[1])
-        metric.should_receive(:dup_for).with(max: nil).and_return(prev_metrics[2])
-        metric.should_receive(:dup_for).with(max: nil).and_return(prev_metrics[3])
-        metric.should_receive(:dup_for).with(max: nil).and_return(prev_metrics[4])
-        prev_metrics.each { |m| m.should_receive(:value) }
+        5.times do |t|
+          metric.should_receive(:dup_for).with(max: nil, extend_cache_life: 5 - t, period: period.prev(t + 1)).and_return(prev_metrics[t])
+        end
+
         metric.max
       end
 
       it 'returns the max value' do
-        metric.should_receive(:dup_for).with(max: nil).and_return(prev_metrics[0])
-        metric.should_receive(:dup_for).with(max: nil).and_return(prev_metrics[1])
-        metric.should_receive(:dup_for).with(max: nil).and_return(prev_metrics[2])
-        metric.should_receive(:dup_for).with(max: nil).and_return(prev_metrics[3])
-        metric.should_receive(:dup_for).with(max: nil).and_return(prev_metrics[4])
+        5.times do |t|
+          metric.should_receive(:dup_for).with(max: nil, extend_cache_life: 5 - t, period: period.prev(t + 1)).and_return(prev_metrics[t])
+        end
+
         expect(metric.max).to eq 99
       end
     end

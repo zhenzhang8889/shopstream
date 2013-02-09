@@ -5,7 +5,17 @@ class Shop
   include Analyzing::Gaugeable
 
   has_events :requests, :orders
-  has_metrics average_purchase: { period: ->{ today } }
+
+  has_metrics visitors: { period: -> { 5.minutes.ago..Time.now } },
+    sales: { period: ->{ today }, max: 30, change: 1 },
+    orders: { period: ->{ today } },
+    average_purchase: { period: ->{ today }, max: 30 },
+    revenue_per_visitor: { period: ->{ today }, max: 30 },
+    conversion_rate: { period: ->{ today }, max: 30 }
+
+  has_top products: { period: ->{ today } },
+    links: { period: ->{ today } },
+    searches: { period: ->{ today } }
 
   field :token, type: String
   field :name, type: String
@@ -36,7 +46,6 @@ class Shop
   after_refresh_gauges :push_gauges
 
   def push_gauges
-    puts "YOLO"
   end
 
   def today
@@ -56,167 +65,6 @@ class Shop
   # Internal: Get URL of tracker script for current shop.
   def tracker_script_url
     "https://#{ENV['COLLECTOR_HOST']}/track-#{token}.js"
-  end
-
-  # Internal: Redis prefix.
-  def redis_prefix
-    "shop_#{token}"
-  end
-
-  # Internal: Prefix a string with redis prefix for current shop.
-  def redis_prefixed(key)
-    "#{redis_prefix}_#{key}"
-  end
-
-  # Internal: Redis live visitors key.
-
-  def live_visitors_key
-    redis_prefixed 'live_visitors'
-  end
-
-  # Internal: Redis average purchase key.
-  def avg_purchase_key
-    redis_prefixed 'avg_purchase'
-  end
-
-  # Internal: Redis max average purchase key.
-  def max_avg_purchase_key
-    redis_prefixed 'max_avg_purchase'
-  end
-
-  # Internal: Redis RVP key.
-  def revenue_per_visit_key
-    redis_prefixed 'revenue_per_visit'
-  end
-
-  # Internal: Redis max RVP key.
-  def max_revenue_per_visit_key
-    redis_prefixed 'max_revenue_per_visit'
-  end
-
-  # Internal: Redis conversion rate key.
-  def conversion_rate_key
-    redis_prefixed 'conversion_rate'
-  end
-
-  # Internal: Redis max conversion rate key.
-  def max_conversion_rate_key
-    redis_prefixed 'max_conversion_rate'
-  end
-
-  # Internal: Redis total orders today key.
-  def total_orders_today_key
-    redis_prefixed 'total_orders_today'
-  end
-
-  # Internal: Redis total sales today key.
-  def total_sales_today_key
-    redis_prefixed 'total_sales_today'
-  end
-
-  # Internal: Redis max total sales key.
-  def max_total_sales_today_key
-    redis_prefixed 'max_total_sales_today'
-  end
-
-  # Internal: Redis checkout distribution key.
-  def checkout_distribution_key
-    redis_prefixed 'co_distribution'
-  end
-
-  # Internal: Redis top links key.
-  def top_links_key
-    redis_prefixed 'top_links'
-  end
-
-  # Internal: Redis top searched key.
-  def top_searches_key
-    redis_prefixed 'top_searches'
-  end
-
-  # Internal: Redis top products key.
-  def top_products_key
-    redis_prefixed 'top_products'
-  end
-
-  # Internal: Redis last tracked at key.
-  def last_tracked_at_key
-    redis_prefixed 'last_tracked_at'
-  end
-
-  # Public: Get live visitors.
-  def live_visitors
-    $redis.get(live_visitors_key).to_i
-  end
-
-  # Public: Get avg purchase.
-  def avg_purchase
-    $redis.get(avg_purchase_key).to_f
-  end
-
-  # Public: Get max average purchase.
-  def max_avg_purchase
-    $redis.get(max_avg_purchase_key).to_f
-  end
-
-  # Public: Get RVP.
-  def revenue_per_visit
-    $redis.get(revenue_per_visit_key).to_f
-  end
-
-  # Public: Get max RVP.
-  def max_revenue_per_visit
-    $redis.get(max_revenue_per_visit_key).to_f
-  end
-
-  # Public: Get conversion rate.
-  def conversion_rate
-    $redis.get(conversion_rate_key).to_f
-  end
-
-  # Public: Get max conversion rate.
-  def max_conversion_rate
-    $redis.get(max_conversion_rate_key).to_f
-  end
-
-  # Public: Get total orders today.
-  def total_orders_today
-    $redis.get(total_orders_today_key).to_f
-  end
-
-  # Public: Get total sales today.
-  def total_sales_today
-    $redis.get(total_sales_today_key).to_f
-  end
-
-  # Public: Get max total sales.
-  def max_total_sales_today
-    $redis.get(max_total_sales_today_key).to_f
-  end
-
-  # Public: Get checkout distribution.
-  def checkout_distribution
-    $redis.get(checkout_distribution_key).try(:split, ',').try(:map, &:to_i)
-  end
-
-  # Public: Get top links.
-  def top_links
-    $redis.zrange top_links_key, 0, 9
-  end
-
-  # Public: Get top searches.
-  def top_searches
-    $redis.zrange top_searches_key, 0, 9
-  end
-
-  # Public: Get top products.
-  def top_products
-    $redis.zrange top_products_key, 0, 9
-  end
-
-  # Public: Query when the store has tracked anything.
-  def last_tracked_at
-    $redis.get(last_tracked_at_key).try(:to_time)
   end
 
   # Public: Check if store was ever tracked.

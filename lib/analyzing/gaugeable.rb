@@ -97,6 +97,10 @@ module Analyzing
       def refresh
         values.each(&:refresh)
       end
+
+      def to_json
+        values.each(&:to_json)
+      end
     end
   end
 end

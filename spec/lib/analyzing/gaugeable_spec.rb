@@ -133,4 +133,15 @@ describe Analyzing::Gaugeable::GaugeSet do
       set.refresh
     end
   end
+
+  describe '#to_json' do
+    let(:value1) { double }
+    let(:value2) { double }
+    let(:set) { described_class[:key1, value1, :key2, value2] }
+
+    it 'calls #refresh on all the values' do
+      [value1, value2].each { |v| v.should_receive(:to_json) }
+      set.to_json
+    end
+  end
 end

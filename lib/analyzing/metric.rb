@@ -42,6 +42,7 @@ module Analyzing
     def _compute
       max
       change
+      series
       value
     end
 
@@ -54,7 +55,7 @@ module Analyzing
     def max
       @max ||= begin
         maxes = []
-        options[:max].times { |t| maxes << dup_for(max: nil, extend_cache_life: options[:max] - t, period: period.prev(t + 1)).value }
+        options[:max].times { |t| maxes << dup_for(max: nil, change: nil, step: nil, extend_cache_life: options[:max] - t, period: period.prev(t + 1)).value }
         maxes.max
       end if options[:max]
     end
@@ -62,7 +63,7 @@ module Analyzing
     # Public: Calculate change.
     def change
       @change ||= begin
-        previous = dup_for(period: period.prev(options[:change]), change: nil)
+        previous = dup_for(max: nil, change: nil, step: nil, period: period.prev(options[:change]))
         change = value / previous.value.to_f
 
         if change.nan?
@@ -73,6 +74,17 @@ module Analyzing
           change - 1
         end
       end if options[:change]
+    end
+
+    # Public: Compute series.
+    def series
+      @series ||= begin
+        periods = period.to_i.each_slice(options[:step]).select { |p| p.first != p.last }.map { |p| (p.first..(p.first + options[:step])).to_time }
+
+        Hash[periods.map do |period|
+          [period.begin, dup_for(max: nil, change: nil, step: nil, period: period).value]
+        end]
+      end if options[:step]
     end
 
     # Internal: Get the associated events. Used for caching.
@@ -96,6 +108,7 @@ module Analyzing
       h = { value: value }
       h[:max] = max if max
       h[:change] = change if change
+      h[:series] = series if series
       h
     end
 

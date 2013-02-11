@@ -8,7 +8,7 @@ class Shop
 
   has_metrics visitors: { period: -> { 5.minutes.ago..Time.now } },
     sales: { period: ->{ today }, max: 30, change: 1 },
-    orders: { period: ->{ today } },
+    orders: { period: ->{ today }, step: 1.hour },
     average_purchase: { period: ->{ today }, max: 30 },
     revenue_per_visitor: { period: ->{ today }, max: 30 },
     conversion_rate: { period: ->{ today }, max: 30 }

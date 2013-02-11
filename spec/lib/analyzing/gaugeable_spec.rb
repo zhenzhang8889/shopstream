@@ -72,7 +72,7 @@ describe Analyzing::Gaugeable do
     end
 
     it 'carries types and passes :top as kind' do
-      klass.should_receive(:has_gauges).with(:top, suits: {})
+      klass.should_receive(:has_gauges).with(:top, { suits: {} }, { kind_class_name: 'analyzing/top' })
       klass.has_top(suits: {})
     end
   end
@@ -84,7 +84,7 @@ describe Analyzing::Gaugeable do
     end
 
     it 'carries types and passes :top as kind' do
-      klass.should_receive(:has_gauges).with(:metric, lols: {})
+      klass.should_receive(:has_gauges).with(:metric, { lols: {} }, { kind_class_name: 'analyzing/metric' })
       klass.has_metric(lols: {})
     end
   end

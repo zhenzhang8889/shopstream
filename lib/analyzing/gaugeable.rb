@@ -32,20 +32,29 @@ module Analyzing
     module ClassMethods
       # Public: Add gauge to the gaugeable.
       #
-      # kind  - The Symbol gauge kind.
-      # types - The Hash of gauge type -> default options.
+      # kind    - The Symbol gauge kind.
+      # types   - The Hash of gauge type -> default options.
+      # options - The optional Hash of options:
+      #           :kind_class_name - the String kind class name. If not passed,
+      #                              kind_class_name would be reflected from
+      #                              the name of kind.
       #
       # Examples
       #
       #   class Shop
       #     has_gauges :top, products: {}
       #   end
-      def has_gauges(kind, types)
-        kind_class = "analyzing/#{kind.to_s.singularize}".camelize.constantize
+      def has_gauges(kind, types, options = {})
+        if options.has_key?(:kind_class_name)
+          kind_class = options[:kind_class_name].camelize.constantize
+        else
+          kind_class = kind.to_s.singularize.camelize.constantize
+        end
+
         kind = kind.to_s.pluralize.to_sym
-        types.each do |type, options|
+        types.each do |type, opts|
           klass = kind_class.class_name_for_type(type).constantize
-          metadata = { kind: kind.to_s.singularize.to_sym, type: type, klass: klass, options: options }
+          metadata = { kind: klass.kind, type: type, klass: klass, options: opts }
           gauges[kind][type] = metadata
           gauge_getter(klass.name.underscore, metadata)
         end
@@ -56,13 +65,13 @@ module Analyzing
 
       # Public: Add top to the gaugeable.
       def has_top(types)
-        has_gauges(:top, types)
+        has_gauges(:top, types, kind_class_name: 'analyzing/top')
       end
       alias_method :has_tops, :has_top
 
       # Public: Add metric to the gaugeable.
       def has_metric(types)
-        has_gauges(:metric, types)
+        has_gauges(:metric, types, kind_class_name: 'analyzing/metric')
       end
       alias_method :has_metrics, :has_metric
 

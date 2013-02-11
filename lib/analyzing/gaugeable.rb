@@ -90,6 +90,7 @@ module Analyzing
         define_method(name) do |period = nil, options = {}|
           options, period = period, nil if period.is_a?(Hash) && !options
           options.reverse_merge!(period: period) if period
+          options.reverse_merge!(type: metadata[:type])
           options.reverse_merge!(metadata[:options])
           klass.new options.merge(object: self)
         end

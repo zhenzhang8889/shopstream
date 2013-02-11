@@ -92,14 +92,14 @@ describe Analyzing::Gaugeable do
   describe '.gauge_getter' do
     let(:gauge) { double.as_null_object }
     let(:model) { klass.new }
-    before { klass.gauge_getter(:top_suits, { klass: gauge, options: { a: 1} }) }
+    before { klass.gauge_getter(:top_suits, { type: :my_type, klass: gauge, options: { a: 1} }) }
 
     it 'defines a getter' do
       expect(model).to respond_to :top_suits
     end
 
     specify 'the getter constructs a new gauge with object and options' do
-      gauge.should_receive(:new).with(a: 1, b: 2, period: 1..2, object: model)
+      gauge.should_receive(:new).with(a: 1, b: 2, period: 1..2, type: :my_type, object: model)
       model.top_suits(1..2, b: 2)
     end
   end

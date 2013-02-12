@@ -7,15 +7,15 @@ class Shop
   has_events :requests, :orders
 
   has_metrics visitors: { period: -> { 5.minutes.ago..Time.now } },
-    sales: { period: ->{ today }, max: 30, change: 1 },
-    orders: { period: ->{ today }, series: { step: 1.hour, period: ->{ two_days } } },
-    average_purchase: { period: ->{ today }, max: 30 },
-    revenue_per_visitor: { period: ->{ today }, max: 30 },
-    conversion_rate: { period: ->{ today }, max: 30 }
+    sales: { period: :today, max: 30, change: 1 },
+    orders: { period: :today, series: { step: 1.hour, period: :two_days } },
+    average_purchase: { period: :today, max: 30 },
+    revenue_per_visitor: { period: :today, max: 30 },
+    conversion_rate: { period: :today, max: 30 }
 
-  has_top products: { period: ->{ today } },
-    links: { period: ->{ today } },
-    searches: { period: ->{ today } }
+  has_top products: { period: :today },
+    links: { period: :today },
+    searches: { period: :today }
 
   field :token, type: String
   field :name, type: String
@@ -88,6 +88,10 @@ class Shop
   def today
     time = Time.now.in_time_zone(tz)
     time.beginning_of_day..time.end_of_day.ceil
+  end
+
+  def two_days
+    today.prev(1).begin..today.end
   end
 
   # Internal: Get URL of tracker script for current shop.

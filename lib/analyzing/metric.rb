@@ -80,9 +80,12 @@ module Analyzing
     def series
       @series ||= begin
         series = options[:series]
-        step = series.delete(:step)
+        step = series[:step]
+        period = series.fetch(:period) { self.period }
+        period = object.send(period) if period.is_a?(Symbol)
+        period = object.instance_exec(&period) if period.respond_to?(:call)
 
-        periods = (series.fetch(:period) { period }).to_i.each_slice(step).select { |p| p.first != p.last }.map { |p| (p.first..(p.first + step)).to_time }
+        periods = period.to_i.each_slice(step).select { |p| p.first != p.last }.map { |p| (p.first..(p.first + step)).to_time }
 
         Hash[periods.map do |per|
           [per.begin, dup_for(max: nil, change: nil, series: nil, period: per).compute]

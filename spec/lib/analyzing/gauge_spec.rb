@@ -38,8 +38,8 @@ describe Analyzing::Gauge do
   describe '#events_cache_key' do
     let(:event1) { double(created_at: 5) }
     let(:event2) { double(created_at: 42) }
-    let(:value1) { double(desc: [event1]) }
-    let(:value2) { double(desc: [event2]) }
+    let(:value1) { double(desc: double(limit: [event1])) }
+    let(:value2) { double(desc: double(limit: [event2])) }
     let(:gauge) { klass.new }
 
     before do

@@ -155,7 +155,7 @@ module Analyzing
 
     # Public: Get cache key for associated events.
     def events_cache_key
-      stamps = events.values.map { |e| e.desc(:created_at).last.try(:created_at).to_i }
+      stamps = events.values.map { |e| e.desc(:created_at).limit(1).first.try(:created_at).to_i }
       "[#{stamps.join(',')}]"
     end
 

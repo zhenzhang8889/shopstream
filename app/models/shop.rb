@@ -62,7 +62,7 @@ class Shop
       live_visitors: metrics[:visitors][:value],
       avg_purchase: metrics[:average_purchase][:value],
       max_avg_purchase: metrics[:average_purchase][:max],
-      conversion_rate: metrics[:conversion_rate][:value],
+      conversion_rate: metrics[:conversion_rate][:value] * 100,
       max_conversion_rate: metrics[:conversion_rate][:max],
       total_orders_today: metrics[:orders][:value],
       total_sales_today: metrics[:sales][:value],
@@ -87,7 +87,7 @@ class Shop
   # Public: Get the range of today in shop's timezone.
   def today
     time = Time.now.in_time_zone(tz)
-    time.beginning_of_day..time.end_of_day.ceil
+    time.beginning_of_day..(time.end_of_day + 1)
   end
 
   def two_days

@@ -27,7 +27,7 @@ module Analyzing
 
       # Public: Track the event.
       def track(data = {})
-        create(data: data)
+        scoped.create(data: data)
       end
 
       # Public: Define event's embedded data.

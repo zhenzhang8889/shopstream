@@ -6,6 +6,8 @@ class RequestEvent
   data do
     field :resource, type: String
     field :referrer, type: String, default: ''
+    field :referrer_host, type: String, default: ''
+    field :search_query, type: String, default: ''
     field :title, type: String
     field :user_agent, type: String
     field :unique, type: Boolean

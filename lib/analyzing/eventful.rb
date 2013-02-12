@@ -15,7 +15,7 @@ module Analyzing
 
     included do
       delegate :event_types, to: 'self.class'
-
+      define_model_callbacks :track_event
       field :last_tracked_at, type: Time
     end
 
@@ -81,10 +81,12 @@ module Analyzing
         name ||= "track_#{event_type}"
 
         define_method(name) do |payload = {}|
-          event = event_associations[event_type.to_s.pluralize.to_sym].track(payload)
-          set(:last_tracked_at, Time.now)
-          try(:refresh_gauges)
-          event
+          run_callbacks(:track_event) do
+            event = event_associations[event_type.to_s.pluralize.to_sym].track(payload)
+            set(:last_tracked_at, Time.now)
+            try(:refresh_gauges)
+            event
+          end
         end
       end
 

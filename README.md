@@ -26,7 +26,7 @@ Required heroku addons:
 * Sendgrid
 * Scheduler
 
-### Schduled tasks
+### Scheduled tasks
 
 Task: `rake send_daily_notifications`, frequency: hourly, run on xx:50.
 

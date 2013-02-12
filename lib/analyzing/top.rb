@@ -80,7 +80,7 @@ module Analyzing
 
     # Public: Get JSON representation.
     def to_json
-      items
+      compute
     end
   end
 end

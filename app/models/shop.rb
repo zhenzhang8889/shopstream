@@ -46,6 +46,24 @@ class Shop
   after_refresh_gauges :push_gauges
 
   def push_gauges
+    gauges = self.gauges.to_json
+    metrics = gauges[:metrics]
+    tops = gauges[:tops]
+
+    {
+      live_visitors: metrics[:visitors][:value],
+      avg_purchase: metrics[:average_purchase][:value],
+      max_avg_purchase: metrics[:average_purchase][:max],
+      conversion_rate: metrics[:conversion_rate][:value],
+      max_conversion_rate: metrics[:conversion_rate][:max],
+      total_orders_today: metrics[:orders][:value],
+      total_sales_today: metrics[:sales][:value],
+      max_total_sales_today: metrics[:sales][:max],
+      checkout_distribution: metrics[:orders][:series],
+      top_links: tops[:links],
+      top_searches: tops[:searches],
+      top_products: tops[:products]
+    }
   end
 
   def today

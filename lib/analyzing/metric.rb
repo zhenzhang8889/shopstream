@@ -55,7 +55,7 @@ module Analyzing
     def max
       @max ||= begin
         maxes = []
-        options[:max].times { |t| maxes << dup_for(max: nil, change: nil, step: nil, extend_cache_life: options[:max] - t, period: period.prev(t + 1)).value }
+        options[:max].times { |t| maxes << dup_for(max: nil, change: nil, step: nil, extend_cache_life: options[:max] - t, period: period.prev(t + 1)).compute }
         maxes.max
       end if options[:max]
     end
@@ -64,7 +64,7 @@ module Analyzing
     def change
       @change ||= begin
         previous = dup_for(max: nil, change: nil, step: nil, period: period.prev(options[:change]))
-        change = value / previous.value.to_f
+        change = value / previous.compute.to_f
 
         if change.nan?
           0.0
@@ -82,7 +82,7 @@ module Analyzing
         periods = period.to_i.each_slice(options[:step]).select { |p| p.first != p.last }.map { |p| (p.first..(p.first + options[:step])).to_time }
 
         Hash[periods.map do |period|
-          [period.begin, dup_for(max: nil, change: nil, step: nil, period: period).value]
+          [period.begin, dup_for(max: nil, change: nil, step: nil, period: period).compute]
         end]
       end if options[:step]
     end
@@ -105,7 +105,7 @@ module Analyzing
 
     # Public: Get JSON representation.
     def to_json
-      h = { value: value }
+      h = { value: compute }
       h[:max] = max if max
       h[:change] = change if change
       h[:series] = series if series

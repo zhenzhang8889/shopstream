@@ -5,8 +5,8 @@ class OrderEvent
 
   data do
     field :total_price, type: Float
-    field :currency, type: String
-    field :total_price_usd, type: Float
+    field :currency, type: String, default: 'USD'
+    field :total_price_usd, type: Float, default: ->{ total_price }
     field :name, type: String
 
     embeds_one_inline :customer do
@@ -17,25 +17,17 @@ class OrderEvent
 
     embeds_many_inline :line_items do
       field :name, type: String
-      field :title, type: String
-      field :price, type: Float
-      field :quantity, type: Integer
+      field :title, type: String, default: ->{ name }
+      field :price, type: Float, default: 0
+      field :quantity, type: Integer, default: 1
       field :sku, type: String
-    end
-
-    before_save :ensure_totals
-
-    def ensure_totals
-      self.currency = 'USD' unless currency
-      self.total_price_usd = total_price unless total_price_usd
-      self.total_price = total_price_usd unless total_price
     end
   end
 
   after_create :create_feed_item
 
   def create_feed_item
-    shop.feed_items.create(activity_type: 'new_order', activity_attributes: data)
+    shop.feed_items.create(activity_type: 'new_order', activity_attributes: data.attributes)
   end
 
   def self.sample_order(shop, time)

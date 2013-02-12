@@ -6,8 +6,6 @@ class RequestEvent
   data do
     field :resource, type: String
     field :referrer, type: String, default: ''
-    field :referrer_host, type: String, default: ''
-    field :search_query, type: String, default: ''
     field :title, type: String
     field :user_agent, type: String
     field :unique, type: Boolean
@@ -17,20 +15,8 @@ class RequestEvent
     field :unique_month, type: Boolean
     field :unique_year, type: Boolean
 
-    field :referrer_host, type: String
-    field :search_query, type: String
-
-    before_save :extract_ref_host, :extract_search_query
-
-    def extract_ref_host
-      self.referrer_host = URI(referrer).host
-    end
-
-    def extract_search_query
-      uri = URI(referrer)
-      query = CGI.parse(uri.query || "")
-      self.search_query = query['q'].try(:first)
-    end
+    field :referrer_host, type: String, default: ->{ URI(referrer).host }
+    field :search_query, type: String, default: ->{ CGI.parse(URI(referrer) || '')['q'].try(:first) }
   end
 
   def self.sample_request(shop, time)

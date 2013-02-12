@@ -10,6 +10,12 @@ describe Analyzing::Eventful do
 
   let(:model) { klass.new }
 
+  describe '.included' do
+    it 'adds last_tracked_at field' do
+      expect(klass.fields['last_tracked_at']).to be_present
+    end
+  end
+
   describe '.has_events' do
     before { klass.has_events(:requests) }
 
@@ -55,6 +61,13 @@ describe Analyzing::Eventful do
 
     specify 'the tracker returns created event' do
       expect(model.track_request(a: 1, b: 2, c: 3)).to eq requests
+    end
+
+    specify 'the tracker sets last_tracked_at' do
+      time = double
+      Time.stub(:now).and_return time
+      model.should_receive(:set).with(:last_tracked_at, time)
+      model.track_request(a: 1, b: 2, c: 3)
     end
 
     specify 'the tracker refreshes gauges if there are any' do

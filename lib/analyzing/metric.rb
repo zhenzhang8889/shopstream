@@ -64,7 +64,7 @@ module Analyzing
     def change
       @change ||= begin
         previous = dup_for(max: nil, change: nil, step: nil, period: period.prev(options[:change]))
-        change = value / previous.compute.to_f
+        change = compute / previous.compute.to_f
 
         if change.nan?
           0.0

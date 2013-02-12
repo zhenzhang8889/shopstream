@@ -15,6 +15,8 @@ module Analyzing
 
     included do
       delegate :event_types, to: 'self.class'
+
+      field :last_tracked_at, type: Time
     end
 
     # Internal: Get all event associations.
@@ -80,6 +82,7 @@ module Analyzing
 
         define_method(name) do |payload = {}|
           event = event_associations[event_type.to_s.pluralize.to_sym].create(payload)
+          set(:last_tracked_at, Time.now)
           try(:refresh_gauges)
           event
         end

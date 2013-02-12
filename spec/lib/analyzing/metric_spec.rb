@@ -63,7 +63,7 @@ describe Analyzing::Metric do
   describe '#max' do
     context 'when metric was initialized with max option' do
       let(:metric) { klass.new(object: object, period: period, max: 5) }
-      let(:prev_metrics) { [double(value: 10), double(value: 25), double(value: 50), double(value: 99), double(value: 75)] }
+      let(:prev_metrics) { [double(compute: 10), double(compute: 25), double(compute: 50), double(compute: 99), double(compute: 75)] }
 
       it 'computes metric value for each of previous periods' do
         5.times do |t|
@@ -86,10 +86,10 @@ describe Analyzing::Metric do
   describe '#change' do
     context 'when metric was initialized with change option' do
       let(:metric) { klass.new(object: object, period: period, change: 1) }
-      let(:prev_metric) { double(value: 50) }
+      let(:prev_metric) { double(compute: 50) }
 
       before do
-        metric.stub(:value).and_return(100)
+        metric.stub(:compute).and_return(100)
         metric.stub(:dup_for).and_return(prev_metric)
       end
 
@@ -103,7 +103,7 @@ describe Analyzing::Metric do
       end
 
       context 'when change is increase' do
-        let(:prev_metric) { double(value: 25) }
+        let(:prev_metric) { double(compute: 25) }
 
         it 'reports positive change' do
           expect(metric.change).to be > 0
@@ -115,7 +115,7 @@ describe Analyzing::Metric do
       end
 
       context 'when change is decrease' do
-        let(:prev_metric) { double(value: 200) }
+        let(:prev_metric) { double(compute: 200) }
 
         it 'reports negative change' do
           expect(metric.change).to be < 0
@@ -127,7 +127,7 @@ describe Analyzing::Metric do
       end
 
       context 'when previous value is the same' do
-        let(:prev_metric) { double(value: 100) }
+        let(:prev_metric) { double(compute: 100) }
 
         it 'reports no change' do
           expect(metric.change).to eq 0
@@ -135,7 +135,7 @@ describe Analyzing::Metric do
       end
 
       context 'when change is increase from 0' do
-        let(:prev_metric) { double(value: 0) }
+        let(:prev_metric) { double(compute: 0) }
 
         it 'reports 100% increase' do
           expect(metric.change).to eq 1
@@ -143,7 +143,7 @@ describe Analyzing::Metric do
       end
 
       context 'when change is decrease to 0' do
-        before { metric.stub(:value).and_return(0) }
+        before { metric.stub(:compute).and_return(0) }
 
         it 'reports 100% decrease' do
           expect(metric.change).to eq(-1)
@@ -158,8 +158,8 @@ describe Analyzing::Metric do
       let(:subperiod1) { period.begin..(period.begin + 12.hours) }
       let(:subperiod2) { (period.begin + 12.hours)..period.end }
       let(:metric) { klass.new(object: object, period: period, step: 12.hours) }
-      let(:prev_metric1) { double(value: 10) }
-      let(:prev_metric2) { double(value: 15) }
+      let(:prev_metric1) { double(compute: 10) }
+      let(:prev_metric2) { double(compute: 15) }
 
       before do
         metric.stub(:dup_for).with(max: nil, change: nil, step: nil, period: subperiod1) { prev_metric1 }
@@ -169,8 +169,8 @@ describe Analyzing::Metric do
       it 'slices the period into steps and computes value for each' do
         metric.should_receive(:dup_for).with(max: nil, change: nil, step: nil, period: subperiod1) { prev_metric1 }
         metric.should_receive(:dup_for).with(max: nil, change: nil, step: nil, period: subperiod2) { prev_metric2 }
-        prev_metric1.should_receive(:value)
-        prev_metric2.should_receive(:value)
+        prev_metric1.should_receive(:compute)
+        prev_metric2.should_receive(:compute)
 
         metric.series
       end

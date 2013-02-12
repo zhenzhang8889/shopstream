@@ -25,7 +25,6 @@ class Shop
   field :timezone_abbr, type: String
   field :send_daily_notifications, type: Boolean, default: true
   field :sound_on_sales, type: Boolean, default: true
-  field :last_tracked_at, type: Time
 
   belongs_to :user
   has_many :feed_items

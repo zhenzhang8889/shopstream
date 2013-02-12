@@ -55,7 +55,7 @@ module Analyzing
     def max
       @max ||= begin
         maxes = []
-        options[:max].times { |t| maxes << dup_for(max: nil, change: nil, step: nil, extend_cache_life: options[:max] - t, period: period.prev(t + 1)).compute }
+        options[:max].times { |t| maxes << dup_for(max: nil, change: nil, series: nil, extend_cache_life: options[:max] - t, period: period.prev(t + 1)).compute }
         maxes.max
       end if options[:max]
     end
@@ -63,8 +63,8 @@ module Analyzing
     # Public: Calculate change.
     def change
       @change ||= begin
-        previous = dup_for(max: nil, change: nil, step: nil, period: period.prev(options[:change]))
-        change = compute / previous.compute.to_f
+        previous = dup_for(max: nil, change: nil, series: nil, period: period.prev(options[:change]))
+        change = value / previous.compute.to_f
 
         if change.nan?
           0.0
@@ -79,12 +79,15 @@ module Analyzing
     # Public: Compute series.
     def series
       @series ||= begin
-        periods = period.to_i.each_slice(options[:step]).select { |p| p.first != p.last }.map { |p| (p.first..(p.first + options[:step])).to_time }
+        series = options[:series]
+        step = series.delete(:step)
 
-        Hash[periods.map do |period|
-          [period.begin, dup_for(max: nil, change: nil, step: nil, period: period).compute]
+        periods = (series.fetch(:period) { period }).to_i.each_slice(step).select { |p| p.first != p.last }.map { |p| (p.first..(p.first + step)).to_time }
+
+        Hash[periods.map do |per|
+          [per.begin, dup_for(max: nil, change: nil, series: nil, period: per).compute]
         end]
-      end if options[:step]
+      end if options[:series]
     end
 
     # Internal: Get the associated events. Used for caching.

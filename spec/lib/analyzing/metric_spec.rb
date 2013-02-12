@@ -67,7 +67,7 @@ describe Analyzing::Metric do
 
       it 'computes metric value for each of previous periods' do
         5.times do |t|
-          metric.should_receive(:dup_for).with(max: nil, change: nil, step: nil,extend_cache_life: 5 - t, period: period.prev(t + 1)).and_return(prev_metrics[t])
+          metric.should_receive(:dup_for).with(max: nil, change: nil, series: nil,extend_cache_life: 5 - t, period: period.prev(t + 1)).and_return(prev_metrics[t])
         end
 
         metric.max
@@ -75,7 +75,7 @@ describe Analyzing::Metric do
 
       it 'returns the max value' do
         5.times do |t|
-          metric.should_receive(:dup_for).with(max: nil, change: nil, step: nil, extend_cache_life: 5 - t, period: period.prev(t + 1)).and_return(prev_metrics[t])
+          metric.should_receive(:dup_for).with(max: nil, change: nil, series: nil, extend_cache_life: 5 - t, period: period.prev(t + 1)).and_return(prev_metrics[t])
         end
 
         expect(metric.max).to eq 99
@@ -89,12 +89,12 @@ describe Analyzing::Metric do
       let(:prev_metric) { double(compute: 50) }
 
       before do
-        metric.stub(:compute).and_return(100)
+        metric.stub(:value).and_return(100)
         metric.stub(:dup_for).and_return(prev_metric)
       end
 
       it 'computes metric value for previous period' do
-        metric.should_receive(:dup_for).with(max: nil, change: nil, step: nil, period: period.prev(1))
+        metric.should_receive(:dup_for).with(max: nil, change: nil, series: nil, period: period.prev(1))
         metric.change
       end
 
@@ -143,7 +143,7 @@ describe Analyzing::Metric do
       end
 
       context 'when change is decrease to 0' do
-        before { metric.stub(:compute).and_return(0) }
+        before { metric.stub(:value).and_return(0) }
 
         it 'reports 100% decrease' do
           expect(metric.change).to eq(-1)
@@ -153,22 +153,22 @@ describe Analyzing::Metric do
   end
 
   describe '#series' do
-    context 'when the metric was initialized with step option' do
+    context 'when the metric was initialized with series option' do
       let(:period) { Time.now.beginning_of_day..Time.now.end_of_day.ceil }
       let(:subperiod1) { period.begin..(period.begin + 12.hours) }
       let(:subperiod2) { (period.begin + 12.hours)..period.end }
-      let(:metric) { klass.new(object: object, period: period, step: 12.hours) }
+      let(:metric) { klass.new(object: object, period: period, series: { step: 12.hours }) }
       let(:prev_metric1) { double(compute: 10) }
       let(:prev_metric2) { double(compute: 15) }
 
       before do
-        metric.stub(:dup_for).with(max: nil, change: nil, step: nil, period: subperiod1) { prev_metric1 }
-        metric.stub(:dup_for).with(max: nil, change: nil, step: nil, period: subperiod2) { prev_metric2 }
+        metric.stub(:dup_for).with(max: nil, change: nil, series: nil, period: subperiod1) { prev_metric1 }
+        metric.stub(:dup_for).with(max: nil, change: nil, series: nil, period: subperiod2) { prev_metric2 }
       end
 
       it 'slices the period into steps and computes value for each' do
-        metric.should_receive(:dup_for).with(max: nil, change: nil, step: nil, period: subperiod1) { prev_metric1 }
-        metric.should_receive(:dup_for).with(max: nil, change: nil, step: nil, period: subperiod2) { prev_metric2 }
+        metric.should_receive(:dup_for).with(max: nil, change: nil, series: nil, period: subperiod1) { prev_metric1 }
+        metric.should_receive(:dup_for).with(max: nil, change: nil, series: nil, period: subperiod2) { prev_metric2 }
         prev_metric1.should_receive(:compute)
         prev_metric2.should_receive(:compute)
 

@@ -66,10 +66,6 @@ class Shop
     }
   end
 
-  def today
-    26.days.ago.beginning_of_day..26.days.ago.end_of_day.ceil
-  end
-
   # Public: Get 10 most recent feed items.
   def feed
     feed_items.desc(:created_at).limit(10).to_a

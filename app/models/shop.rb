@@ -25,6 +25,7 @@ class Shop
   field :timezone_abbr, type: String
   field :send_daily_notifications, type: Boolean, default: true
   field :sound_on_sales, type: Boolean, default: true
+  field :last_tracked_at, type: Time
 
   belongs_to :user
   has_many :feed_items
@@ -46,6 +47,9 @@ class Shop
   after_refresh_gauges :push_gauges
 
   def push_gauges
+  end
+
+  def gauge_values
     gauges = self.gauges.to_json
     metrics = gauges[:metrics]
     tops = gauges[:tops]
@@ -59,10 +63,10 @@ class Shop
       total_orders_today: metrics[:orders][:value],
       total_sales_today: metrics[:sales][:value],
       max_total_sales_today: metrics[:sales][:max],
-      checkout_distribution: metrics[:orders][:series],
-      top_links: tops[:links],
-      top_searches: tops[:searches],
-      top_products: tops[:products]
+      checkout_distribution: metrics[:orders][:series].values,
+      top_links: tops[:links].map { |i| i['count'] },
+      top_searches: tops[:searches].map { |i| i['count'] },
+      top_products: tops[:products].map { |i| i['purchases'] }
     }
   end
 
@@ -74,6 +78,12 @@ class Shop
   # Public: Get TimeZone object for shop's time zone.
   def tz
     ActiveSupport::TimeZone.new timezone
+  end
+
+  # Public: Get the range of today in shop's timezone.
+  def today
+    time = Time.now.in_time_zone(tz)
+    time.beginning_of_day..time.end_of_day.ceil
   end
 
   # Internal: Get URL of tracker script for current shop.
@@ -111,22 +121,6 @@ class Shop
 
   def custom?
     _type == "CustomShop"
-  end
-
-  # Internal: Reset all redis keys to default values in case those values are
-  # blank currently.
-  def reset_redis_keys
-    $redis.set avg_purchase_key, 0.0 unless avg_purchase
-    $redis.set max_avg_purchase_key, 0.0 unless max_avg_purchase
-    $redis.set revenue_per_visit_key, 0.0 unless revenue_per_visit
-    $redis.set max_revenue_per_visit_key, 0.0 unless max_revenue_per_visit
-    $redis.set conversion_rate_key, 0.0 unless conversion_rate
-    $redis.set max_conversion_rate_key, 0.0 unless max_conversion_rate
-    $redis.set total_orders_today_key, 0.0 unless total_orders_today
-    $redis.set total_sales_today_key, 0.0 unless total_sales_today
-    $redis.set max_total_sales_today_key, 0.0 unless max_total_sales_today
-    $redis.set checkout_distribution_key, '[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]' unless checkout_distribution
-    $redis.set last_tracked_at_key, '' unless last_tracked_at
   end
 
   # Internal: Find shops interested in daily reports, for specified `time`.

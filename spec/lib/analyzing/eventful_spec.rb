@@ -47,7 +47,7 @@ describe Analyzing::Eventful do
       klass.event_tracker(:requests)
       model.stub(:event_associations) { { requests: request_double } }
       model.stub(:refresh_gauges) { true }
-      request_double.stub(:create) { requests }
+      request_double.stub(:track) { requests }
     end
 
     it 'defines a tracker' do
@@ -55,7 +55,7 @@ describe Analyzing::Eventful do
     end
 
     specify 'the tracker creates a new event document' do
-      request_double.should_receive(:create).with(a: 1, b: 2, c: 3)
+      request_double.should_receive(:track).with(a: 1, b: 2, c: 3)
       model.track_request(a: 1, b: 2, c: 3)
     end
 

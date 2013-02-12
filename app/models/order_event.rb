@@ -3,7 +3,7 @@ class OrderEvent
 
   event_for :shop
 
-  embeds_one_inline :data do
+  data do
     field :total_price, type: Float
     field :currency, type: String
     field :total_price_usd, type: Float

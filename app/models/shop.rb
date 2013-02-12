@@ -68,9 +68,9 @@ class Shop
       total_sales_today: metrics[:sales][:value],
       max_total_sales_today: metrics[:sales][:max],
       checkout_distribution: metrics[:orders][:series].values,
-      top_links: tops[:links].map { |i| i['count'] },
-      top_searches: tops[:searches].map { |i| i['count'] },
-      top_products: tops[:products].map { |i| i['purchases'] }
+      top_links: tops[:links].map { |i| i['_id'] },
+      top_searches: tops[:searches].map { |i| i['_id'] },
+      top_products: tops[:products].map { |i| i['_id'] }
     }
   end
 

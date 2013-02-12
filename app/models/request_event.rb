@@ -3,7 +3,7 @@ class RequestEvent
 
   event_for :shop
 
-  embeds_one_inline :data do
+  data do
     field :resource, type: String
     field :referrer, type: String, default: ''
     field :title, type: String

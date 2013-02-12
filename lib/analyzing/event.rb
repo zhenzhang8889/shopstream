@@ -25,6 +25,16 @@ module Analyzing
         belongs_to model
       end
 
+      # Public: Track the event.
+      def track(data = {})
+        create(data: data)
+      end
+
+      # Public: Define event's embedded data.
+      def data(&block)
+        embeds_one_inline(:data, &block)
+      end
+
       # Internal: Get the event type.
       #
       # Examples

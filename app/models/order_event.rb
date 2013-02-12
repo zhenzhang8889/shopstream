@@ -22,6 +22,14 @@ class OrderEvent
       field :quantity, type: Integer
       field :sku, type: String
     end
+
+    before_save :ensure_totals
+
+    def ensure_totals
+      self.currency = 'USD' unless currency
+      self.total_price_usd = total_price unless total_price_usd
+      self.total_price = total_price_usd unless total_price
+    end
   end
 
   def self.sample_order(shop, time)

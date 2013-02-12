@@ -32,6 +32,12 @@ class OrderEvent
     end
   end
 
+  after_create :create_feed_item
+
+  def create_feed_item
+    shop.feed_items.create(activity_type: 'new_order', activity_attributes: data)
+  end
+
   def self.sample_order(shop, time)
     prods = []
     (1..5).to_a.sample.times do

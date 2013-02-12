@@ -16,9 +16,6 @@ class RequestEvent
     field :unique_day, type: Boolean
     field :unique_month, type: Boolean
     field :unique_year, type: Boolean
-    field :screenx, type: Integer
-    field :browserx, type: Integer
-    field :browsery, type: Integer
 
     field :referrer_host, type: String
     field :search_query, type: String

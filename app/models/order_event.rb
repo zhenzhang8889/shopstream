@@ -9,6 +9,11 @@ class OrderEvent
     field :total_price_usd, type: Float, default: ->{ total_price }
     field :name, type: String
 
+    validates :currency, presence: true
+    validates :name, presence: true
+    validates :total_price, presence: true, numericality: { greater_than: 0 }
+    validates :total_price_usd, presence: true, numericality: { greater_than: 0 }
+
     embeds_one_inline :customer do
       field :first_name, type: String
       field :last_name, type: String
@@ -17,10 +22,14 @@ class OrderEvent
 
     embeds_many_inline :line_items do
       field :name, type: String
-      field :title, type: String, default: ->{ name }
-      field :price, type: Float, default: 0
+      field :price, type: Float
       field :quantity, type: Integer, default: 1
       field :sku, type: String
+
+      validates :name, presence: true
+      validates :sku, presence: true
+      validates :price, presence: true, numericality: { greater_than: 0 }
+      validates :quantity, presence: true, numericality: { greater_than_or_equal: 1 }
     end
   end
 

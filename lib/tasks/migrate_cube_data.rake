@@ -17,6 +17,7 @@ task migrate_cube_data: :environment do
   requests = collections.select { |c| c.match(/^shop_\w+_requests_events$/) }
 
   Shop.send(:define_method, :refresh_gauges) { nil }
+  Shop.send(:define_method, :pusher) { Class.new { def trigger(*args); end }.new }
 
   puts "-- processing orders..."
 

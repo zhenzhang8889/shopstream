@@ -27,7 +27,10 @@ module Analyzing
 
       # Public: Track the event.
       def track(data = {})
-        scoped.create(data: data)
+        created_at = data.with_indifferent_access.delete(:timestamp)
+        attrs = created_at ? { data: data, created_at: created_at } : { data: data }
+
+        scoped.create(attrs)
       end
 
       # Public: Define event's embedded data.

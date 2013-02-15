@@ -37,7 +37,7 @@ module Analyzing
 
       # Public: Define event's embedded data.
       def data(&block)
-        embeds_one_inline(:data, &block)
+        embeds_one_inline(:data, autobuild: true, &block)
       end
 
       # Internal: Get the event type.

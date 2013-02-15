@@ -27,8 +27,10 @@ module Analyzing
 
       # Public: Track the event.
       def track(data = {})
-        created_at = data.with_indifferent_access.delete(:timestamp)
-        attrs = created_at ? { data: data, created_at: created_at } : { data: data }
+        data = data.with_indifferent_access
+        created_at = data.delete(:timestamp)
+        attrs = { data: data }
+        attrs.merge(created_at: created_at) if created_at
 
         scoped.create(attrs)
       end

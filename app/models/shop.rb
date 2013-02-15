@@ -183,6 +183,12 @@ class Shop
     all.reject(&:ever_tracked?)
   end
 
+  def self.refresh_all_gauges
+    Shop.all.each do |shop|
+      shop.refresh_gauges
+    end
+  end
+
   def set_timezone_name
     self.timezone_name = tz.to_s
     self.timezone_abbr = tz.tzinfo.name

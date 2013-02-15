@@ -30,6 +30,8 @@ Required heroku addons:
 
 Task: `rake send_daily_notifications`, frequency: hourly, run on xx:50.
 
+Task: `rake refresh_all_gauges`, frequency: hourly, run on xx:01
+
 ### DB
 
 Don't forget to create indexes

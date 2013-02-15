@@ -1,4 +1,4 @@
 class ConversionRateMetric < Analyzing::Metric
   events :orders, :requests
-  calculate { orders.count / requests.where("data.unique_day" => true).count }
+  calculate { orders.count / requests.distinct("data.client_id").count }
 end

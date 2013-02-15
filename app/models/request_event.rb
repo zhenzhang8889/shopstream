@@ -11,7 +11,7 @@ class RequestEvent
     field :client_id, type: String
 
     field :referrer_host, type: String, default: ->{ URI(referrer).host }
-    field :search_query, type: String, default: ->{ CGI.parse(URI(referrer) || '')['q'].try(:first) }
+    field :search_query, type: String, default: ->{ CGI.parse(URI(referrer).query || '')['q'].try(:first) }
 
     validates :client_id, presence: true
   end
@@ -38,7 +38,7 @@ class RequestEvent
          'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)',
          'Mozilla/5.0 (Windows; U; MSIE 9.0; WIndows NT 9.0; en-US))'
       ].sample,
-      client_idclient_id: (('a'..'z').to_a * 20).shuffle.take(16)
+      client_id: (('a'..'z').to_a * 20).shuffle.take(16)
     )
     e.created_at = time.is_a?(Range) ? rand(time) : time
     e.save

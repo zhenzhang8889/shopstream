@@ -75,7 +75,7 @@ module Analyzing
 
     # Internal: Get the final aggregation pipeline.
     def pipeline
-      self.class.pipeline.unshift("$match" => event.query.selector)
+      self.class.pipeline.dup.unshift("$match" => event.query.selector)
     end
 
     # Public: Get JSON representation.

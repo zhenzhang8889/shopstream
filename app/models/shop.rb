@@ -74,7 +74,7 @@ class Shop
       checkout_distribution: metrics[:orders][:series].values,
       top_links: tops[:links].map { |i| i['_id'] },
       top_searches: tops[:searches].map { |i| i['_id'] },
-      top_products: tops[:products].map { |i| i['_id'] }
+      top_products: tops[:products].map { |i| i['name'] }
     }
   end
 

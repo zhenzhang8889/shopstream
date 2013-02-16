@@ -19,6 +19,13 @@ module ActiveSupport
         end
       end
 
+      def delete_matched(matcher, options = nil)
+        instrument(:delete_matched, matcher.inspect) do
+          keys = @data.keys(matcher)
+          @data.del(*keys) if keys.present?
+        end
+      end
+
       def clear
         instrument(:clear, nil, nil) do
           @data.flushdb

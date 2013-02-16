@@ -161,15 +161,21 @@ module Analyzing
 
     # Internal: Fetch the cached value from cache store, execute block
     # otherwise.
-    def cached(simple = true, &block)
+    def cached(simple = true)
       key = simple ? simple_cache_key : cache_key
-      cache_store.fetch(key, expires_in: cache_expiry, &block)
+      cache_store.fetch(key, expires_in: cache_expiry) do
+        clear_unneeded_keys
+        yield
+      end
     end
 
     # Internal: Execute the block and cache the result.
-    def force_cache(simple = true, &block)
+    def force_cache(simple = true)
       key = simple ? simple_cache_key : cache_key
-      cache_store.fetch(key, expires_in: cache_expiry, force: true, &block)
+      cache_store.fetch(key, expires_in: cache_expiry, force: true) do
+        clear_unneeded_keys
+        yield
+      end
     end
 
     # Internal: Calculate the expirty term for cached value. Defaults to
@@ -206,6 +212,10 @@ module Analyzing
     # Internal: Get cache key components.
     def cache_key_components
       simple_cache_key_components.append(events_cache_key)
+    end
+
+    def clear_unneeded_keys
+      cache_store.delete_matched("#{simple_cache_key}:*")
     end
 
     # Internal: Get the cache store.

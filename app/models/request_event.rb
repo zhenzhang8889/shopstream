@@ -17,7 +17,7 @@ class RequestEvent
 
     before_create :escape_urls, :set_referrer_host, :set_search_query
 
-    def escape_referrer
+    def escape_urls
       self.resource = URI.escape(resource) if resource
       self.referrer = URI.escape(referrer)
     end

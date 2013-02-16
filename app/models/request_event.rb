@@ -10,10 +10,20 @@ class RequestEvent
     field :user_agent, type: String
     field :client_id, type: String
 
-    field :referrer_host, type: String, default: ->{ URI(referrer).host }
-    field :search_query, type: String, default: ->{ CGI.parse(URI(referrer).query || '')['q'].try(:first) }
+    field :referrer_host, type: String
+    field :search_query, type: String
 
     validates :client_id, presence: true
+
+    before_create :set_referrer_host, :set_search_query
+
+    def set_referrer_host
+      self.referrer_host = URI(referrer).host
+    end
+
+    def set_search_query
+      self.search_query = CGI.parse(URI(referrer).query || '')['q'].try(:first)
+    end
   end
 
   def self.sample_request(shop, time)

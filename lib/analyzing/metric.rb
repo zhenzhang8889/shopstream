@@ -103,9 +103,9 @@ module Analyzing
     # Internal: Calculate the expiry term for cached value.
     def cache_expiry
       if options[:extend_cache_life]
-        (1 + options[:extend_cache_life]) * super
+        (2 + options[:extend_cache_life]) * super
       else
-        super
+        2 * super
       end
     end
 

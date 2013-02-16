@@ -66,6 +66,7 @@ class Shop
       live_visitors: metrics[:visitors][:value],
       avg_purchase: metrics[:average_purchase][:value],
       max_avg_purchase: metrics[:average_purchase][:max],
+      revenue_per_visitor: metrics[:revenue_per_visitor][:value] * 100,
       conversion_rate: metrics[:conversion_rate][:value] * 100,
       max_conversion_rate: metrics[:conversion_rate][:max],
       total_orders_today: metrics[:orders][:value],

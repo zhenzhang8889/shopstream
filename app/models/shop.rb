@@ -40,7 +40,6 @@ class Shop
     :sound_on_sales, as: :admin
 
   before_create :generate_token
-  after_create :reset_redis_keys
   before_save :set_timezone_name
 
   after_refresh_gauges :push_gauges

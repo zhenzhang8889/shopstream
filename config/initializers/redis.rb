@@ -6,3 +6,4 @@ else
 end
 
 Redis.current = $redis
+Rails.cache.instance_variable_set(:@data, $redis)

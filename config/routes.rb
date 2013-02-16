@@ -1,4 +1,5 @@
 require 'subdomain_constraint'
+require 'sidekiq/web'
 
 ShopstreamApi::Application.routes.draw do
   scope constraints: SubdomainConstraint.new('manage') do
@@ -37,6 +38,10 @@ ShopstreamApi::Application.routes.draw do
     resources :shops, only: [:index, :show, :update, :create, :destroy] do
       post :send_instructions, on: :member
     end
+  end
+
+  authenticate :superuser do
+    mount Sidekiq::Web => '/sidekiq'
   end
 
   root to: 'home#app'

@@ -23,6 +23,9 @@ gem 'active_model_serializers', git: 'git://github.com/rails-api/active_model_se
 gem 'puma'
 gem 'rack-cors', require: 'rack/cors'
 
+gem 'slim'
+gem 'sinatra', '>= 1.3.0', require: nil
+
 group :development do
   gem 'pry-rails'
   gem 'letter_opener'

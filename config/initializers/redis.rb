@@ -6,4 +6,4 @@ else
 end
 
 Redis.current = $redis
-Rails.cache.instance_variable_set(:@data, $redis)
+Rails.cache.instance_variable_set(:@data, $redis) unless Rails.env.test?

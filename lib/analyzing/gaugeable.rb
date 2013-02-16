@@ -29,6 +29,11 @@ module Analyzing
       end
     end
 
+    # Internal: Attempt refresh gauges.
+    def attempt_refresh_gauges
+      refresh_gauges
+    end
+
     module ClassMethods
       # Public: Add gauge to the gaugeable.
       #

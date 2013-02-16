@@ -84,7 +84,7 @@ module Analyzing
           run_callbacks(:track_event) do
             event = event_associations[event_type.to_s.pluralize.to_sym].track(payload)
             set(:last_tracked_at, Time.now)
-            try(:refresh_gauges)
+            try(:attempt_refresh_gauges)
             event
           end
         end

@@ -45,6 +45,10 @@ class Shop
 
   after_refresh_gauges :push_gauges
 
+  def attempt_refresh_gauges
+    RefreshGaugesWorker.perform_async(id)
+  end
+
   def push_gauges
     pusher.trigger('metrics-updated', gauge_values)
   end
@@ -185,7 +189,7 @@ class Shop
 
   def self.refresh_all_gauges
     Shop.all.each do |shop|
-      shop.refresh_gauges
+      shop.attempt_refresh_gauges
     end
   end
 

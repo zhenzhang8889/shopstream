@@ -222,6 +222,8 @@ GEM
       multi_json (~> 1)
       redis (~> 3)
       redis-namespace
+    sidekiq-middleware (0.0.6)
+      sidekiq
     signature (0.1.6)
     simple_form (2.0.4)
       actionpack (~> 3.0)
@@ -280,6 +282,7 @@ DEPENDENCIES
   sass-rails (~> 3.2.3)
   shopify_app
   sidekiq
+  sidekiq-middleware
   simple_form
   uglifier (>= 1.0.3)
   zurb-foundation

@@ -168,7 +168,7 @@ describe Analyzing::Gauge do
   end
 
   describe '#cache_expiry' do
-    let(:gauge) { klass.new object: double.as_null_object, period: 1..5 }
+    let(:gauge) { klass.new object: double.as_null_object, period: 4.seconds.ago..Time.now }
 
     it 'calculates difference between period end and start' do
       expect(gauge.cache_expiry).to eq 4

@@ -4,3 +4,5 @@ if ENV['REDISTOGO_URL']
 else
   $redis = Redis.new driver: :hiredis
 end
+
+Redis.current = $redis

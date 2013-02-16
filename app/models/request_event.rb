@@ -15,7 +15,12 @@ class RequestEvent
 
     validates :client_id, presence: true
 
-    before_create :set_referrer_host, :set_search_query
+    before_create :escape_urls, :set_referrer_host, :set_search_query
+
+    def escape_referrer
+      self.resource = URI.escape(resource) if resource
+      self.referrer = URI.escape(referrer)
+    end
 
     def set_referrer_host
       self.referrer_host = URI(referrer).host

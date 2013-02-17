@@ -30,7 +30,7 @@ module Analyzing
         data = data.with_indifferent_access
         created_at = data.delete(:timestamp)
         attrs = { data: data }
-        attrs.merge(created_at: created_at) if created_at
+        attrs.merge!(created_at: created_at) if created_at
 
         scoped.create(attrs)
       end

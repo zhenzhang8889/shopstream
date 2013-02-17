@@ -227,6 +227,11 @@ GEM
       multi_json (~> 1)
       redis (~> 3)
       redis-namespace
+    sidekiq-failures (0.1.0)
+      sidekiq (>= 2.2.1)
+      sinatra
+      slim
+      sprockets
     sidekiq-limit_fetch (1.1)
       sidekiq (>= 2.6.5, < 3)
     sidekiq-middleware (0.0.6)
@@ -298,6 +303,7 @@ DEPENDENCIES
   sass-rails (~> 3.2.3)
   shopify_app
   sidekiq
+  sidekiq-failures
   sidekiq-limit_fetch
   sidekiq-middleware
   simple_form

@@ -26,7 +26,7 @@ task migrate_cube_data: :environment do
     shop = Shop.where(token: token).first
     collection = session[col]
 
-    puts "migrating orders for #{shop.id} (from #{collection})..." if shop
+    puts "migrating orders for #{shop.id} (from #{col})..." if shop
 
     collection.find.each do |doc|
       t = doc['t']
@@ -39,7 +39,7 @@ task migrate_cube_data: :environment do
     collection.drop
   end
 
-  puts "processing requests..."
+  puts "-- processing requests..."
 
   requests.each do |col|
     puts "dropping #{col}..."

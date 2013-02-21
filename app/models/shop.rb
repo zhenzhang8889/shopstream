@@ -188,7 +188,7 @@ class Shop
   end
 
   def self.refresh_all_gauges
-    Shop.all.each do |shop|
+    Shop.all.to_a.each do |shop|
       shop.attempt_refresh_gauges
     end
   end

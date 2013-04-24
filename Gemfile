@@ -55,6 +55,10 @@ group :assets do
   gem 'zurb-foundation'
 end
 
+if RUBY_PLATFORM =~ /linux/
+  gem 'therubyracer', require: 'v8'
+end
+
 gem 'jquery-rails', '2.0.3'
 gem 'ember-rails'
 

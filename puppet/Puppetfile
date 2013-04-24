@@ -1,0 +1,5 @@
+forge "http://forge.puppetlabs.com"
+
+mod "rbenv", :git => "git://github.com/alup/puppet-rbenv.git"
+mod "puppetlabs/mongodb"
+mod "redis", :git => "git://github.com/thomasvandoren/puppet-redis.git"
